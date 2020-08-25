@@ -1,0 +1,411 @@
+<style>
+    #obj_1_1,#obj_1_2,#obj_1_3,#obj_1_4,#obj_1_5,#obj_1_6,#obj_2_1,#obj_2_2,#obj_2_3,#obj_2_4,#obj_3_1,#obj_3_2,#obj_3_3{
+        background-color: #00B050;
+    }
+    #obj_1_7,#obj_2_5,#obj_2_6,#obj_3_4,#obj_3_5,#obj_3_4,#obj_4_1,#obj_4_2,#obj_4_3,#obj_4_4,#obj_4_5,#obj_5_1,#obj_5_2,#obj_5_3,#obj_5_4{
+        background-color: #FFFF00;
+    }
+    #obj_6_1,#obj_6_2,#obj_6_3,#obj_6_4,#obj_6_5,#obj_6_6,#obj_6_7,#obj_7_1,#obj_7_2,#obj_7_3,#obj_7_4,#obj_7_5,#obj_7_6,#obj_7_7,#obj_5_5,#obj_5_6,#obj_5_7,#obj_4_6,#obj_4_7,#obj_3_6,#obj_3_7,#obj_2_7{
+        background-color: #FF0000;
+    }
+    .coords{
+        border:1px solid #babdc1;
+        width: 12.5%;
+        text-align: center;
+    }
+    #label_impacto{
+        writing-mode:tb-rl;
+        -webkit-transform:rotate(-180deg);
+        -moz-transform:rotate(-180deg);
+        -o-transform: rotate(-180deg);
+        -ms-transform:rotate(-180deg);
+        transform: rotate(-180deg);
+        color: black;
+        font-size: 19px;
+    }
+    .num_prob{
+        font-size: 10px !important;
+    }
+    .impacto-vertical{
+        width: 12.5%;
+        border: 1px solid black;
+        text-align: center;
+    }
+    .impacto-horizontal{
+        width: 12.5%;
+        border: 1px solid black;
+        text-align: center;        
+    }
+    .label_horizontal{
+        font-size: 10px !important;
+    }
+
+    .r-circle {
+        background: black;
+        color: #fff;
+        padding: 0px 10%;
+        border-radius: 50%;
+        font-size: 15px;
+        display: none;
+        width: 35%;
+    }
+    </style>    
+
+<div class="table-responsive">
+    <table style="width: 100%;height: 327px;">        
+        <tbody>
+            <tr>
+                <td rowspan="7" style="width: 1%;">
+                    <label style="font-weight: 100;margin-left: 1%;" id="label_impacto">Impacto</label>
+                </td>
+            <td style="width: 12.5%;" class="impacto-vertical"> 
+                <label class="num_prob">Critico</label>
+            </td>
+            <td id="obj_7_1" class="coords">                                    
+                <center><span class="r-circle" id="obj_label_7_1">R</span></center>
+            </td>
+
+            <td id="obj_7_2" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_7_2">R</span></center>
+                </div>
+            </td>
+            <td id="obj_7_3" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_7_3">R</span></center>
+                </div>            
+            </td>
+            <td id="obj_7_4" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_7_4">R</span></center>
+                </div>            
+            </td>
+            <td id="obj_7_5" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_7_5">R</span></center>
+                </div>            
+            </td>
+            <td id="obj_7_6" class="coords">
+                <div class="parent">                                                                
+                    <center><span class="r-circle"  id="obj_label_7_6">R</span></center>
+                </div>            
+            </td>
+            <td id="obj_7_7" class="coords">
+                <div class="parent">                                                            
+                    <center><span class="r-circle"  id="obj_label_7_7">R</span></center>
+                </div>
+                
+            </td>
+        </tr>
+
+        <tr>
+            <td class="impacto-vertical">
+                <center><label class="num_prob">Muy Alto</label></center>
+            </td>
+            <td id="obj_6_1" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_6_1">R</span></center>
+                </div>            		
+            </td>
+            <td id="obj_6_2" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_6_2">R</span></center>
+                </div>
+            </td>
+            <td id="obj_6_3" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_6_3">R</span></center>
+                </div>
+            </td>
+            <td id="obj_6_4" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_6_4">R</span></center>
+                </div>
+            </td>
+            <td id="obj_6_5" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_6_5">R</span></center>
+                </div>
+            </td>
+            <td id="obj_6_6" class="coords">
+                <div class="parent">
+                    <center>
+                        <span class="r-circle"  id="obj_label_6_6">R</span>
+                    </center>
+                </div>
+            </td>
+            <td id="obj_6_7" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_6_7">R</span></center>
+                </div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="impacto-vertical">
+                <label class="num_prob">Alto</label>
+            </td>
+            <td id="obj_5_1" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_5_1">R</span></center>
+                </div>
+            </td>
+            <td id="obj_5_2" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_5_2">R</span></center>
+                </div>
+            </td>
+            <td id="obj_5_3" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_5_3">R</span></center>
+                </div>
+            </td>
+            <td id="obj_5_4" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_5_4">R</span></center>
+                </div>
+            </td>
+            <td id="obj_5_5" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_5_5">R</span></center>
+                </div>
+            </td>
+            <td id="obj_5_6" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_5_6">R</span></center>
+                </div>
+            </td>
+            <td id="obj_5_7" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_5_7">R</span></center>
+                </div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="impacto-vertical">
+                <label class="num_prob">Significativo</label>
+            </td>
+            <td id="obj_4_1" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_4_1">R</span></center>
+                </div>
+            </td>
+            <td id="obj_4_2" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_4_2">R</span></center>
+                </div>
+            </td>
+            <td id="obj_4_3" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_4_3">R</span></center>
+                </div>
+            </td>
+            <td id="obj_4_4" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_4_4">R</span></center>
+                </div>
+            </td>
+            <td id="obj_4_5" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_4_5">R</span></center>
+                </div>
+            </td>
+            <td id="obj_4_6" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_4_6">R</span></center>
+                </div>
+            </td>
+            <td id="obj_4_7" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_4_7">R</span></center>
+                </div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="impacto-vertical">
+                <label class="num_prob">Medio</label>
+            </td>
+            <td id="obj_3_1" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_3_1">R</span></center>
+                </div>
+            </td>
+            <td id="obj_3_2" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_3_2">R</span></center>
+                </div>
+            </td>
+            <td id="obj_3_3" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_3_3">R</span></center>
+                </div>
+            </td>
+            <td id="obj_3_4" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_3_4">R</span></center>
+                </div>
+            </td>
+            <td id="obj_3_5" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_3_5">R</span></center>
+                </div>
+            </td>
+            <td id="obj_3_6" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_3_6">R</span></center>
+                </div>
+            </td>
+            <td id="obj_3_7" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_3_7">R</span></center>
+                </div>
+            </td>
+        </tr>
+
+        <tr>   
+            <td class="impacto-vertical">
+                <label class="num_prob">Bajo</label>
+            </td>     
+            <td id="obj_2_1" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_2_1">R</span></center>
+                </div>
+            </td>
+            <td id="obj_2_2" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_2_2">R</span></center>
+                </div>
+            </td>
+            <td id="obj_2_3" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_2_3">R</span></center>
+                </div>
+            </td>
+            <td id="obj_2_4" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_2_4">R</span></center>
+                </div>
+            </td>
+            <td id="obj_2_5" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_2_5">R</span></center>
+                </div>
+            </td>
+            <td id="obj_2_6" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_2_6">R</span></center>
+                </div>
+            </td>
+            <td id="obj_2_7" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_2_7">R</span></center>
+                </div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="impacto-vertical">
+                <label class="num_prob">Muy Bajo</label>
+            </td>
+            <td id="obj_1_1" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_1_1">R</span></center>
+                </div>
+            </td>
+            <td id="obj_1_2" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_1_2">R</span></center>
+                </div>
+            </td>
+            <td id="obj_1_3" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_1_3">R</span></center>
+                </div>
+            </td>
+            <td id="obj_1_4" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_1_4">R</span></center>
+                </div>
+            </td>
+            <td id="obj_1_5" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_1_5">R</span></center>
+                </div>
+            </td>
+            <td id="obj_1_6" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_1_6">R</span></center>
+                </div>
+            </td>
+            <td id="obj_1_7" class="coords">
+                <div class="parent">
+                    
+                    <center><span class="r-circle"  id="obj_label_1_7">R</span></center>
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 0px;">
+            <td></td>
+            <td></td>
+            <td class="impacto-horizontal"><center><label class="label_horizontal">Improbable</label></center></td>
+            <td class="impacto-horizontal"><center><label class="label_horizontal">Remoto</label></center></td>
+            <td class="impacto-horizontal"><center><label class="label_horizontal">Poco Probable</label></center></td>
+            <td class="impacto-horizontal"><center><label class="label_horizontal">Posible</label></center></td>
+            <td class="impacto-horizontal"><center><label class="label_horizontal">Probable</label></center></td>
+            <td class="impacto-horizontal"><center><label class="label_horizontal">Muy Probable</label></center></td>
+            <td class="impacto-horizontal"><center><label class="label_horizontal">Casi Seguro</label></center></td>                
+        </tr>
+        <tr style="height: 0px;">
+            <td colspan="9">
+                <center><label style="color: black; font-size: 19px; font-weight: 100;">Probabilidad</label></center>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+</div>

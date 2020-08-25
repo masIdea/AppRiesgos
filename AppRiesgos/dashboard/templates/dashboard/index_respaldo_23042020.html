@@ -1,0 +1,700 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% load humanize %}
+
+{% block page_content %}
+<style>
+    .td_number_left{
+        border-left: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid transparent;
+    }
+    .td_number{
+        border-left: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        border-right: 1px solid transparent;
+    }
+    caption{
+        caption-side: top !important;
+        margin-left: 40%;
+    }
+
+    .modal-open {
+        overflow: scroll;
+    }
+    
+    .kt-spinner.kt-spinner--sm:before {
+        width: 100px !important;
+        height: 100px !important;
+        margin-top: -52px !important;
+        margin-left: 125px !important;
+    }
+    #loading-impacto-financiero:before {
+        width: 100px !important;
+        height: 100px !important;
+        margin-top: 13px !important;
+        margin-left: 125px !important;
+    }
+    #loading-causas-riesgos-criticos:before{
+        width: 100px !important;
+        height: 100px !important;
+        margin-top: -82px !important;
+        margin-left: 226px !important;
+    }
+    #loading-causas-riesgos-criticos-valorizados:before{
+        width: 100px !important;
+        height: 100px !important;
+        margin-top: -82px !important;
+        margin-left: 226px !important;
+    }
+    #loading-causas-riesgos-direcciones:before{
+        width: 100px !important;
+        height: 100px !important;
+        margin-top: -82px !important;
+        margin-left: 226px !important;
+    }
+    #loading-causas-riesgos-direcciones-valorizadas:before{
+        width: 100px !important;
+        height: 100px !important;
+        margin-top: -82px !important;
+        margin-left: 226px !important;
+    }
+
+    @media only screen and (max-device-width : 640px) {
+        #loading-causas-riesgos-criticos:before, #loading-causas-riesgos-criticos-valorizados:before, #loading-causas-riesgos-direcciones:before, #loading-causas-riesgos-direcciones-valorizadas:before{
+            width: 100px !important;
+            height: 100px !important;
+            margin-top: -43px !important;
+            margin-left: 96px !important;
+        }
+    }
+
+    @media only screen and (max-device-width: 768px) {
+        #loading-causas-riesgos-criticos:before, #loading-causas-riesgos-criticos-valorizados:before, #loading-causas-riesgos-direcciones:before, #loading-causas-riesgos-direcciones-valorizadas:before{
+            width: 100px !important;
+            height: 100px !important;
+            margin-top: -43px !important;
+            margin-left: 96px !important;
+        }
+    }
+        
+</style>
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+    <!-- begin:: Content Head -->
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-container ">
+            <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">Dashboard</h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                <span class="kt-subheader__desc">Riesgos</span>
+            </div>
+            <div class="kt-subheader__toolbar">                
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Content Head -->
+
+    <!-- begin:: Content -->
+    <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+
+        <!-- INICIO INDICADORES RIESGOS  -->
+
+        <div class="kt-portlet">
+            <div class="kt-portlet__body  kt-portlet__body--fit">
+                <div class="row row-no-padding row-col-separator-lg">
+                    <div class="col-md-12 col-lg-6 col-xl-3">
+
+                        <!--begin::Total Profit-->
+                        <div class="kt-widget24">
+                            <div class="kt-widget24__details">
+                                <div class="kt-widget24__info">
+                                    <h4 class="kt-widget24__title">
+                                        Costo Presupuesto                                        
+                                    </h4>
+                                    <span class="kt-widget24__desc">
+                                        En KUS$
+                                    </span>
+                                </div>
+                                <span class="kt-widget24__stats kt-font-brand">
+                                    KUS${{kpi_costo_presupuesto.0.valor}}M
+                                </span>
+                            </div>
+                            <div class="progress progress--sm">
+                                <div class="progress-bar kt-bg-brand" role="progressbar" id="id-bar-costo-presupuesto" aria-valuemax="100"></div>
+                            </div>
+                            <div class="kt-widget24__action">
+                                <span class="kt-widget24__change">
+                                    &nbsp;
+                                </span>
+                                <span class="kt-widget24__number">
+                                    {{kpi_costo_presupuesto.0.porcavance}}%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!--end::Total Profit-->
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-3">
+
+                        <!--begin::New Feedbacks-->
+                        <div class="kt-widget24">
+                            <div class="kt-widget24__details">
+                                <div class="kt-widget24__info">
+                                    <h4 class="kt-widget24__title">
+                                        Producción
+                                    </h4>
+                                    <span class="kt-widget24__desc">
+                                        En KTon
+                                    </span>
+                                </div>
+                                <span class="kt-widget24__stats kt-font-warning">
+                                    {{kpi_produccion.0.valor}}
+                                </span>
+                            </div>
+                            <div class="progress progress--sm">
+                                <div class="progress-bar kt-bg-warning" role="progressbar" id="id-bar-produccion" aria-valuemax="100"></div>
+                            </div>
+                            <div class="kt-widget24__action">
+                                <span class="kt-widget24__change">
+                                    &nbsp;
+                                </span>
+                                <span class="kt-widget24__number">
+                                    {{kpi_produccion.0.porcavance}}%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!--end::New Feedbacks-->
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-3">
+
+                        <!--begin::New Orders-->
+                        <div class="kt-widget24">
+                            <div class="kt-widget24__details">
+                                <div class="kt-widget24__info">
+                                    <h4 class="kt-widget24__title">
+                                        Seguridad
+                                    </h4>
+                                    <span class="kt-widget24__desc">
+                                        Eventos
+                                    </span>
+                                </div>
+                                <span class="kt-widget24__stats kt-font-danger">
+                                    {{kpi_seguridad.0.valor}}
+                                </span>
+                            </div>
+                            <div class="progress progress--sm">
+                                <div class="progress-bar kt-bg-danger" role="progressbar" id="id-bar-seguridad" aria-valuemax="100"></div>
+                            </div>
+                            <div class="kt-widget24__action">
+                                <span class="kt-widget24__change">
+                                    &nbsp;
+                                </span>
+                                <span class="kt-widget24__number">
+                                    {{kpi_seguridad.0.porcavance}}%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!--end::New Orders-->
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-3">
+
+                        <!--begin::New Users-->
+                        <div class="kt-widget24">
+                            <div class="kt-widget24__details">
+                                <div class="kt-widget24__info">
+                                    <h4 class="kt-widget24__title">
+                                        Ambiental
+                                    </h4>
+                                    <span class="kt-widget24__desc">
+                                        Eventos
+                                    </span>
+                                </div>
+                                <span class="kt-widget24__stats kt-font-success">
+                                    {{kpi_ambiental.0.valor}}
+                                </span>
+                            </div>
+                            <div class="progress progress--sm">
+                                <div class="progress-bar kt-bg-success" role="progressbar" id="id-bar-ambiental" aria-valuemax="100"></div>
+                            </div>
+                            <div class="kt-widget24__action">
+                                <span class="kt-widget24__change">
+                                    &nbsp;
+                                </span>
+                                <span class="kt-widget24__number">
+                                    {{kpi_ambiental.0.porcavance}}%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!--end::New Users-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FINAL INDICADORES RIESGOS  -->
+
+        <!--Begin::Dashboard 2-->
+
+        <!--Begin::Row-->
+        <div class="row">
+            <div class="col-xl-8 order-lg-1 order-xl-1">
+
+                <!--begin:: Widgets/Activity-->
+                <div class="kt-portlet kt-portlet--fit kt-portlet--head-lg kt-portlet--head-overlay kt-portlet--skin-solid kt-portlet--height-fluid">
+                    <div class="kt-portlet__head kt-portlet__head--noborder kt-portlet__space-x">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Eventos Relevantes Riesgo
+                            </h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <!--<a href="#" class="btn btn-label-light btn-sm btn-bold dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Export
+                            </a>-->
+                            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
+                                <ul class="kt-nav">
+                                    <li class="kt-nav__section kt-nav__section--first">
+                                        <span class="kt-nav__section-text">Finance</span>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-graph-1"></i>
+                                            <span class="kt-nav__link-text">Statistics</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
+                                            <span class="kt-nav__link-text">Events</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-layers-1"></i>
+                                            <span class="kt-nav__link-text">Reports</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__section">
+                                        <span class="kt-nav__section-text">Customers</span>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-calendar-4"></i>
+                                            <span class="kt-nav__link-text">Notifications</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon flaticon2-file-1"></i>
+                                            <span class="kt-nav__link-text">Files</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body kt-portlet__body--fit">
+                        <div class="kt-widget17">
+                            <div class="kt-widget17__visual kt-widget17__visual--chart kt-portlet-fit--top kt-portlet-fit--sides" style="background-color: #fd397a">
+                                <div class="kt-widget17__chart" style="height:320px;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <center>
+                                    <div style="position: relative; width: 200px; height: 150px; border: 0px solid white; margin-left: 15%;">
+
+                                        <div style="position: absolute;top: 7%;left: -1%;">                                            
+                                            <table style="line-height: 34px;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><span style="font-weight: 900;font-size: 75px; float: left;">{{cantidad_riesgos_acumulados}}</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><center><span style="font-size: 15px;float: left;margin-left: 10%;">Acumulado</span></center></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                  
+
+                                        <div style="position: absolute;top: 50%;left: 48%;">
+                                            <table style="line-height: 23px;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><span style="font-weight: 900;font-size: 45px; float: left;">{{cantidad_riesgos_mes}}</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><center><span style="font-size: 12px;float: left;margin-left: 7%;">Mensual</span></center></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                </center>
+                                    
+                                    
+                                </div>
+                            </div>
+                            <div class="kt-widget17__stats">
+                                <div class="kt-widget17__items">
+                                    <div class="kt-widget17__item">
+                                        <span class="kt-widget17__icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--brand">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <path d="M5,3 L6,3 C6.55228475,3 7,3.44771525 7,4 L7,20 C7,20.5522847 6.55228475,21 6,21 L5,21 C4.44771525,21 4,20.5522847 4,20 L4,4 C4,3.44771525 4.44771525,3 5,3 Z M10,3 L11,3 C11.5522847,3 12,3.44771525 12,4 L12,20 C12,20.5522847 11.5522847,21 11,21 L10,21 C9.44771525,21 9,20.5522847 9,20 L9,4 C9,3.44771525 9.44771525,3 10,3 Z" fill="#000000"></path>
+                                                    <rect fill="#000000" opacity="0.3" transform="translate(17.825568, 11.945519) rotate(-19.000000) translate(-17.825568, -11.945519) " x="16.3255682" y="2.94551858" width="3" height="18" rx="1"></rect>
+                                                </g>
+                                            </svg> </span>
+                                        <span class="kt-widget17__subtitle">
+                                            Atraso Proyecto
+                                        </span>
+                                        <span class="kt-widget17__desc" style="font-size: 12px;">
+                                            Acumulado {{atraso_proyecto.num_acumulado}} - KUS$ {{atraso_proyecto.suma_acum}}
+                                        </span>                                        
+                                        <span class="kt-widget17__desc" style="font-size: 12px;">
+                                            En el Mes {{atraso_proyecto.num_mes}} - KUS$ {{atraso_proyecto.suma_mes}}
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget17__item">
+                                        <span class="kt-widget17__icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--success">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                    <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero"></path>
+                                                    <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3"></path>
+                                                </g>
+                                            </svg> </span>
+                                        <span class="kt-widget17__subtitle">
+                                            Probidad y Transparencia
+                                        </span>
+                                        <span class="kt-widget17__desc" style="font-size: 12px;">
+                                            Acumulado {{probidad_transparencia.num_acumulado}} - KUS$ {{probidad_transparencia.suma_acum}}
+                                        </span>                                        
+                                        <span class="kt-widget17__desc" style="font-size: 12px;">
+                                            En el Mes {{probidad_transparencia.num_mes}} - KUS$ {{probidad_transparencia.suma_mes}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="kt-widget17__items">
+                                    <div class="kt-widget17__item">
+                                        <span class="kt-widget17__icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                    <path d="M8,18 L8,18 C10.209139,18 12,19.790861 12,22 L4,22 L4,22 C4,19.790861 5.790861,18 8,18 Z" fill="#000000" opacity="0.3"/>
+                                                    <path d="M7,12.1260175 L7,8 C7,4.6862915 9.6862915,2 13,2 C16.3137085,2 19,4.6862915 19,8 L19,9 L17,9 L17,8 C17,5.790861 15.209139,4 13,4 C10.790861,4 9,5.790861 9,8 L9,12.1260175 C10.7252272,12.5700603 12,14.1361606 12,16 C12,18.209139 10.209139,20 8,20 C5.790861,20 4,18.209139 4,16 C4,14.1361606 5.27477279,12.5700603 7,12.1260175 Z M8,18 C9.1045695,18 10,17.1045695 10,16 C10,14.8954305 9.1045695,14 8,14 C6.8954305,14 6,14.8954305 6,16 C6,17.1045695 6.8954305,18 8,18 Z" fill="#000000"/>
+                                                    <path d="M18,17 C19.1045695,17 20,16.1045695 20,15 C20,14.2636203 19.3333333,13.2636203 18,12 C16.6666667,13.2636203 16,14.2636203 16,15 C16,16.1045695 16.8954305,17 18,17 Z" fill="#000000" opacity="0.3"/>
+                                                </g>
+                                            </svg> </span>
+                                        <span class="kt-widget17__subtitle">
+                                            Falta Agua
+                                        </span>
+                                        <span class="kt-widget17__desc" style="font-size: 12px;">
+                                            Acumulado {{falta_agua.num_acumulado}} - KUS$ {{falta_agua.suma_acum}}
+                                        </span>                                        
+                                        <span class="kt-widget17__desc" style="font-size: 12px;">
+                                            En el Mes {{falta_agua.num_mes}} - KUS$ {{falta_agua.suma_mes}}
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget17__item">
+                                        <span class="kt-widget17__icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"/>
+                                                    <path d="M22,8 C22,8.55228475 21.5522847,9 21,9 L19,9 L19,15 C19,18.3137085 16.3137085,21 13,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,11 C3,7.6862915 5.6862915,5 9,5 L17,5 C18.1045695,5 19,5.8954305 19,7 L21,7 L21,6 L22,6 L22,8 Z M11,17 C13.209139,17 15,15.209139 15,13 C15,10.790861 13.209139,9 11,9 C8.790861,9 7,10.790861 7,13 C7,15.209139 8.790861,17 11,17 Z" fill="brown" style="fill: brown !important;"/>
+                                                    <path d="M12,3 L15,3 C15.5522847,3 16,3.44771525 16,4 L16,5 L11,5 L11,4 C11,3.44771525 11.4477153,3 12,3 Z" fill="brown" opacity="0.3" style="fill: brown !important;"/>
+                                                </g>
+                                            </svg> </span>
+                                        <span class="kt-widget17__subtitle">
+                                            Falla Equipo Crítico
+                                        </span>
+                                        <span class="kt-widget17__desc" style="font-size: 12px;">
+                                            Acumulado {{falla_equipo_critico.num_acumulado}} - KUS$ {{falla_equipo_critico.suma_acum|intcomma}}
+                                        </span>                                        
+                                        <span class="kt-widget17__desc" style="font-size: 12px;">
+                                            En el Mes {{falla_equipo_critico.num_mes}} - KUS$ {{falla_equipo_critico.suma_mes|intcomma}}
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget17__item">
+                                        <span class="kt-widget17__icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--danger">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"/>
+                                                    <path d="M17,20 L17,12 C17,9.23857625 14.7614237,7 12,7 C9.23857625,7 7,9.23857625 7,12 L7,20 L5,20 C3.8954305,20 3,19.1045695 3,18 L3,6 C3,4.8954305 3.8954305,4 5,4 L19,4 C20.1045695,4 21,4.8954305 21,6 L21,18 C21,19.1045695 20.1045695,20 19,20 L17,20 Z" fill="#000000" opacity="0.3"/>
+                                                    <path d="M12.9717525,11.7005668 C12.8097937,13.3201542 12.3239175,14.1866868 11.5141238,14.3001646 C11.5141238,14.3001646 12.2429381,11.4576287 11.2711857,10 C11.2711857,10 11.1681401,11.5618236 10.126941,13.4359819 C9.63887975,14.3144921 9.08474261,14.9067082 9.08474261,16.0734529 C9.08474261,17.7393714 10.7908674,18.6003292 12.002779,18.6003292 C13.2146906,18.6003292 14.9152574,18.0172577 14.9152574,15.9765075 C14.9152574,15.1373628 14.2674224,13.7120493 12.9717525,11.7005668 Z" fill="red"/>
+                                                </g>
+                                            </svg> </span>
+                                        <span class="kt-widget17__subtitle">
+                                            Incendio
+                                        </span>
+                                        <span class="kt-widget17__desc" style="font-size: 12px;">
+                                            Acumulado {{incendio.num_acumulado}} - KUS$ {{incendio.suma_acum}}
+                                        </span>                                        
+                                        <span class="kt-widget17__desc" style="font-size: 12px;">
+                                            En el Mes {{incendio.num_mes}} - KUS$ {{incendio.suma_mes}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--end:: Widgets/Activity-->
+            </div>
+            <div class="col-xl-4 col-lg-6 order-lg-1 order-xl-1">
+
+                <!--begin:: Widgets/Inbound Bandwidth-->
+                <div class="kt-portlet kt-portlet--fit kt-portlet--head-noborder kt-portlet--height-fluid-half">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-widget14">
+                            <div class="kt-widget14__header">
+                                <h3 class="kt-widget14__title">
+                                    Riesgos Críticos por Gerencia
+                                    <span style="font-size: 12px; float: right; cursor: pointer; color: dodgerblue;" id="span_detalle_riesgos_criticos">Detalle</span>
+                                </h3>                                
+                                <span class="kt-widget14__desc">
+                                    Eventos Relevantes                                    
+                                </span>
+                            </div>
+                            <div class="kt-widget14__content">
+                                <div style="float: right; display: none;" id="loading-riesgos-criticos" class="kt-spinner kt-spinner--sm kt-spinner--success"></div>
+                                <div class="kt-widget14__chart">                                                                        
+                                     <div id="div_riesgos_criticos_gerencia" style="height: 140px; width: 140px;"></div>                                  
+                                </div>
+
+                                <div class="kt-widget14__legends" id="id-contenedor-riesgos-criticos-gerencia">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <!--end:: Widgets/Inbound Bandwidth-->
+                <div class="kt-space-20"></div>
+
+                <!--begin:: Widgets/Outbound Bandwidth-->
+                <div class="kt-portlet kt-portlet--fit kt-portlet--head-noborder kt-portlet--height-fluid-half">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-widget14">
+                            <div class="kt-widget14__header">
+                                <h3 class="kt-widget14__title">
+                                    Impacto Financiero Eventos Materializados
+                                </h3>
+                                <span class="kt-widget14__desc">
+                                    En Kilo Dólares
+                                </span>
+                            </div>
+                            <div class="kt-widget14__content">                                
+                                <div class="kt-widget14__chart">
+                                    <div style="float: left; display: none;margin-top: 13px !important;" id="loading-impacto-financiero" class="kt-spinner kt-spinner--sm kt-spinner--success"></div>
+                                    <div id="kt_chart_revenue_change" style="height: 150px; width: 150px;"></div>
+                                </div>
+                                <div class="kt-widget14__legends" style="display: none;" id="id-cuerpo-financiero-materializados">                                    
+                                    {% for key, value in eventos_materializados.valores_por_clasificacion.items %}                                       
+                                        <div class="kt-widget14__legend">
+                                            <span class="kt-widget14__bullet kt-bg-{{value.color}}"></span>                                            
+                                            <span class="kt-widget14__stats">{% widthratio value.valor eventos_materializados.total 100 %}% {{key}}</span>
+                                        </div>
+                                    {% endfor %}                                      
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+                <div class="kt-space-20"></div>
+
+                <!--begin:: Widgets/Outbound Bandwidth-->
+                <!-- <div class="kt-portlet kt-portlet--fit kt-portlet--head-noborder kt-portlet--height-fluid-half">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-widget14">
+                            <div class="kt-widget14__header">
+                                <h3 class="kt-widget14__title">
+                                    Frecuencia Eventos Materializados
+                                </h3>
+                                <span class="kt-widget14__desc">
+                                    Cantidad de Veces de Ocurrencia
+                                </span>
+                            </div>
+                            <div class="kt-widget14__content">
+                                <div class="kt-widget14__chart">
+                                    <div id="kt_chart_revenue_change" style="height: 150px; width: 150px;"></div>
+                                </div>
+                                <div class="kt-widget14__legends">
+                                    <div class="kt-widget14__legend">
+                                        <span class="kt-widget14__bullet kt-bg-success"></span>
+                                        <span class="kt-widget14__stats">10% Atraso Proyecto</span>
+                                    </div>
+                                    <div class="kt-widget14__legend">
+                                        <span class="kt-widget14__bullet kt-bg-danger" style="background-color: #fd3995; color: #fd3995;"></span>
+                                        <span class="kt-widget14__stats">20% Incendio</span>
+                                    </div>
+                                    <div class="kt-widget14__legend">
+                                        <span class="kt-widget14__bullet kt-bg-warning"></span>
+                                        <span class="kt-widget14__stats">+20% Falta de Agua</span>
+                                    </div>
+                                    <div class="kt-widget14__legend">
+                                        <span class="kt-widget14__bullet kt-bg-brand"></span>
+                                        <span class="kt-widget14__stats">+20% Falla Equipo Crítico</span>
+                                    </div>
+                                    <div class="kt-widget14__legend">
+                                        <span class="kt-widget14__bullet kt-bg-info" style="background-color: #36a3f7 !important;"></span>
+                                        <span class="kt-widget14__stats">+20% Probidad y Transparencia</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div> -->
+
+                <!--end:: Widgets/Outbound Bandwidth-->
+            </div>																		
+        </div>
+
+        {% include 'dashboard/includes/modales.html' %}
+
+    </div>
+
+    <!-- end:: Content -->
+</div>
+
+{% endblock %}
+
+
+
+{% block extra_javascript %}
+
+<!-- <script src="{% static 'dashboard/js/charts.js' %}" type="text/javascript"></script> -->
+<script src="{% static 'dashboard/js/charts_nivel4.js' %}" type="text/javascript"></script>
+<script src="{% static 'dashboard/js/charts_nivel5.js' %}" type="text/javascript"></script>
+<script src="{% static 'core/assets/js/pages/crud/metronic-datatable/base/data-local-riesgos.js' %}" type="text/javascript"></script>
+
+<!-- ARCHIVOS DATATABLE -->
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/jquery.dataTables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/buttons.dataTables.min.css' %}">
+<!-- FIN ARCHIVOS DATATABLE -->
+<!-- ARCHIVOS DATATABLE -->
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/jszip.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/pdfmake.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/vfs_fonts.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/createDatatable.js' %}"></script>
+<!-- FIN ARCHIVOS DATATABLE -->
+
+<script type="text/javascript" language="javascript"src="{% static 'dashboard/js/datosCriticosGerencia.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'dashboard/js/matrices.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'dashboard/js/tipo_riesgos.js' %}"></script>
+
+<script>
+    $(document).ready(function(){
+        createDatatable("id-tb-gerencias", 5);
+        trae_riesgos_criticos_x_gerencia();
+        $("#span_detalle_riesgos_criticos").click(function(){            
+            trae_detalle_riesgos_criticos_x_gerencia();            
+            trae_causas_riesgos_criticos("DET");
+            trae_riesgos_por_gerencia("DET");
+            trae_riesgos_por_direccion_valorizados("DET");
+            $("#modal_detalle_riesgos").modal("show");
+            $("#id-spn-filtro-seleccionado").html("DET");
+        });        
+    });
+
+    var cambia_gerencia = function(gerencia){
+        $("#id-spn-filtro-seleccionado").html("");
+        $("#id-spn-filtro-seleccionado").html(gerencia);
+        trae_causas_riesgos_criticos(gerencia);
+        trae_riesgos_por_gerencia(gerencia);
+        trae_riesgos_por_direccion_valorizados(gerencia);
+    }
+
+    var actualiza_G1 = function(gerencia){
+        $('#grafico_1').html("");
+        $('#grafico_2').html("");
+        $('#grafico_3').html("");
+        $('#grafico_4').html("");
+        graficosDetalle.init(gerencia);
+    }
+    var  verMatriz = function(valor){
+        trae_matrices('gerencia', valor);
+        if(valor == null){
+            $("#tituloVerMatrices").html("Matriz " + $("#id-span-dato-nivel-seleccionado").html());
+        }else if(valor == 0){
+            $("#tituloVerMatrices").html("Matriz " + $("#id-span-dato-nivel-5-seleccionado").html());
+        }else{
+            $("#tituloVerMatrices").html("Matriz " + valor);
+        }
+        $("#matriz_riesgos").modal("show");
+    }
+
+    var  verMatrizDetalle = function(valor){                
+        if(valor == null){
+            $("#tituloVerMatrices").html("Matriz " + $("#id-span-dato-nivel-seleccionado").html());
+        }else if(valor == 0){
+            $("#tituloVerMatrices").html("Matriz " + $("#id-span-dato-nivel-5-seleccionado").html());
+        }else{
+            $("#tituloVerMatrices").html("Matriz " + valor);
+        }
+        $("#matriz_riesgos").modal("show");
+    }
+
+    $(document).ready(function(){
+        porc_costo_presupuesto = parseInt("{{kpi_costo_presupuesto.0.porcavance}}");
+        $("#id-bar-costo-presupuesto").width(porc_costo_presupuesto+'%');
+        porc_produccion = parseInt("{{kpi_produccion.0.porcavance}}");
+        $("#id-bar-produccion").width(porc_produccion+'%');
+        porc_seguridad = parseInt("{{kpi_seguridad.0.porcavance}}");
+        $("#id-bar-seguridad").width(porc_seguridad+'%');
+        porc_ambiental = parseInt("{{kpi_ambiental.0.porcavance}}");
+        $("#id-bar-ambiental").width(porc_ambiental+'%');
+        revenueChange();
+        
+        $("#kt_chart_revenue_change").css("display", "none");
+        $("#loading-impacto-financiero").css("display", "block");
+                
+        setTimeout(() => {
+            $("#loading-impacto-financiero").css("display", "none");
+            $("#kt_chart_revenue_change").css("display", "block");
+            $("#id-cuerpo-financiero-materializados").css("display", "block");
+            
+        }, 1000);
+    });
+
+    var revenueChange = function() {
+        if ($('#kt_chart_revenue_change').length == 0) {
+            return;
+        }
+        Morris.Donut({
+            element: 'kt_chart_revenue_change',
+            data: [{% for key, value in eventos_materializados.valores_por_clasificacion.items %}
+                    {
+                        label: '{{key}}',
+                        value: parseFloat({{value.valor}})
+                    },
+                   {% endfor %}                    
+                  ],
+            colors: [
+                {% for key, value in eventos_materializados.valores_por_clasificacion.items %}
+                KTApp.getStateColor('{{value.color}}'),
+                {% endfor %}
+            ],
+        });
+    }
+
+    
+
+</script>
+
+{% endblock %}

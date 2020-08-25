@@ -1,0 +1,235 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Datos CIO{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block page_content %}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+    <!-- begin:: Content Head -->
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-container ">
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">                    
+                    <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="" data-placement="left" data-original-title="Quick actions">                        
+                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right">
+                            
+
+                            <!--end::Nav-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Content Head -->
+
+    <!-- begin:: Content -->
+    <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--begin::Portlet-->
+                <div class="kt-portlet">                    
+
+                    <!--begin::Form-->
+                    <form class="kt-form" id="id-form-datos-cio" method="POST" action="{% url 'editar_cio' %}" style="display: none;">
+                        {% csrf_token %}
+                        <div class="kt-portlet__body">                            
+                            <div class="form-group">
+                                <label>Editar</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="hidden" name="txt-cio" id="id-txt-cio" />
+                                        <label>IdCosto</label>
+                                        <input name="IdCosto" id="id-txt-IdCosto" type="text" class="form-control" />
+                                        <label style="margin-top:2%">Fecha</label>
+                                        <input name="Fecha" id="id-txt-Fecha" type="text" class="form-control" />
+                                        <label style="margin-top:2%">Gerencia</label>
+                                        <input name="Gerencia" id="id-txt-Gerencia" type="text" class="form-control" />
+                                        <label style="margin-top:2%">SuperIntendencia</label>
+                                        <input name="SuperIntendencia" id="id-txt-SuperIntendencia" type="text" class="form-control" />
+                                        <label style="margin-top:2%">UnidadOperacional</label>
+                                        <input name="UnidadOperacional" id="id-txt-UnidadOperacional" type="text" class="form-control" />
+                                        <label style="margin-top:2%">TipoObjeto</label>
+                                        <input name="TipoObjeto" id="id-txt-TipoObjeto" type="text" class="form-control" />
+                                        <label style="margin-top:2%">Evento</label>
+                                        <input name="Evento" id="id-txt-Evento" type="text" class="form-control" />
+                                        <label style="margin-top:2%">NivelImpacto</label>
+                                        <input name="NivelImpacto" id="id-txt-NivelImpacto" type="text" class="form-control" />
+                                        <label style="margin-top:2%">Comentarios</label>
+                                        <input name="Comentarios" id="id-txt-Comentarios" type="text" class="form-control" />
+                                        <label style="margin-top:2%">CantidadDiasDetencion</label>
+                                        <input name="CantidadDiasDetencion" id="id-txt-CantidadDiasDetencion" type="text" class="form-control" />
+                                        <label style="margin-top:2%">TipoFalla</label>
+                                        <select  class="form-control" name="TipoFalla" id="id-txt-TipoFalla">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for tipo in TipoFalla %}
+                                                <option value="{{tipo.glosa}}">{{tipo.glosa}}</option>
+                                            {% endfor %}
+                                        </select>                                         
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>CantidadTMFPerdidas</label>
+                                        <input name="CantidadTMFPerdidas" id="id-txt-CantidadTMFPerdidas" type="text" class="form-control" />
+                                        <label style="margin-top:2%">MontoDePerdida</label>
+                                        <input name="MontoDePerdida" id="id-txt-MontoDePerdida" type="text" class="form-control" />
+                                        <label style="margin-top:2%">RepeticionDelEvento</label>
+                                        <input name="RepeticionDelEvento" id="id-txt-RepeticionDelEvento" type="text" class="form-control" />
+                                        <label style="margin-top:2%">Estadistica</label>
+                                        <input name="Estadistica" id="id-txt-Estadistica" type="text" class="form-control" />
+                                        <label style="margin-top:2%">AreaDeEvento</label>
+                                        <select  class="form-control" name="AreaDeEvento" id="id-txt-AreaDeEvento">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for area in AreaDeEvento %}
+                                                <option value="{{area.glosa}}">{{area.glosa}}</option>
+                                            {% endfor %}
+                                        </select>                                         
+                                        <label style="margin-top:2%">SuperIntendenciaEvento</label>
+                                        <select  class="form-control" name="SuperIntendenciaEvento" id="id-txt-SuperIntendenciaEvento">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for sup in SuperIntendenciaEvento %}
+                                                <option value="{{sup.glosa}}">{{sup.glosa}}</option>
+                                            {% endfor %}
+                                        </select>                                         
+                                        <label style="margin-top:2%">Proyecto</label>
+                                        <select  class="form-control" name="Proyecto" id="id-txt-Proyecto">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for proyecto in Proyecto %}
+                                                <option value="{{proyecto.glosa}}">{{proyecto.glosa}}</option>
+                                            {% endfor %}
+                                        </select>                                         
+                                        <label style="margin-top:2%">Familia</label>
+                                        <select  class="form-control" id="id-txt-Familia" name="Familia">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for familia in familias %}
+                                                <option value="{{familia.FAMILIA}}">{{familia.FAMILIA}}</option>
+                                            {% endfor %}
+                                        </select>                                        
+                                        <label style="margin-top:2%">SubProceso</label>
+                                        subproceso
+                                        <select  class="form-control" name="SubProceso" id="id-txt-SubProceso">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for subproceso in subprocesos %}
+                                                <option value="{{subproceso.subproceso}}">{{subproceso.subproceso}}</option>
+                                            {% endfor %}
+                                        </select>                                         
+                                        <label style="margin-top:2%">Clasificacion</label>
+                                        <input name="Clasificacion" id="id-txt-Clasificacion" type="text" class="form-control" />
+                                        <label style="margin-top:2%">ControlesQueNoFuncionaron</label>
+                                        <select  class="form-control" name="ControlesQueNoFuncionaron" id="id-txt-ControlesQueNoFuncionaron">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for controles in ControlesQueNoFuncionaron %}
+                                                <option value="{{controles.glosa}}">{{controles.glosa}}</option>
+                                            {% endfor %}
+                                        </select>                                         
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__foot">
+                            <div class="kt-form__actions">
+                                <button type="submit" class="btn btn-primary">Modificar</button>
+                                <button type="reset" class="btn btn-secondary">Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="kt-portlet kt-portlet--mobile">
+                        <div class="kt-portlet__head kt-portlet__head--lg">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    Registros Datos CIO
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body">
+                            <!--begin: Datatable --> 
+                            <div class="table-responsive">
+                                <table class="table" id="id-tb-datos-cio">
+                                    <thead>
+                                        <tr>
+                                            <th>IdCosto</th>
+                                            <th>Fecha</th>
+                                            <th>Gerencia</th>
+                                            <th>SuperIntendencia</th>
+                                            <th>UnidadOperacional</th>
+                                            <th>TipoObjeto</th>
+                                            <th>Evento</th>
+                                            <th>NivelImpacto</th>
+                                            <th>Comentarios</th>
+                                            <th>CantidadDiasDetencion</th>
+                                            <th>CantidadTMFPerdidas</th>
+                                            <th>AreaDeEvento</th>
+                                            <th>SuperIntendenciaEvento</th>
+                                            <th>Proyecto</th>
+                                            <th>Familia</th>
+                                            <th>SubProceso</th>
+                                            <th>Clasificacion</th>
+                                            <th>ControlesQueNoFuncionaron</th>
+                                            <th>TipoFalla</th>
+                                            <th>MontoDePerdida</th>
+                                            <th>RepeticionDelEvento</th>
+                                            <th>Estadistica</th>
+                                            <th>Editar</th>
+                                        </tr>                                       
+                                    </thead>
+                                    <tbody id="id-cuerpo-datos-cio">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!--end: Datatable -->
+                        </div>
+                    </div>
+
+                    <!--end::Form-->
+                </div>
+
+                <!--end::Portlet-->
+
+                <!--begin::Portlet-->                
+
+                <!--end::Portlet-->
+            </div>            
+        </div>
+    </div>
+
+    <!-- end:: Content -->
+</div>
+{% endblock %}
+
+{% block extra_javascript %}
+<!-- ARCHIVOS DATATABLE -->
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/jquery.dataTables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/buttons.dataTables.min.css' %}">
+<!-- FIN ARCHIVOS DATATABLE -->
+<!-- ARCHIVOS DATATABLE -->
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/jszip.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/pdfmake.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/vfs_fonts.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/createDatatable.js' %}"></script>
+<!-- FIN ARCHIVOS DATATABLE -->
+
+<script type="text/javascript" language="javascript"src="{% static 'appCarga/js/datosCio.js' %}"></script>
+<script>
+    $(document).ready(function(){        
+        datos_cio();
+    });
+    
+   
+</script>
+
+{% endblock %}

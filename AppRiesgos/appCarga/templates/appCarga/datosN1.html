@@ -1,0 +1,270 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Datos N1{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block page_content %}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+    <!-- begin:: Content Head -->
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-container ">
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">                    
+                    <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="" data-placement="left" data-original-title="Quick actions">                        
+                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right">
+                            
+
+                            <!--end::Nav-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Content Head -->
+
+    <!-- begin:: Content -->
+    <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--begin::Portlet-->
+                <div class="kt-portlet">                    
+
+                    <!--begin::Form-->
+                    <form class="kt-form" id="id-form-datos-n1" method="POST" action="{% url 'editar_n1' %}" style="display: none;">
+                        {% csrf_token %}
+                        <div class="kt-portlet__body">                            
+                            <div class="form-group">
+                                <label>Editar</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="hidden" id="id-txt-n1" name="txt-n1">
+                                        <label style="margin-top:2%">CodigoRSSO</label>
+                                        <input type="text" class="form-control" name="CodigoRSSO" id="id-txt-CodigoRSSO" />
+                                        <label style="margin-top:2%">TipoRSSO</label>
+                                        <input type="text" class="form-control" name="TipoRSSO" id="id-txt-TipoRSSO" />
+                                        <label style="margin-top:2%">Estado</label>
+                                        <input type="text" class="form-control" name="Estado" id="id-txt-Estado" />
+                                        <label style="margin-top:2%">Causal</label>
+                                        <input type="text" class="form-control" name="Causal" id="id-txt-Causal" />
+                                        <label style="margin-top:2%">NivelRSSO</label>
+                                        <input type="text" class="form-control" name="NivelRSSO" id="id-txt-NivelRSSO" />
+                                        <label style="margin-top:2%">FechaCreacion</label>
+                                        <input type="text" class="form-control" name="FechaCreacion" id="id-txt-FechaCreacion" />
+                                        <label style="margin-top:2%">FechaHallazgo</label>
+                                        <input type="text" class="form-control" name="FechaHallazgo" id="id-txt-FechaHallazgo" />
+                                        <label style="margin-top:2%">Division</label>
+                                        <input type="text" class="form-control" name="Division" id="id-txt-Division" />
+                                        <label style="margin-top:2%">Gerencia</label>
+                                        <input type="text" class="form-control" name="Gerencia" id="id-txt-Gerencia" />
+                                        <label style="margin-top:2%">Superintendencia</label>
+                                        <input type="text" class="form-control" name="Superintendencia" id="id-txt-Superintendencia" />
+                                        <label style="margin-top:2%">Area</label>
+                                        <input type="text" class="form-control" name="Area" id="id-txt-Area" />
+                                        <label style="margin-top:2%">SAPInformante</label>
+                                        <input type="text" class="form-control" name="SAPInformante" id="id-txt-SAPInformante" />
+                                        <label style="margin-top:2%">Informante</label>
+                                        <input type="text" class="form-control" name="Informante" id="id-txt-Informante" />
+                                        <label style="margin-top:2%">SAPResponsable</label>
+                                        <input type="text" class="form-control" name="SAPResponsable" id="id-txt-SAPResponsable" />
+                                        <label style="margin-top:2%">Responsable</label>
+                                        <input type="text" class="form-control" name="Responsable" id="id-txt-Responsable" />
+                                        <label style="margin-top:2%">FechaCierre</label>
+                                        <input type="text" class="form-control" name="FechaCierre" id="id-txt-FechaCierre" />
+                                        <label style="margin-top:2%">TipoFalla</label>
+                                        <select  class="form-control" name="TipoFalla" id="id-txt-TipoFalla">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for tipo in TipoFalla %}
+                                                <option value="{{tipo.glosa}}">{{tipo.glosa}}</option>
+                                            {% endfor %}
+                                        </select>    
+                                    </div>
+                                                                        
+                                    <div class="col-md-6">
+                                        <label style="margin-top:2%">DescripcionIncidente</label>
+                                        <input type="text" class="form-control" name="DescripcionIncidente" id="id-txt-DescripcionIncidente" />
+                                        <label style="margin-top:2%">AccionRealizada</label>
+                                        <input type="text" class="form-control" name="AccionRealizada" id="id-txt-AccionRealizada" />
+                                        <label style="margin-top:2%">Estandar</label>
+                                        <input type="text" class="form-control" name="Estandar" id="id-txt-Estandar" />
+                                        <label style="margin-top:2%">RiesgoCritico</label>
+                                        <input type="text" class="form-control" name="RiesgoCritico" id="id-txt-RiesgoCritico" />
+                                        <label style="margin-top:2%">IdEvento</label>
+                                        <input type="text" class="form-control" name="IdEvento" id="id-txt-IdEvento" />
+                                        <label style="margin-top:2%">CantidadDiasDetencion</label>
+                                        <input type="text" class="form-control" name="CantidadDiasDetencion" id="id-txt-CantidadDiasDetencion" />
+                                        <label style="margin-top:2%">CantidadTMFPerdidas</label>
+                                        <input type="text" class="form-control" name="CantidadTMFPerdidas" id="id-txt-CantidadTMFPerdidas" />
+                                        <label style="margin-top:2%">AreaDeEvento</label>
+                                        <select  class="form-control" name="AreaDeEvento" id="id-txt-AreaDeEvento">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for area in AreaDeEvento %}
+                                                <option value="{{area.glosa}}">{{area.glosa}}</option>
+                                            {% endfor %}
+                                        </select>  
+                                        <label style="margin-top:2%">SuperIntendenciaEvento</label>
+                                        <select  class="form-control" name="SuperIntendenciaEvento" id="id-txt-SuperIntendenciaEvento">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for sup in SuperIntendenciaEvento %}
+                                                <option value="{{sup.glosa}}">{{sup.glosa}}</option>
+                                            {% endfor %}
+                                        </select> 
+                                        <label style="margin-top:2%">Proyecto</label>
+                                        <select  class="form-control" name="Proyecto" id="id-txt-Proyecto">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for proyecto in Proyecto %}
+                                                <option value="{{proyecto.glosa}}">{{proyecto.glosa}}</option>
+                                            {% endfor %}
+                                        </select>  
+                                        <label style="margin-top:2%">Familia</label>
+                                        <select  class="form-control" id="id-txt-Familia" name="Familia">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for familia in familias %}
+                                                <option value="{{familia.FAMILIA}}">{{familia.FAMILIA}}</option>
+                                            {% endfor %}
+                                        </select>   
+                                        <label style="margin-top:2%">SubProceso</label>
+                                        <select  class="form-control" name="SubProceso" id="id-txt-SubProceso">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for subproceso in subprocesos %}
+                                                <option value="{{subproceso.subproceso}}">{{subproceso.subproceso}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label style="margin-top:2%">MontoDePerdida</label>
+                                        <input type="text" class="form-control" name="MontoDePerdida" id="id-txt-MontoDePerdida" />
+                                        <label style="margin-top:2%">RepeticionDelEvento</label>
+                                        <input type="text" class="form-control" name="RepeticionDelEvento" id="id-txt-RepeticionDelEvento" />
+                                        <label style="margin-top:2%">Clasificacion</label>
+                                        <input type="text" class="form-control" name="Clasificacion" id="id-txt-Clasificacion" />
+                                        <label style="margin-top:2%">ControlesQueNoFuncionaron</label>
+                                        <select  class="form-control" name="ControlesQueNoFuncionaron" id="id-txt-ControlesQueNoFuncionaron">
+                                            <option value="-" selected>Seleccione</option>
+                                            {% for controles in ControlesQueNoFuncionaron %}
+                                                <option value="{{controles.glosa}}">{{controles.glosa}}</option>
+                                            {% endfor %}
+                                        </select> 
+                                        <label style="margin-top:2%">Estadistica</label>
+                                        <input type="text" class="form-control" name="Estadistica" id="id-txt-Estadistica" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__foot">
+                            <div class="kt-form__actions">
+                                <button type="submit" class="btn btn-primary">Modificar</button>
+                                <button type="reset" class="btn btn-secondary">Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="kt-portlet kt-portlet--mobile">
+                        <div class="kt-portlet__head kt-portlet__head--lg">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    Registros Datos N1
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body">
+                            <!--begin: Datatable --> 
+                            <div class="table-responsive">
+                                <table class="table" id="id-tb-datos-n1">
+                                    <thead>
+                                        <tr>
+                                            <th>CodigoRSSO</th>
+                                            <th>TipoRSSO</th>
+                                            <th>Estado</th>
+                                            <th>Causal</th>
+                                            <th>NivelRSSO</th>
+                                            <th>FechaCreacion</th>
+                                            <th>FechaHallazgo</th>
+                                            <th>Division</th>
+                                            <th>Gerencia</th>
+                                            <th>Superintendencia</th>
+                                            <th>Area</th>
+                                            <th>SAPInformante</th>
+                                            <th>Informante</th>
+                                            <th>SAPResponsable</th>
+                                            <th>Responsable</th>
+                                            <th>FechaCierre</th>
+                                            <th>DescripcionIncidente</th>
+                                            <th>AccionRealizada</th>
+                                            <th>Estandar</th>
+                                            <th>RiesgoCritico</th>
+                                            <th>IdEvento</th>
+                                            <th>CantidadDiasDetencion</th>
+                                            <th>CantidadTMFPerdidas</th>
+                                            <th>AreaDeEvento</th>
+                                            <th>SuperIntendenciaEvento</th>
+                                            <th>Proyecto</th>
+                                            <th>Familia</th>
+                                            <th>SubProceso</th>
+                                            <th>MontoDePerdida</th>
+                                            <th>RepeticionDelEvento</th>
+                                            <th>Clasificacion</th>
+                                            <th>ControlesQueNoFuncionaron</th>
+                                            <th>TipoFalla</th>
+                                            <th>Estadistica</th>
+                                            <th>Editar</th>
+                                        </tr>                                       
+                                    </thead>
+                                    <tbody id="id-cuerpo-datos-n1">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!--end: Datatable -->
+                        </div>
+                    </div>
+
+                    <!--end::Form-->
+                </div>
+
+                <!--end::Portlet-->
+
+                <!--begin::Portlet-->                
+
+                <!--end::Portlet-->
+            </div>            
+        </div>
+    </div>
+
+    <!-- end:: Content -->
+</div>
+{% endblock %}
+
+{% block extra_javascript %}
+<!-- ARCHIVOS DATATABLE -->
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/jquery.dataTables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/buttons.dataTables.min.css' %}">
+<!-- FIN ARCHIVOS DATATABLE -->
+<!-- ARCHIVOS DATATABLE -->
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/jszip.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/pdfmake.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/vfs_fonts.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/createDatatable.js' %}"></script>
+<!-- FIN ARCHIVOS DATATABLE -->
+
+<script type="text/javascript" language="javascript"src="{% static 'appCarga/js/datosN1.js' %}"></script>
+<script>
+    $(document).ready(function(){        
+        datos_n1();
+    });
+    
+   
+</script>
+
+{% endblock %}

@@ -1,0 +1,202 @@
+<!--Modal Planes Riesgos-->
+<div class="modal fade" id="modal_creacion_plan" style="padding-right: 16px;background-color: #00000078;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Crear Plan de Acción</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #80808021;border: 1px solid #00BCD4;">
+                <form class="kt-form" method="POST" id="form-plan-respuesta" enctype="multipart/form-data" action="{% url 'save_plan_respuesta' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="riesgo-plan" id="id_riesgo_plan" />
+                    <input type="hidden" id="id-edit-plan" name="edit-plan" value="0" />
+                    <input type="hidden" id="id-plan" name="name-plan-id" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Estrategia:</label>
+                            <select class="form-control" required name="estrategia-plan" id="id-estrategia-plan" style="border: 1px solid #00000038;">
+                                <option value="">Seleccione</option>
+                                <option value="Estrategia 1">Estrategia 1</option>
+                                <option value="Estrategia 2">Estrategia 2</option>
+                                <option value="Estrategia 3">Estrategia 3</option>
+                                <option value="Estrategia 4">Estrategia 4</option>
+                                <option value="Estrategia 5">Estrategia 5</option>
+                            </select>
+
+                            <label>Descripción:</label>
+                            <textarea style="border: 1px solid #00000038;" required name="descripcion-plan" id="id-descripcion-plan" class="form-control" name="descripcion_control" rows="3" id="descripcion_txtarea">
+                            </textarea>
+                            
+                        </div>
+                       
+                        <div class="col-md-6">
+                            <label>Dueño Plan De Acción:</label>
+                            <input style="border: 1px solid #00000038;" required id="id-dueno-plan" name="dueno-plan" type="text" class="form-control">
+
+                            <label>Cargo del dueño del Plan:</label>
+                            <input style="border: 1px solid #00000038;" required id="id-cargo-dueno-plan" name="cargo-dueno-plan" type="text" class="form-control">
+
+                            <label>Trigger:</label>
+                            <input style="border: 1px solid #00000038;" required id="id-trigger-plan" name="trigger-plan" type="text" class="form-control"> 
+                        </div>
+                        <div class="col-md-12">
+                            <div class="kt-form__actions" style="margin-top: 5%; float: right;">
+                                <center>                                    
+                                    <input type="submit" id="btn_crear_plan_respuesta" class="btn btn-success btn-sm" value="" />
+                                    <br />
+                                    <div id="contenedor-check-plan-respuesta">
+                                        
+                                    </div>
+                                </center>
+                                
+                            </div> 
+                        </div>                        
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--end::Modal Planes-->
+
+
+<!--Modal Detalle Planes Riesgos-->
+<div class="modal fade" id="modal_detalle_plan_actividad" style="padding-right: 16px;background-color: #00000078;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Actividad Asociada al Plan de Acción</b> <i><span id="plan-seleccionado" style="font-weight: bold;"></span></i></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #80808021;border: 1px solid #00BCD4;">
+                <form class="kt-form" method="POST" id="form-actividad-plan" enctype="multipart/form-data" action="{% url 'save_actividad_plan' %}">
+                    {% csrf_token %}
+                    <input type="hidden" id="id-txt-id-plan" name="txt-id-plan" />
+                    <input type="hidden" id="id-txt-id-actividad" name="txt-id-actividad" />
+                    <input type="hidden" id="id-txt-edit-actividad" value="0" name="txt-edit-actividad" />
+                    <span style="font-size: 20px;">Definición del Riesgo</span>
+                    <div class="row">                        
+                        <div class="col-md-6" style="border: 1px solid #00BCD4;">                        
+                                <label style="margin-top: 2%;" class="">Riesgo:</label> 
+                                <br>                                   
+                                &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="actividad_descripcion_riesgo"></span>
+                                <hr>                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="">Causas:</label>
+                                        <div class="table-responsive" style="height: 300px;border: 1px dashed #9ea2ad;">                                               
+                                            <table class="table" id="tb_causas_riesgo_actividad">
+                                                <thead>
+                                                                                                                                                                
+                                                </thead>
+                                                <tbody id="cuerpo_causas_riesgo_actividad">
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="">Consecuencias:</label>
+                                        <div class="table-responsive" style="height: 300px;border: 1px dashed #9ea2ad;">                                               
+                                            <table class="table" id="tb_consecuencias_riesgo_actividad">
+                                                <thead>
+                                                                                                                                                                
+                                                </thead>
+                                                <tbody id="cuerpo_consecuencias_riesgo_actividad">
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>                            
+                        </div>
+                        <div class="col-md-6">
+                            <label>Responsable:</label>
+                            <input type="text" class="form-control" id="id-actividad-responsable" style="border: 1px solid #00000038;" name="actividad-responsable" />
+
+                            <label style="margin-top: 2%;">Estrategia:</label>
+                            <select class="form-control" id="id-actividad-estrategia" name="actividad-estrategia" style="border: 1px solid #00000038;">
+                                <option value="">Seleccione</option>
+                                <option value="Estrategia 1">Estrategia 1</option>
+                                <option value="Estrategia 2">Estrategia 2</option>
+                                <option value="Estrategia 3">Estrategia 3</option>
+                            </select>
+
+                            <div class="row" style="margin-top: 2%;">
+                                <div class="col-md-4">
+                                    <label style="margin-top: 2%;">Costo (kUS$):</label>
+                                    <input type="number" step="0.1" min="0" class="form-control" style="border: 1px solid #00000038;" id="id-actividad-costo" name="actividad-costo"  />
+                                </div>
+                                <div class="col-md-4">
+                                    <label style="margin-top: 2%;">Fecha Inicio:</label>
+                                    <input type="" autocomplete="off" name="actividad-fecha-inicio" style="border: 1px solid #00000038;" id="kt_datepicker_2" class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label style="margin-top: 2%;">Fecha Término:</label>
+                                    <input type="" autocomplete="off" name="actividad-fecha-termino" style="border: 1px solid #00000038;" id="kt_datepicker_1" class="form-control">
+                                </div>
+                                
+                            </div>
+                            <div class="row" style="margin-top: 2%;">
+                                <div class="col-md-4">
+                                    <label>Estado:</label>
+                                    <select class="form-control" id="id-actividad-estado" style="border: 1px solid #00000038;" name="actividad-estado">
+                                        <option value="">Seleccione</option>
+                                        <option value="Estado 1">Estado 1</option>
+                                        <option value="Estado 2">Estado 2</option>
+                                        <option value="Estado 3">Estado 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Peso Específico(%):</label>
+                                    <input type="number" step="1" min="0" max="100" id="id-actividad-peso-especifico" style="border: 1px solid #00000038;" name="actividad-peso-especifico" class="form-control">        
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Avance Real(%):</label>
+                                    <input type="number" step="1" min="0" max="100" id="id-actividad-avance-real" style="border: 1px solid #00000038;" name="actividad-avance-real" class="form-control">
+                                </div>
+
+                            </div>
+                            
+                            <div class="row" style="margin-top:2%;">
+                                <div class="col-md-6">
+                                    <label>Nombre Actividad:</label>
+                                    <input type="text" id="id-actividad-nombre" name="actividad-nombre" style="border: 1px solid #00000038;" class="form-control">        
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Detalle Actividad:</label>
+                                    <textarea style="border: 1px solid #00000038;" required="" class="form-control" id="id-actividad-detalle-actividad" name="actividad-detalle-actividad" rows="3">
+                                    </textarea>
+                                </div>
+                            </div>                                                        
+
+                            <div class="kt-form__actions" style="margin-top: 0%;">
+                                <div class="custom-file" style="width: 100%; margin-top: 5%;" id="id-evidencia-actividad">                                            
+                                    <input required type="file" class="custom-file-input" name="evidencia" id="customFile">
+                                    <label class="custom-file-label" style="font-size: 9px;" for="customFile">Evidencia</label>
+                                </div>                                
+                                <div style="float: left;" id="id-href-actividad-evidencia"></div>
+                                <input type="submit" style="float: right;" id="btn_registrar_actividad" class="btn btn-success btn-sm" value="Registrar" />                                
+                                <br />
+                                <div id="contenedor-check-actividad"></div>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--end:: Detalle Modal Planes-->

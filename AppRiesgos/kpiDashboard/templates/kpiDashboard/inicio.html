@@ -1,0 +1,168 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Kpi's{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block page_content %}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+    <!-- begin:: Content Head -->
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-container ">
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">                    
+                    <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="" data-placement="left" data-original-title="Quick actions">                        
+                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right">
+                            
+
+                            <!--end::Nav-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Content Head -->
+
+    <!-- begin:: Content -->
+    <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--begin::Portlet-->
+                <div class="kt-portlet">                    
+
+                    <!--begin::Form-->
+                    <form class="kt-form" method="POST" action="{% url 'save_kpi' %}">
+                        {% csrf_token %}
+                        <div class="kt-portlet__body">                            
+                            <div class="form-group">
+                                <label>Tipo</label>                                
+                                <select class="form-control" name="tipo" id="id-tipo">
+                                    <option value="" selected>Seleccione una Opción</option>
+                                    <option value="Costo Presupuesto">Costo Presupuesto</option>
+                                    <option value="Producción">Producción</option>
+                                    <option value="Seguridad">Seguridad</option>
+                                    <option value="Ambiental">Ambiental</option>
+                                </select>
+
+                                <label style="margin-top: 2%;">Valor</label>
+                                <input type="number" class="form-control" name="valor" id="id-valor">                                
+
+                                <label style="margin-top: 2%;">Porcentaje de Avance (%)</label>
+                                <input type="number" step="0.1" max="100" min="0" class="form-control" name="porcavance" id="id-porc-avance">                                
+                                                                                                
+                            </div>
+                        </div>
+                        <div class="kt-portlet__foot">
+                            <div class="kt-form__actions">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="reset" class="btn btn-secondary">Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="kt-portlet kt-portlet--mobile">
+                        <div class="kt-portlet__head kt-portlet__head--lg">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    Registros
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body">
+
+                            <!--begin: Datatable -->                            
+                            <table class="table" id="id-table-kpis">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Tipo
+                                        </th>
+                                        <th>
+                                            Valor
+                                        </th>
+                                        <th>
+                                            % Avance
+                                        </th>
+                                        <th>
+                                            Mes
+                                        </th>
+                                        <th>
+                                            Ano
+                                        </th>
+                                    </tr>                                       
+                                </thead>
+                                <tbody id="cuerpo_kpis">
+                                    {% for kpi in registros_kpi %}
+                                        <tr>
+                                            <td>
+                                                {{kpi.tipo}}
+                                            </td>
+                                            <td>
+                                                {{kpi.valor}}
+                                            </td>
+                                            <td>
+                                                {{kpi.porcavance}}
+                                            </td>
+                                            <td>
+                                                {{kpi.mes}}
+                                            </td>
+                                            <td>
+                                                {{kpi.ano}}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <!--end: Datatable -->
+                        </div>
+                    </div>
+
+                    <!--end::Form-->
+                </div>
+
+                <!--end::Portlet-->
+
+                <!--begin::Portlet-->                
+
+                <!--end::Portlet-->
+            </div>            
+        </div>
+    </div>
+
+    <!-- end:: Content -->
+</div>
+{% endblock %}
+
+{% block extra_javascript %}
+<!-- ARCHIVOS DATATABLE -->
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/jquery.dataTables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/buttons.dataTables.min.css' %}">
+<!-- FIN ARCHIVOS DATATABLE -->
+<!-- ARCHIVOS DATATABLE -->
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/jszip.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/pdfmake.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/vfs_fonts.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/createDatatable.js' %}"></script>
+<!-- FIN ARCHIVOS DATATABLE -->
+
+
+<script>
+    $(document).ready(function(){
+        createDatatable("id-table-kpis", 5);
+    });       
+</script>
+
+{% endblock %}

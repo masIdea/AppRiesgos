@@ -1,0 +1,366 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Planes{% endblock %}
+
+{% block styles %}
+<link href="{% static 'planes/css/rowTables.css' %}" rel="stylesheet" type="text/css" />
+<style>
+    #left_arrow::after{
+        transform: rotate(180deg) !important;
+        color: #5d78ff;
+    }
+    .form-control.input-inherente{
+        width: 80%;
+        margin-left: 5%;
+    }
+    .td-inherente{
+        background-color: gray;
+        color: white;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        text-align: center;
+        border: 1px solid #00BCD4;
+    }
+
+    .td-inherente-probabilidad, .td-inherente-impacto{                
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        text-align: center;
+        border: 1px solid #00BCD4;
+        font-weight: 900;
+    }
+
+    .form-control.input-inherente-probabilidad, .form-control.input-inherente-impacto{
+        width: 100%;
+        margin-left: 5%;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+    -moz-appearance: textfield;
+    }
+
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+    <!-- begin:: Content Head -->
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-container ">
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">                    
+                    <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="" data-placement="left" data-original-title="Quick actions">                        
+                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right">
+                            
+
+                            <!--end::Nav-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Content Head -->
+
+    <!-- begin:: Content -->
+    <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--begin::Portlet-->
+                <div class="kt-portlet">                    
+
+                    <!--begin::Form-->
+                   
+
+                    <div class="kt-portlet kt-portlet--mobile">
+                        <div class="kt-portlet__head kt-portlet__head--lg">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    <b>Registros Riesgos</b>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body">
+
+                            <!--begin: Datatable -->   
+                            <div class="table-responsive">
+                                <table class="table" id="tb_riesgos">
+                                    <thead>
+                                        <tr>
+                                            <th>Riesgo</th>
+                                            <th>Gerencia</th>
+                                            <th>Dirección</th>
+                                            <th>Proyecto</th>                                            
+                                            <th>Fase del Riesgo</th>
+                                            <th>Dueño</th>                                            
+                                            <th>Estado</th>
+                                            <th>Seleccionar Control</th>
+                                        </tr>                                                                                                                
+                                    </thead>
+                                    <tbody id="cuerpo_riesgos">
+                                        {% for riesgo in riesgos %}
+                                            <tr>
+                                                <td>{{riesgo.Riesgo}}</td>
+                                                <td>{{riesgo.Gerencia}}</td>
+                                                <td>{{riesgo.Direccion}}</td>
+                                                <td>{{riesgo.Proyecto}}</td>                                                
+                                                <td>{{riesgo.FasedelRiesgo}}</td>
+                                                <td>{{riesgo.dueno}}</td>                                                
+                                                <td>{{riesgo.estado}}</td>
+                                                <td><span style="cursor: pointer;" onclick="detalle_riesgo('{{riesgo.IdRiesgo}}')" class="fa fa-plus"></span></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!--end: Datatable -->
+                        </div>
+                    </div>
+
+                    <!--end::Form-->
+                </div>
+
+                <!--end::Portlet-->
+
+                <!--begin::Portlet-->                
+
+                <!--end::Portlet-->
+            </div>
+
+            <div class="col-lg-12" id="id-div-creacion-plan-accion" style="display: block;">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                <b>Creación Plan de Acción</b>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!--begin::Form-->
+                    <form class="kt-form kt-form--label-right">                        
+                        <div class="kt-portlet__body">
+                            <label class="">Definición del Riesgo:</label>
+                            <div class="form-group row">                                
+                                <div class="col-lg-4" style="border: 1px solid #00BCD4;background-color: #8080800f;">                                    
+                                    <label style="margin-top: 2%;" class="">Riesgo:</label> 
+                                    <br />                                   
+                                    &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="descripcion_riesgo"></span>
+                                    <hr />                                    
+                                    <label class="">Direccion:</label>                                                                      
+                                    <br />
+                                    &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="direccion_riesgo"></span>
+                                    <hr />
+                                    <label class="">Estado:</label> 
+                                    <br />
+                                    &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="estado_riesgo"></span>                                    
+                                    <hr />
+                                    <label class="">Fase del Riesgo:</label>
+                                    <br />
+                                    &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="fase_riesgo"></span>
+                                    <br />                                    
+                                    <hr />
+                                    <label class="">Proyecto:</label>
+                                    <br />
+                                    &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="proyecto_riesgo"></span>                                    
+                                    <hr />
+                                    <label class="">Dueño:</label>
+                                    <br />
+                                    &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="dueno_riesgo"></span>                                    
+                                    <hr />
+                                    
+                                </div>                                
+                                <div class="col-lg-6">
+                                    <label class="">Planes de Acción Creados:</label>
+                                    <div class="table-responsive" style="height: 300px;border: 1px dashed #9ea2ad;">
+                                       
+
+                                        <table class="table" id="tb_planes">
+                                            <thead>
+                                                                                                                                                            
+                                            </thead>
+                                            <tbody id="cuerpo_planes_riesgo">
+                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">                                    
+                                    <div class="table-responsive" style="height: 300px; margin-top: 8%;">
+                                        <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="kt-form__actions" style="margin-top: 5%;">
+                                                <center>
+                                                    <input type="button" id="btn_agregar_plan" disabled class="btn btn-primary btn-block" value="Agregar Plan" style="margin-bottom: 5%;" data-toggle="modal" data-target="#modal_creacion_plan">                                                
+                                                    <button type="button" disabled class="btn btn-primary btn-sm" id="editar-detalle-plan">Editar</button>
+                                                    <button type="button" id="btn_eliminar_plan" disabled="" class="btn btn-primary btn-sm">Eliminar</button>                                                
+                                                </center>
+                                            </div>                                         
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit" style="border-bottom: 1px solid #9ea2ad !important;"></div>
+                        </form>
+
+                        <form class="kt-form kt-form--label-right" id="id-form-plan-accion">
+                            <label class="">Plan de Acción <span id="plan-accion-seleccionado"></span>:</label>
+                            <div class="kt-portlet__body">
+                                <div class="form-group row">                                
+                                    <div class="col-lg-6" style="border: 1px solid #00BCD4;background-color: #8080800f;">
+                                        <label style="margin-top: 2%;" class="">Estrategia:</label> 
+                                        <br />                                   
+                                        &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="estrategia_plan"></span>
+                                        <hr />                                    
+                                        <label class="">Trigger:</label>                                        
+                                        <br />
+                                        &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="trigger_plan"></span>
+                                        <hr />
+                                        <label class="">Descripción:</label> 
+                                        <br />
+                                        &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="descripcion_plan"></span>                                    
+                                        <hr />
+                                        <label class="">Dueño Plan:</label> 
+                                        <br />
+                                        &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="dueno_plan"></span>                                    
+                                        <hr /> 
+                                        <label class="">Cargo del Dueño del Plan:</label> 
+                                        <br />
+                                        &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="cargo_dueno_plan"></span>                                    
+                                        <hr style="border: 1px solid #00BCD4;" /> 
+                                        <div class="row">
+                                            <div class="col-md-4">                                                
+                                                <label class="">Costo (kUS$):</label> 
+                                                <br />
+                                                &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="costo_detalle_plan"></span>                                                 
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="">Fecha Inicio:</label> 
+                                                <br />
+                                                &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="fec_ini_detalle_plan"></span>                                                 
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="">Fecha Término:</label> 
+                                                <br />
+                                                &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="fec_ter_detalle_plan"></span>                                                 
+                                            </div>
+                                        </div>                                        
+                                        <hr /> 
+                                        <div class="row">
+                                            <div class="col-md-6">                                                
+                                                <label class="">Avance Real:</label> 
+                                                <br />
+                                                &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="avance_real"></span> 
+                                                <hr /> 
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="">Avance Planificado:</label> 
+                                                <br />
+                                                &emsp;&emsp;&emsp;&emsp;<span style="font-weight:500;" id="avance_planificado"></span> 
+                                                <hr /> 
+                                            </div>                                           
+                                        </div>
+                                        
+                                    </div>                                
+                                    <div class="col-lg-4">
+                                        <label class="">Detalle Plan:</label>
+                                        <div class="table-responsive" style="height: 300px;border: 1px dashed #9ea2ad;">
+                                            <table class="table">
+                                                <tbody id="cuerpo_actividades_plan">
+    
+                                                </tbody>                                            
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">                                    
+                                        <div class="table-responsive" style="height: 300px; margin-top: 8%;">
+                                            <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                                                <div class="kt-form__actions" style="margin-top: 5%;">
+                                                    <center>
+                                                        <input type="button" id="btn_agregar_detalle" class="btn btn-primary btn-block" value="Agregar Detalle Plan" style="margin-bottom: 5%;">
+                                                        <button type="button" disabled class="btn btn-primary btn-sm" style="float:left" id="editar-actividad-plan">Editar</button>
+                                                        <button type="button" id="eliminar-actividad-plan" disabled="" style="float:right" class="btn btn-primary btn-sm">Eliminar</button>
+                                                    </center>
+                                                </div>                                         
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit" style="border-bottom: 1px solid #9ea2ad !important;"></div>
+                            </form>                                                    
+                        </div>
+                        
+
+                        {%include 'planes/includes/matrizObjetivo.html'%}
+                        <div class="kt-portlet__foot">
+                            
+                        </div>                    
+                    
+
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Content -->
+</div>
+
+{% include 'planes/includes/modales.html' %}
+{% endblock %}
+
+
+{% block extra_javascript %}
+<!-- ARCHIVOS DATATABLE -->
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/jquery.dataTables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/buttons.dataTables.min.css' %}">
+<!-- FIN ARCHIVOS DATATABLE -->
+<!-- ARCHIVOS DATATABLE -->
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/jszip.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/pdfmake.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/vfs_fonts.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/createDatatable.js' %}"></script>
+<!-- FIN ARCHIVOS DATATABLE -->
+
+<script src="{% static 'core/utils/goTo.js' %}" type="text/javascript"></script>
+<script src="{% static 'core/assets/js/getCookie.js' %}" type="text/javascript"></script>
+<script src="{% static 'planes/js/planes.js' %}" type="text/javascript"></script>
+<script src="{% static 'planes/js/limpiar.js' %}" type="text/javascript"></script>
+<script src="{% static 'planes/js/registrarPlanRespuesta.js' %}" type="text/javascript"></script>
+<script src="{% static 'planes/js/planesRiesgos.js' %}" type="text/javascript"></script>
+<script src="{% static 'planes/js/actividadPlan.js' %}" type="text/javascript"></script>
+<script src="{% static 'core/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js' %}" type="text/javascript"></script>
+
+<script>
+    $("#tb_riesgos tr").click(function(){    
+        $(this).addClass("selected").siblings().removeClass("selected");
+    });
+
+    $(document).ready(function(){
+        createDatatable("tb_riesgos");
+    });
+    
+   
+</script>
+
+{% endblock %}

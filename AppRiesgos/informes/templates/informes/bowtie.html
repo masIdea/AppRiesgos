@@ -1,0 +1,163 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Bowtie{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block page_content %}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+    <!-- begin:: Content Head -->
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-container ">
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">                    
+                    <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="" data-placement="left" data-original-title="Quick actions">                        
+                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right">
+                            
+
+                            <!--end::Nav-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Content Head -->
+
+    <!-- begin:: Content -->
+    <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--begin::Portlet-->
+                <div class="kt-portlet">  
+                    <div class="kt-portlet__head kt-portlet__head--lg">
+                        <div class="kt-portlet__head-label">
+                            <span class="kt-portlet__head-icon">
+                                <i class="kt-font-brand flaticon2-line-chart"></i>
+                            </span>
+                            <h3 class="kt-portlet__head-title">
+                                <b>Bowtie</b>
+                            </h3>
+                        </div>
+                    </div>                    
+
+                    <!--begin::Form-->
+                    <form class="kt-form" method="POST" action="#">
+                        {% csrf_token %}
+                        <div class="kt-portlet__body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Gerencia</label>
+                                        <select class="form-control" id="id-gerencias-riesgos-criticos">
+                                            <option selected disabled value="">Seleccione</option>
+                                            <option value="0">Todas</option>
+                                            {% for gerencia in gerencias %}
+                                            <option value="{{gerencia.sigla}}">{{gerencia.gerencia}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Riesgo</label>
+                                        <select class="form-control" id="id-riesgos-gerencia">
+                                            <option selected disabled value="">Seleccione</option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+
+                                
+
+                               
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="button" class="btn btn-brand" onclick="bowTie()" value="Generar Informe" />
+                                    </div>
+                                </div>
+
+                                                                                         
+                                    <table class="table" id="id-tb-bowtie">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Causas
+                                                </th>
+                                                <th>
+                                                    Controles Predictivos
+                                                </th>
+                                                <th>
+                                                    Riesgo
+                                                </th>
+                                                <th>
+                                                    Controles Correctivos
+                                                </th>
+                                                <th>
+                                                    Consecuencias
+                                                </th>                                                
+                                            </tr>                                       
+                                        </thead>
+                                        <tbody id="id-cuerpo-bowtie">
+                                            
+                                        </tbody>
+                                    </table>
+                                                                            
+
+                                
+                            </div>
+                            
+                        </div>
+                    </form>                    
+
+                    <!--end::Form-->
+                </div>
+
+                <!--end::Portlet-->
+
+                <!--begin::Portlet-->                
+
+                <!--end::Portlet-->
+            </div>            
+        </div>
+    </div>
+
+    <!-- end:: Content -->
+</div>
+{% endblock %}
+
+{% block extra_javascript %}
+
+<!-- ARCHIVOS DATATABLE -->
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/jquery.dataTables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/buttons.dataTables.min.css' %}">
+<!-- FIN ARCHIVOS DATATABLE -->
+<!-- ARCHIVOS DATATABLE -->
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/jszip.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/pdfmake.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/vfs_fonts.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/createDatatable.js' %}"></script>
+<!-- FIN ARCHIVOS DATATABLE -->
+
+<script type="text/javascript" language="javascript"src="{% static 'informes/js/matrices.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'informes/js/bowTie.js' %}"></script>
+
+<script>
+    $(document).ready(function(){        
+        $('#id-fecha-inicio').datepicker({});
+        $('#id-fecha-termino').datepicker({});
+    })
+</script>
+
+{% endblock %}
+

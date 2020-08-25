@@ -1,0 +1,105 @@
+var datos_n1 = function(){
+    $.ajax({
+        url:"../get-datos-n1",
+        type:"GET",
+        dataType:"json",
+        data:{},
+        success:function(data){
+            console.log(data);
+            var tbody = ""
+            for(var i=0; i<data.datos.length;i++){
+                tbody+="<tr>";
+                tbody+="<td>"+data.datos[i].codigorsso+"</td>";
+                tbody+="<td>"+data.datos[i].tiporsso+"</td>";
+                tbody+="<td>"+data.datos[i].estado+"</td>";
+                tbody+="<td>"+data.datos[i].causal+"</td>";
+                tbody+="<td>"+data.datos[i].nivelrsso+"</td>";
+                tbody+="<td>"+data.datos[i].fechacreacion+"</td>";
+                tbody+="<td>"+data.datos[i].fechahallazgo+"</td>";
+                tbody+="<td>"+data.datos[i].division+"</td>";
+                tbody+="<td>"+data.datos[i].gerencia+"</td>";
+                tbody+="<td>"+data.datos[i].superintendencia+"</td>";
+                tbody+="<td>"+data.datos[i].area+"</td>";
+                tbody+="<td>"+data.datos[i].sapinformante+"</td>";
+                tbody+="<td>"+data.datos[i].informante+"</td>";
+                tbody+="<td>"+data.datos[i].sapresponsable+"</td>";
+                tbody+="<td>"+data.datos[i].responsable+"</td>";
+                tbody+="<td>"+data.datos[i].fechacierre+"</td>";
+                tbody+="<td>"+data.datos[i].descripcionincidente+"</td>";
+                tbody+="<td>"+data.datos[i].accionrealizada+"</td>";
+                tbody+="<td>"+data.datos[i].estandar+"</td>";
+                tbody+="<td>"+data.datos[i].riesgocritico+"</td>";
+                tbody+="<td>"+data.datos[i].idevento+"</td>";
+                tbody+="<td>"+data.datos[i].cantidaddiasdetencion+"</td>";
+                tbody+="<td>"+data.datos[i].cantidadtmfperdidas+"</td>";
+                tbody+="<td>"+data.datos[i].areadeevento+"</td>";
+                tbody+="<td>"+data.datos[i].superintendenciaevento+"</td>";
+                tbody+="<td>"+data.datos[i].proyecto+"</td>";
+                tbody+="<td>"+data.datos[i].familia+"</td>";
+                tbody+="<td>"+data.datos[i].subproceso+"</td>";
+                tbody+="<td>"+data.datos[i].clasificacion+"</td>";
+                tbody+="<td>"+data.datos[i].controlesquenofuncionaron+"</td>";
+                tbody+="<td>"+data.datos[i].montodeperdida+"</td>";
+                tbody+="<td>"+data.datos[i].repeticiondelevento+"</td>";
+                tbody+="<td>"+data.datos[i].tipofalla+"</td>";
+                tbody+="<td>"+data.datos[i].estadistica+"</td>";
+                tbody+='<td><center><i style="cursor:pointer;" onclick="editarN1(\''+data.datos[i].idn1+'\')" class="flaticon2-pen"></i></td>';
+                tbody+="</tr>";
+            }
+            $("#id-cuerpo-datos-n1").html(tbody);
+            createDatatable("id-tb-datos-n1");
+        }, error:function(err){
+            console.error(err);
+        }
+    });    
+}
+
+var editarN1 = function(id_registro){
+    $("#id-txt-n1").val(id_registro);
+    $("#id-form-datos-n1").fadeIn("slow");
+    $.ajax({
+        url:'../datos-id-n1',
+        type:"GET",
+        dataType:"json",
+        data:{'id':id_registro},
+        success:function(data){
+            $("#id-txt-CodigoRSSO").val(data.datos[0].codigorsso)
+            $("#id-txt-TipoRSSO").val(data.datos[0].tiporsso)
+            $("#id-txt-Estado").val(data.datos[0].estado)
+            $("#id-txt-Causal").val(data.datos[0].causal)
+            $("#id-txt-NivelRSSO").val(data.datos[0].nivelrsso)
+            $("#id-txt-FechaCreacion").val(data.datos[0].fechacreacion)
+            $("#id-txt-FechaHallazgo").val(data.datos[0].fechahallazgo)
+            $("#id-txt-Division").val(data.datos[0].division)
+            $("#id-txt-Gerencia").val(data.datos[0].gerencia)
+            $("#id-txt-Superintendencia").val(data.datos[0].superintendencia)
+            $("#id-txt-Area").val(data.datos[0].area)
+            $("#id-txt-SAPInformante").val(data.datos[0].sapinformante)
+            $("#id-txt-Informante").val(data.datos[0].informante)
+            $("#id-txt-SAPResponsable").val(data.datos[0].sapresponsable)
+            $("#id-txt-Responsable").val(data.datos[0].responsable)
+            $("#id-txt-FechaCierre").val(data.datos[0].fechacierre)
+            $("#id-txt-TipoFalla").val(data.datos[0].tipofalla)
+            $("#id-txt-DescripcionIncidente").val(data.datos[0].descripcionincidente)
+            $("#id-txt-AccionRealizada").val(data.datos[0].accionrealizada)
+            $("#id-txt-Estandar").val(data.datos[0].estandar)
+            $("#id-txt-RiesgoCritico").val(data.datos[0].riesgocritico)
+            $("#id-txt-IdEvento").val(data.datos[0].idevento)
+            $("#id-txt-CantidadDiasDetencion").val(data.datos[0].cantidaddiasdetencion)
+            $("#id-txt-CantidadTMFPerdidas").val(data.datos[0].cantidadtmfperdidas)
+            $("#id-txt-AreaDeEvento").val(data.datos[0].areadeevento)
+            $("#id-txt-SuperIntendenciaEvento").val(data.datos[0].superintendenciaevento)
+            $("#id-txt-Proyecto").val(data.datos[0].proyecto)
+            $("#id-txt-Familia").val(data.datos[0].familia)
+            $("#id-txt-SubProceso").val(data.datos[0].subproceso)
+            $("#id-txt-MontoDePerdida").val(data.datos[0].montodeperdida)
+            $("#id-txt-RepeticionDelEvento").val(data.datos[0].repeticiondelevento)
+            $("#id-txt-Clasificacion").val(data.datos[0].clasificacion)
+            $("#id-txt-ControlesQueNoFuncionaron").val(data.datos[0].controlesquenofuncionaron)
+            $("#id-txt-Estadistica").val(data.datos[0].estadistica)
+
+        }, error:function(err){
+            console.error(err);
+        }
+    })
+}

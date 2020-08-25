@@ -1,0 +1,381 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Controles{% endblock %}
+
+{% block styles %}
+<style>
+    #left_arrow::after{
+        transform: rotate(180deg) !important;
+        color: #5d78ff;
+    }
+    .form-control.input-inherente{
+        width: 80%;
+        margin-left: 5%;
+    }
+    .td-inherente{
+        background-color: gray;
+        color: white;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        text-align: center;
+        border: 1px solid #00BCD4;
+    }
+
+    .td-inherente-probabilidad, .td-inherente-impacto{                
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        text-align: center;
+        border: 1px solid #00BCD4;
+        font-weight: 900;
+    }
+
+    .form-control.input-inherente-probabilidad, .form-control.input-inherente-impacto{
+        width: 100%;
+        margin-left: 5%;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+    -moz-appearance: textfield;
+    }
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+    <!-- begin:: Content Head -->
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-container ">
+            <div class="kt-subheader__toolbar">
+                <div class="kt-subheader__wrapper">                    
+                    <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="" data-placement="left" data-original-title="Quick actions">                        
+                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right">
+                            
+
+                            <!--end::Nav-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Content Head -->
+
+    <!-- begin:: Content -->
+    <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--begin::Portlet-->
+                <div class="kt-portlet">                    
+
+                    <!--begin::Form-->
+                   
+
+                    <div class="kt-portlet kt-portlet--mobile">
+                        <div class="kt-portlet__head kt-portlet__head--lg">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title">
+                                    <b>Registros Riesgos</b>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body">
+
+                            <!--begin: Datatable -->   
+                            <div class="table-responsive">
+                                <table class="table" id="id-table-controles">
+                                    <thead>
+                                        <tr>
+                                            <th>Riesgo</th>
+                                            <th>Gerencia</th>
+                                            <th>Dirección</th>
+                                            <th>Proyecto</th>                                            
+                                            <th>Fase del Riesgo</th>
+                                            <th>Dueño</th>                                            
+                                            <th>Estado</th>
+                                            <th>Seleccionar Control</th>
+                                        </tr>                                                                                                                
+                                    </thead>
+                                    <tbody id="cuerpo_riesgos">
+                                        {% for riesgo in riesgos %}
+                                            <tr>
+                                                <td>{{riesgo.Riesgo}}</td>
+                                                <td>{{riesgo.Gerencia}}</td>
+                                                <td>{{riesgo.Direccion}}</td>
+                                                <td>{{riesgo.Proyecto}}</td>                                                
+                                                <td>{{riesgo.FasedelRiesgo}}</td>
+                                                <td>{{riesgo.dueno}}</td>                                                
+                                                <td>{{riesgo.estado}}</td>
+                                                <td><span style="cursor: pointer;" onclick="control('{{riesgo.IdRiesgo}}')" class="fa fa-plus"></span></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!--end: Datatable -->
+                        </div>
+                    </div>
+
+                    <!--end::Form-->
+                </div>
+
+                <!--end::Portlet-->
+
+                <!--begin::Portlet-->                
+
+                <!--end::Portlet-->
+            </div>
+
+            <div class="col-lg-12" id="causas_consecuencias" style="display: block;">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                <b>Definición del Riesgo</b>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!--begin::Form-->
+                    <form class="kt-form kt-form--label-right">
+                        <div class="kt-portlet__body">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label class="">Causas Asociadas al Riesgo:</label>
+                                    <div class="table-responsive" style="height: 350px;border: 1px dashed #9ea2ad;">
+                                        <table class="table">
+                                            <tbody id="cuerpo_causas">
+
+                                            </tbody>                                            
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4" style="border: 1px solid #00BCD4;background-color: #8080800f; height: 350px; margin-top: 2%;">
+                                    <label class="">Riesgo:</label>                                    
+                                    <input type="text" style="height: 30px; font-size: 14px; color: black;" readonly class="form-control" id="descripcion_riesgo" />                                    
+                                    <label class="">Direccion:</label>                                                                      
+                                    <input type="text" style="height: 30px; font-size: 14px; color: black;" readonly class="form-control" id="direccion_riesgo" />                                    
+                                    <label class="">Estado:</label>                                                                      
+                                    <input type="text" style="height: 30px; font-size: 14px; color: black;" readonly class="form-control" id="estado_riesgo" />                                    
+                                    <label class="">Fase del Riesgo:</label>                                                                      
+                                    <input type="text" style="height: 30px; font-size: 14px; color: black;" readonly class="form-control" id="fase_riesgo" />                                    
+                                    <label class="">Proyecto:</label>                                                                      
+                                    <input type="text" style="height: 30px; font-size: 14px; color: black;" readonly class="form-control" id="proyecto_riesgo" />                                    
+                                    <label class="">Dueño:</label>                                    
+                                    <input type="text" style="height: 30px; font-size: 14px; color: black;" readonly class="form-control" id="dueno_riesgo" />
+                                    <br />
+                                </div>
+                                <hr />
+                                <div class="col-lg-4">
+                                    <label class="">Consecuencias Asociadas al Riesgo:</label>
+                                    <div class="table-responsive" style="height: 350px;border: 1px dashed #9ea2ad;">
+                                        <table class="table">
+                                            <tbody id="cuerpo_consecuencias">
+
+                                            </tbody>                                            
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit" style="border-bottom: 1px solid #9ea2ad !important;"></div>
+                        </form>
+                        <form class="kt-form" method="POST" id="form-control" enctype="multipart/form-data" action="{% url 'save_control' %}">
+                            {% csrf_token %}
+                            <!-- EL ID DEL RIESGO -->
+                            <input type="hidden" name="id_riesgo_control" id="id_riesgo_control" />
+                            <div class="form-group row">
+                                <div class="col-lg-3">
+                                    <label class="">Controles Asociados al Riesgo:</label>
+                                    <div class="table-responsive" style="height: 150px;border: 1px dashed #9ea2ad;">
+                                        <select class="form-control kt-select2" id="select_controles_asociados_riesgo" style="height: 100%; font-size: 14px;color:black" name="causas_asociadas_al_control" multiple="multiple">                                            
+                                            
+                                        </select>
+                                    </div>
+                                    <br />
+                                    <label class="">Controles CREADOS Asociados al Riesgo:</label>
+                                    <div class="table-responsive" style="height: 150px;border: 1px dashed #9ea2ad;">                                        
+                                        <select class="form-control kt-select2" id="select_controles_creados_riesgo" style="height: 100%; font-size: 14px;color:black" name="causas_asociadas_al_control" multiple="multiple">                                            
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6" style="border: 1px solid #00BCD4;background-color: #8080800f; border-radius:8px;">
+                                    <div class="row">
+                                        <div class="col-md-6" style="margin-top: 2%;">
+                                            <input type="hidden" id="id_control_seleccionado" />
+                                            <input type="hidden" id="valida_asignacion" />
+                                            <input type="hidden" id="valida_edit" />
+                                            <label class="">Nombre del Control:</label>
+                                            <input type="text" required style="height: 30px;font-size: 14px;color:black" class="form-control" id="nombre_control" name="nombres_controles" />
+                                            <br />
+                                            <label class="">Decripción:</label>
+                                            <textarea required class="form-control" name="descripcion_control" rows="3" id="descripcion_txtarea" style="font-size: 14px;color:black">
+
+                                            </textarea>                                            
+                                            <br />
+                                            <label class="">Tipo:</label>                                    
+                                            <select required class="form-control" id="tipo_control" style="font-size: 14px;color:black" name="tipos_controles">
+                                                <option value="">Seleccione un Tipo</option>
+                                                <option value="Preventivo/Detectivo">Preventivo/Detectivo</option>
+                                                <option value="Mitigadores/Correctivos">Mitigadores/Correctivos</option>
+                                            </select>
+                                            <br />
+                                            <label class="">Dueño del Control:</label>                                    
+                                            <input required type="text" id="dueno_control" name="dueno_control" class="form-control" style="height: 30px; font-size: 14px;color:black" />
+                                            <br />
+                                            <label class="">Frecuencia:</label>                                    
+                                            <select required class="form-control" name="frecuencias_controles" style="font-size: 14px;color:black" id="frecuencia_control">
+                                                <option value="">Seleccione una Frecuencia</option>
+                                                <option value="Múltiples veces al día">Múltiples veces al día</option>
+                                                <option value="Diario">Diario</option>
+                                                <option value="Semanal">Semanal</option>
+                                                <option value="Quincenal">Quincenal</option>
+                                                <option value="Mensual">Mensual</option>
+                                                <option value="Trimestral">Trimestral</option>
+                                                <option value="Anual">Anual</option>
+                                                <option value="Cuando ocurra">Cuando ocurra</option>
+                                            </select>
+
+                                            <input type="submit" value="Guardar Control" id="guardar_control" style="margin-top: 3%;border: 2px solid #2bc79a;background-color: #00800014;font-weight: 500;" class="form-control" />
+                                        </div>
+
+                                        <div class="col-md-6" style="margin-top: 2%;">
+                                            <label class="">Causas Asociadas al Control:</label>                                    
+                                            <div id="contenedor_select_causas"></div>
+                                            <br /><br />
+                                            <label class="">Consecuencias Asociadas al Control:</label>                                    
+                                            <div id="contenedor_select_consecuencias"></div>
+                                            <br />
+                                            <div class="kt-form__actions" style="margin-top: 5%;">
+                                                <button type="button" onclick="limpiar_form();" class="btn btn-primary btn-sm">Limpiar</button>
+                                                <button type="button" onclick="eliminar_control();" id="btn_eliminar_control" disabled class="btn btn-primary btn-sm">Eliminar</button>
+                                                <input type="button" disabled id="btn_asignar_actualizar" class="btn btn-primary btn-sm" value="Asignar/Actualizar" />                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                                                                                            
+                                </div>
+                                <hr />
+                                <div class="col-lg-3">                                    
+                                    <div class="table-responsive" style="height: 220px;border: 1px dashed #9ea2ad;">
+                                        <label class="" style="margin-left: 2%; margin-top: 4%;">Eficacia:</label>                                    
+                                            <select id="eficacia_control" required class="form-control" name="eficacia_controles" style="width: 90%; margin-left: 2%;">
+                                                <option value="">Seleccione Eficacia</option>
+                                                <option value="Baja">Baja</option>
+                                                <option value="Media">Media</option>
+                                                <option value="Alta">Alta</option>
+                                            </select>
+
+                                            <label class="" style="margin-left: 2%;">Eficiencia:</label>                                    
+                                            <select id="eficiencia_control" required class="form-control" name="eficiencia_controles" style="width: 90%; margin-left: 2%;">
+                                                <option value="">Seleccione Eficiencia</option>
+                                                <option value="Baja">Baja</option>
+                                                <option value="Media">Media</option>
+                                                <option value="Alta">Alta</option>
+                                            </select>
+
+                                            <label class="" style="margin-left: 2%;">Efectividad:</label>                                    
+                                            <input id="efectividad_control" readonly required type="text" name="efectividad_controles" style="width: 90%; margin-left: 2%;" class="form-control" />
+                                    </div>
+                                    <br>                                    
+                                    <div class="table-responsive" style="height: 270px;border: 1px dashed #9ea2ad;">
+                                        <label class="" style="margin-left: 2%; margin-top: 4%;">Frecuencia Monitoreo:</label>                                    
+                                        <select id="frecuencia_monitoreo" name="frecuencias_monitoreos" required style="margin-left: 2%; width: 90%;" class="form-control">
+                                            <option value="">Seleccione una Frecuencia</option>
+                                                <option value="Múltiples veces al día">Múltiples veces al día</option>
+                                                <option value="Diario">Diario</option>
+                                                <option value="Semanal">Semanal</option>
+                                                <option value="Quincenal">Quincenal</option>
+                                                <option value="Mensual">Mensual</option>
+                                                <option value="Trimestral">Trimestral</option>
+                                                <option value="Anual">Anual</option>
+                                                <option value="Cuando ocurra">Cuando ocurra</option>
+                                        </select>
+
+                                        <label class="" style="margin-left: 2%;">Fecha de Inicio:</label>                                    
+                                        <input type="text" required class="form-control" id="kt_datepicker_1" name="fecha_inicio" readonly="" placeholder="Seleccione una fecha">
+                                        
+
+                                        <label class="" style="margin-left: 2%;">Fecha de Término:</label>    
+                                        <input type="text" required class="form-control" id="kt_datepicker_2" name="fecha_termino" readonly="" placeholder="Seleccione una fecha">                                
+                                        
+                                        <br />                                     
+                                        <div id="link_evidencia"></div>
+                                        <div class="custom-file" style="margin-left: 2%; width: 90%;">
+                                            
+                                            <input required type="file" class="custom-file-input" name="evidencia" id="customFile">
+                                            <label class="custom-file-label" style="text-align: left; font-size: 9px;" for="customFile">Evidencia</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                            <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg kt-separator--portlet-fit" style="border-bottom: 1px solid #9ea2ad !important;"></div>
+                        </div>
+                        
+
+                        {%include 'includes/matrizResidual.html'%}
+                        <div class="kt-portlet__foot">
+                            
+                        </div>                    
+                    
+
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Content -->
+</div>
+{% endblock %}
+
+{% block extra_javascript %}
+<script src="{% static 'core/assets/js/getCookie.js' %}" type="text/javascript"></script>
+<script src="{% static 'core/assets/js/pages/custom/wizard/wizard-1.js' %}" type="text/javascript"></script>
+<script src="{% static 'core/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js' %}" type="text/javascript"></script>
+<script src="{% static 'controles/js/controles.js' %}" type="text/javascript"></script>
+<script src="{% static 'controles/js/limpiar.js' %}" type="text/javascript"></script>
+<script src="{% static 'controles/js/registrarControl.js' %}" type="text/javascript"></script>
+<script src="{% static 'controles/js/magnitudNivel.js' %}" type="text/javascript"></script>
+
+<script src="{% static 'core/assets/js/pages/crud/forms/widgets/select2.js' %}" type="text/javascript"></script>
+<!-- ARCHIVOS DATATABLE -->
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/jquery.dataTables.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'core/datatable/css/buttons.dataTables.min.css' %}">
+<!-- FIN ARCHIVOS DATATABLE -->
+<!-- ARCHIVOS DATATABLE -->
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/jszip.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/pdfmake.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'core/datatable/js/vfs_fonts.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" language="javascript"src="{% static 'core/datatable/createDatatable.js' %}"></script>
+<!-- FIN ARCHIVOS DATATABLE -->
+
+<script>
+    $(document).ready(function(){
+        $(".dual-listbox__search").attr("placeholder", "Buscar");
+        createDatatable("id-table-controles");
+    })
+</script>
+
+{% endblock %}

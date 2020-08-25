@@ -1,0 +1,141 @@
+<div class="kt-container  kt-grid__item kt-grid__item--fluid" id="riesgo-residual" style="display: block;">
+                <div class="row">
+            <div class="col-md-6">
+
+                <!--begin::Portlet-->
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                <b>Evaluación Riesgos Residuales</b>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!--begin::Form-->
+                    <form class="kt-form" method="POST" id="id-form-riesgos-residual" action="{% url 'save_matriz_residual' %}">
+                    {% csrf_token %}
+                    <input type="hidden" id="id-riesgo-control-residual" name="riesgo-control-residual" />
+                        <label id="identificador-riesgo-creado-residual" name="identificador-riesgo-creado" style="display: none;"></label>
+                        <div class="kt-portlet__body">
+                            <div class="form-group form-group-last">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <table style="border-collapse: separate; border-spacing: 0 15px;">
+                                            <tr>
+                                                <td class="td-residual-probabilidad">Probabilidad</td>
+                                                <td><input type="number" required name="res_probabilidad" id="txt_res_probabilidad" min="0" max="7" class="form-control input-residual-probabilidad" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-residual">Capex</td>
+                                                <td><input id="txt_res_capex" required name="res_capex" type="number" min="0" max="7" class="form-control input-residual" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-residual">Plazo</td>
+                                                <td><input id="txt_res_plazo" required name="res_plazo" type="number" min="0" max="7" class="form-control input-residual" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-residual">Economico</td>
+                                                <td><input id="txt_res_economico" required name="res_economico" type="number" min="0" max="7" class="form-control input-residual" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-residual">SSO</td>
+                                                <td><input id="txt_res_sso" required name="res_sso" type="number" min="0" max="7" class="form-control input-residual" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-residual">Medioambiente</td>
+                                                <td><input id="txt_res_medioambiente" required name="res_medioambiente" type="number" min="0" max="7" class="form-control input-residual" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-residual">Comunitario</td>
+                                                <td><input id="txt_res_comunitario" required name="res_comunitario" type="number" min="0" max="7" class="form-control input-residual" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-residual">Reputacional</td>
+                                                <td><input id="txt_res_reputacional" required name="res_reputacional" type="number" min="0" max="7" class="form-control input-residual" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-residual">Legal</td>
+                                                <td><input id="txt_res_legal" required name="res_legal" type="number" min="0" max="7" class="form-control input-residual" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-residual-impacto">Impacto</td>
+                                                <td><input id="txt_res_impacto" name="res_impacto" type="number" id="txt_impacto_residual" style="text-align: center;font-weight: bold;" readonly min="1" max="7" class="form-control input-residual-impacto" /></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-lg-6" style="position: relative;">
+                                        
+                                        <button type="button" class="btn btn-outline-primary" style="width: 100%;">Matriz de Probabilidad</button>
+
+                                        <button type="button" class="btn btn-outline-primary" style="margin-top: 3%; width: 100%;">Matriz de Impacto</button>                                        
+
+                                        <table style="bottom: 0; border-collapse: separate; border-spacing: 0 15px;">
+                                            <tr>
+                                                <td class="td-residual">Magnitud Riesgo</td>
+                                                <td><input type="text" required name="res_magnitud" id="txt_res_magnitud" class="form-control input-residual-magnitud" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-residual">Nivel Riesgo</td>
+                                                <td><input type="text" required name="res_nivel" id="txt_res_nivel" class="form-control input-residual-nivel" /></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="kt-portlet__foot">
+                            <div class="kt-form__actions">
+                                <button type="button" onclick="accion()" class="btn btn-primary" id="btn-guardar-riesgo-residual">Guardar</button>
+                                <button type="button" onclick="javascript:location.reload();" class="btn btn-secondary" id="btn-cancelar-riesgo-residual">Cancelar</button>
+                                <div id="save-actions-residual">
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--end::Form-->
+                </div>
+
+                <!--end::Portlet-->
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <!--begin::Portlet-->
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                <b>Magnitud de Riesgos Residuales (MRR)</b>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!--begin::Form-->
+                    <form class="kt-form">
+                        <div class="kt-portlet__body">
+                            <div class="form-group form-group-last">
+                                <div class="row">
+                                   
+                                    {%include 'tables/residual.html'%}
+                                    
+                                </div>
+                            </div>
+                           
+                        </div>
+                      
+                    </form>
+
+                    <!--end::Form-->
+                </div>
+
+                <!--end::Portlet-->
+
+            </div>
+                </div>
+            </div>

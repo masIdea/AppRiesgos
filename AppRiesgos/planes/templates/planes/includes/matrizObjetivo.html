@@ -1,0 +1,141 @@
+<div class="kt-container  kt-grid__item kt-grid__item--fluid" id="riesgo-objetivo" style="display: block;">
+    <div class="row">
+<div class="col-md-5">
+
+    <!--begin::Portlet-->
+    <div class="kt-portlet">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">
+                    <b>Evaluación Riesgos Objetivos</b>
+                </h3>
+            </div>
+        </div>
+
+        <!--begin::Form-->
+        <form class="kt-form" method="POST" id="id-form-riesgos-objetivo" action="{% url 'save_matriz_objetivo' %}">
+        {% csrf_token %}
+        <input type="hidden" id="id-riesgo-control-objetivo" name="riesgo-control-objetivo" />
+            <label id="identificador-riesgo-creado-objetivo" name="identificador-riesgo-creado" style="display: none;"></label>
+            <div class="kt-portlet__body">
+                <div class="form-group form-group-last">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <table style="border-collapse: separate; border-spacing: 0 15px;">
+                                <tr>
+                                    <td class="td-objetivo-probabilidad">Probabilidad</td>
+                                    <td><input type="number" required name="obj_probabilidad" id="txt_obj_probabilidad" min="0" max="7" class="form-control input-objetivo-probabilidad" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-objetivo">Capex</td>
+                                    <td><input id="txt_obj_capex" required name="obj_capex" type="number" min="0" max="7" class="form-control input-objetivo" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-objetivo">Plazo</td>
+                                    <td><input id="txt_obj_plazo" required name="obj_plazo" type="number" min="0" max="7" class="form-control input-objetivo" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-objetivo">Economico</td>
+                                    <td><input id="txt_obj_economico" required name="obj_economico" type="number" min="0" max="7" class="form-control input-objetivo" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-objetivo">SSO</td>
+                                    <td><input id="txt_obj_sso" required name="obj_sso" type="number" min="0" max="7" class="form-control input-objetivo" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-objetivo">Medioambiente</td>
+                                    <td><input id="txt_obj_medioambiente" required name="obj_medioambiente" type="number" min="0" max="7" class="form-control input-objetivo" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-objetivo">Comunitario</td>
+                                    <td><input id="txt_obj_comunitario" required name="obj_comunitario" type="number" min="0" max="7" class="form-control input-objetivo" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-objetivo">Reputacional</td>
+                                    <td><input id="txt_obj_reputacional" required name="obj_reputacional" type="number" min="0" max="7" class="form-control input-objetivo" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-objetivo">Legal</td>
+                                    <td><input id="txt_obj_legal" required name="obj_legal" type="number" min="0" max="7" class="form-control input-objetivo" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-objetivo-impacto">Impacto</td>
+                                    <td><input id="txt_obj_impacto" name="obj_impacto" type="number" id="txt_impacto_objetivo" style="text-align: center;font-weight: bold;" readonly min="0" max="7" class="form-control input-objetivo-impacto" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-6" style="position: relative;">
+                            
+                            <button type="button" class="btn btn-outline-primary" style="width: 100%;">Matriz de Probabilidad</button>
+
+                            <button type="button" class="btn btn-outline-primary" style="margin-top: 3%; width: 100%;">Matriz de Impacto</button>                                        
+
+                            <table style="bottom: 0; border-collapse: separate; border-spacing: 0 15px;">
+                                <tr>
+                                    <td class="td-objetivo">Magnitud Riesgo</td>
+                                    <td><input type="text" required name="obj_magnitud" id="txt_obj_magnitud" class="form-control input-objetivo-magnitud" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-objetivo">Nivel Riesgo</td>
+                                    <td><input type="text" required name="obj_nivel" id="txt_obj_nivel" class="form-control input-objetivo-nivel" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions">
+                    <button type="button" onclick="accion()" class="btn btn-primary" id="btn-guardar-riesgo-objetivo">Guardar</button>
+                    <button type="button" onclick="javascript:location.reload();" class="btn btn-secondary" id="btn-cancelar-riesgo-objetivo">Cancelar</button>
+                    <div id="save-actions-objetivo">
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!--end::Form-->
+    </div>
+
+    <!--end::Portlet-->
+
+</div>
+
+
+<div class="col-md-7">
+
+    <!--begin::Portlet-->
+    <div class="kt-portlet">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">
+                    <b>Magnitud de Riesgos Objetivos (MRO)</b>
+                </h3>
+            </div>
+        </div>
+
+        <!--begin::Form-->
+        <form class="kt-form">
+            <div class="kt-portlet__body">
+                <div class="form-group form-group-last">
+                    <div class="row">
+                       
+                        {%include 'tables/objetivo.html'%}
+                        
+                    </div>
+                </div>
+               
+            </div>
+          
+        </form>
+
+        <!--end::Form-->
+    </div>
+
+    <!--end::Portlet-->
+
+</div>
+    </div>
+</div>

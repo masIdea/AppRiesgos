@@ -1,0 +1,773 @@
+<!--Modal detalle Riesgos-->
+<div class="modal fade" id="modal_detalle_riesgos" style="overflow-y: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <input type="hidden" id="id-tipo-nivel" />
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Riesgos Materializados - Eventos
+                    <div style="float: right;">
+                        <span style="font-size: 17px;float: left;cursor: pointer;color: dodgerblue;margin-left: 15px;" data-toggle="modal" onclick="verMatriz('DET')">Ver Matriz</span>
+                        <span style="font-size: 17px;float: right;cursor: pointer;color: dodgerblue;margin-left: 15px; font-weight: 800;" onclick="cambia_gerencia('DET')" id="span_detalle">DET</span>
+                     </div>                    
+                </h5>                                 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <span id="cargando-datos-tabla" style="margin-bottom: 2%;margin-left: 1%;font-weight: 900; display: none;">Cargando Datos ...</span>
+                        <div class="col-md-12">                            
+                            <div class="table-responsive">                                
+                                <table class="table" id="id-tb-gerencias-riesgos-criticos">
+                                    <thead>
+                                        <th>#</th>
+                                        <th>Gerencia</th>
+                                        <th>Monto KUS$</th>
+                                        <th>% Monto</th>
+                                        <th>Cantidad</th>
+                                        <th>% Cantidad</th>
+                                        <th>Acciones</th>
+                                        <th>Indicador</th>
+                                    </thead>
+                                    <tbody id="id-cuerpo-tb-gerencias-riesgos-criticos">                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <span id="id-spn-filtro-seleccionado" style="font-size: 24px; float: left;"></span>
+                            <div class="form-group" style="float:left;margin-left: 2%;margin-top: 9px;width: 30%;">                                                                                                   
+                                <input type="hidden" value="riesgos" id="id-txt-tipo" />
+                                <label class="kt-radio kt-radio--bold kt-radio--success">
+                                    <input type="radio" name="tipo-riesgo-detalle" class="tipo-riesgos" value="eventos" id="id-check-eventos"> Eventos
+                                    <span></span>
+                                </label>
+                                <label class="kt-radio kt-radio--bold kt-radio--brand" style="margin-left: 4%;">
+                                    <input type="radio" checked name="tipo-riesgo-detalle" class="tipo-riesgos" value="riesgos" id="id-check-riesgos"> Riesgos
+                                    <span></span>
+                                </label>      
+                                <label class="kt-radio kt-radio--bold kt-radio--warning" style="margin-left: 4%;">
+                                    <input type="radio" name="tipo-riesgo-detalle" class="tipo-riesgos" value="riesgos" id="id-check-directic"> Directic
+                                    <span></span>
+                                </label>                           
+                            </div>
+                        </div>                        
+                        <br />
+                        <div class="col-md-6">
+                            <!-- INICIO GRAFICO -->
+                                <div class="kt-portlet kt-portlet--height-fluid">
+                                    <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                        <div class="kt-widget14__header">
+                                            <h3 class="kt-widget14__title" id="id-gerencia-h3-criticos">
+                                                Causas de Riesgos Críticos
+                                            </h3>
+                                            <span class="kt-widget14__desc">
+                                                Cantidad de Veces
+                                            </span>
+                                        </div>
+                                        <div class="kt-widget14__content">
+                                            <div style="float: right; display: none;" id="loading-causas-riesgos-criticos" class="kt-spinner kt-spinner--sm kt-spinner--success"></div>
+                                            <div class="kt-widget14__chart">
+                                                <div id="grafico_1" style="height: 200px; width: 200px;"></div>
+                                            </div>
+                                            <div class="kt-widget14__legends" style="margin-left: -7%;" id="cuerpo-contenedor-causas"> 
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- FIN GRAFICO -->                                                       
+                        </div>
+                        <div class="col-md-6">
+                            <!-- INICIO GRAFICO -->
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title" id="id-gerencia-h3-valorizadas">
+                                            Causas Valorizadas
+                                        </h3>
+                                        <span class="kt-widget14__desc">
+                                            Valores en KUS$
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">
+                                        <div style="float: right; display: none;" id="loading-causas-riesgos-criticos-valorizados" class="kt-spinner kt-spinner--sm kt-spinner--success"></div>
+                                        <div class="kt-widget14__chart">
+                                            <div id="grafico_2" style="height: 200px; width: 200px;"></div>
+                                        </div>
+                                        <div class="kt-widget14__legends" style="margin-left: -7%;" id="cuerpo-contenedor-causas-valorizadas">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- FIN GRAFICO -->  
+                        </div>
+                        <div class="col-md-6">
+                            <!-- INICIO GRAFICO -->
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title" id="id-gerencia-h3-sup-dir">
+                                            Direcciones/SuperIntendencias Con Más Riesgos
+                                        </h3>
+                                        <span class="kt-widget14__desc" id="id-gerencia-h3-sub-sup-dir">
+                                            Riesgos Críticos
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">
+                                        <div style="float: right; display: none;" id="loading-causas-riesgos-direcciones" class="kt-spinner kt-spinner--sm kt-spinner--success"></div>
+                                        <div class="kt-widget14__chart">
+                                            <div id="grafico_3" style="height: 200px; width: 200px;"></div>
+                                        </div>
+                                        <div class="kt-widget14__legends" id="id-contenedor-riesgos-direcciones">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- FIN GRAFICO -->  
+                        </div>
+                        <div class="col-md-6">
+                            <!-- INICIO GRAFICO -->
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title" id="id-gerencia-h3-sup-dir-gastos">
+                                            Direcciones/SuperIntendencias Con Mayores Gastos por Riesgos
+                                        </h3>
+                                        <span class="kt-widget14__desc">
+                                            Valores en KUS$
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">
+                                        <div style="float: right; display: none;" id="loading-causas-riesgos-direcciones-valorizadas" class="kt-spinner kt-spinner--sm kt-spinner--success"></div>
+                                        <div class="kt-widget14__chart">
+                                            <div id="grafico_4" style="height: 200px; width: 200px;"></div>
+                                        </div>
+                                        <div class="kt-widget14__legends" id="id-contenedor-riesgos-direcciones-valorizados">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- FIN GRAFICO -->  
+                        </div>
+                        <div class="col-md-12">
+                            <span id="" style="font-size: 24px; float: left;">Eventos</span>
+                        </div>  
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleSelect1">Campo</label>
+                                <select class="form-control" id="id-select-campos" name="select-campos">
+                                    <option value="" selected disabled>Seleccione</option>
+                                    <option value="fecha">Fecha</option>
+                                    <option value="gerencia">Gerencia</option>
+                                    <option value="superintendencia">SuperIntendencia</option>
+                                    <option value="unidadoperacional">Unidad Operacional</option>
+                                    <option value="area">Área</option>
+                                    <option value="sector">Sector</option>
+                                    <option value="lugar">Lugar</option>
+                                    <option value="tipoobjeto">Tipo Objeto</option>
+                                    <option value="evento">Evento</option>
+                                    <option value="nivelimpacto">Nivel Impacto</option>
+                                    <option value="familia">Familia</option>
+                                    <option value="subproceso">SubProceso</option>
+                                    <option value="clasificacion">Clasificación</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleSelect1">Datos</label>
+                                <select class="form-control" id="id-select-datos-campos" name="select-datos-campos">
+                                    
+                                </select>
+                            </div>
+                        </div>                        
+                        <div class="col-md-6" style="display:none;" id="id-div-grafico-1-eventos">
+                            
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title">
+                                            <span id="id-title-chart-cantidad"></span>
+                                        </h3>
+                                        <span class="kt-widget14__desc" id="id-sub-title-chart-cantidad">
+                                            
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">
+                                        <div style="float: right; display: none;" id="loading-causas-riesgos-direcciones-valorizadas" class="kt-spinner kt-spinner--sm kt-spinner--success"></div>
+                                        <div class="chart-container" style="position: relative; height:50vh; width:90vw" id="id-div-canvas-cantidad">
+                                            <canvas id="chart-area-cantidad"></canvas>
+                                        </div>                                            
+                                        
+                                        <div class="kt-widget14__legends" id="a">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                     
+                        </div>
+
+
+                        <div class="col-md-6" style="display:none;" id="id-div-grafico-2-eventos">
+                            
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title">
+                                            <span id="id-title-chart-montokus"></span>
+                                        </h3>
+                                        <span class="kt-widget14__desc" id="id-sub-title-chart-montokus">
+                                            
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">                                        
+                                        <div class="chart-container" style="position: relative; height:50vh; width:90vw" id="id-div-canvas-montos">
+                                            <canvas id="chart-area-montokus"></canvas>
+                                        </div>                                            
+                                        
+                                        <div class="kt-widget14__legends" id="b">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--end::Modal detalle Riesgos-->
+
+
+<!--Modal TEST-->
+<div class="modal fade" id="matriz_riesgos" style="overflow-y: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="height: 82px;">
+                <h5 class="modal-title" id="tituloVerMatrices"></h5>
+                
+                <input type="hidden" id="id-txt-gerencia-matriz" name="txt-gerencia-matriz" />
+                <input type="hidden" id="id-txt-gerencia-eventos" name="txt-gerencia-eventos" />                
+                <div class="form-group" style="position: absolute;top: 9%;">
+                    <label class="kt-checkbox kt-checkbox--success">
+                        <input id="id-chk-directic" checked name="chk-directic" type="checkbox"> Directic
+                        <span></span>
+                    </label>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+                
+            </div>
+            
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-4">        
+                            <div style="display: none; position: absolute; top: 50%; left: 25%;" class="kt-spinner kt-spinner--sm kt-spinner--danger loading-matrices"></div>                    
+                            {%include 'tables_dashboard/inherente.html'%}
+                            
+                        </div>
+                        <div class="col-md-4">
+                            <div style="display: none; position: absolute; top: 50%; left: 25%;" class="kt-spinner kt-spinner--sm kt-spinner--danger loading-matrices"></div>
+                            {%include 'tables_dashboard/residual.html'%}
+                            
+                        </div>
+                        <div class="col-md-4">        
+                            <div style="display: none; position: absolute; top: 50%; left: 25%;" class="kt-spinner kt-spinner--sm kt-spinner--danger loading-matrices"></div>                    
+                            {%include 'tables_dashboard/objetivo.html'%}
+                            
+                        </div>
+                        <div class="col-md-12">
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Detalle Matriz Riesgos -->
+<div class="modal fade" id="id-modal-detalle-matriz" style="overflow-y: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="id-titulo-detalle-matriz"></h5>                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table" id="id-tb-matriz-detalle">
+                                <thead>
+                                    <tr>
+                                        <th>Riesgo</th>
+                                        <th>Gerencia</th>
+                                        <th>Dirección</th>
+                                        <th>Dueño</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="id-cuerpo-detalle-riesgos-matriz">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin Modal Detalle Matriz Riesgos -->
+
+
+<!--**********************MODAL NIVEL 4**********************-->
+<!--Modal detalle Riesgos-->
+<div class="modal fade" id="modal_nivel" style="overflow-y: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Riesgos y Eventos Materializados <span id="id-span-dato-nivel-seleccionado"></span>
+                    <div style="float: right;">
+                       <span style="font-size: 17px;float: left;cursor: pointer;color: dodgerblue;margin-left: 15px;" id="span_detalle" onclick="verMatriz(null)">Ver Matriz</span>
+                       <span style="font-size: 17px;float: right;cursor: pointer;color: dodgerblue;margin-left: 15px; font-weight: 800;" onclick="$('#modal_nivel').modal('hide')" id="span_detalle">Volver</span>
+                    </div>
+                </h5>                                 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">                            
+                            <div class="table-responsive">
+                                <table class="table" id="id-tb-niveles">
+                                    <thead>
+                                        <th>#</th>
+                                        <th>Dirección/Sup.Intendencia</th>
+                                        <th>Monto KUS$</th>
+                                        <th>% Monto</th>
+                                        <th>Cantidad</th>
+                                        <th>% Cantidad</th>
+                                        <th>Acciones</th>
+                                        <th>Indicador</th>
+                                    </thead>
+                                    <tbody id="id-cuerpo-nivel">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- INICIO GRAFICO -->
+                                <div class="kt-portlet kt-portlet--height-fluid">
+                                    <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                        <div class="kt-widget14__header">
+                                            <h3 class="kt-widget14__title">
+                                                Causas de Riesgos Críticos
+                                            </h3>
+                                            <span class="kt-widget14__desc">
+                                                Cantidad de Veces
+                                            </span>
+                                        </div>
+                                        <div class="kt-widget14__content">
+                                            <div class="kt-widget14__chart">
+                                                <div id="grafico_11" style="height: 200px; width: 200px;"></div>
+                                            </div>
+                                            <div class="kt-widget14__legends" style="margin-left: -7%;"> 
+                                                <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                    <span class="kt-widget14__bullet kt-bg-success"></span>
+                                                    <span class="kt-widget14__stats">Falla equipo A</span>
+                                                </div>
+                                                <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                    <span class="kt-widget14__bullet kt-bg-danger" style="background-color: #fd3995; color: #fd3995;"></span>
+                                                    <span class="kt-widget14__stats">Falla equipo B</span>
+                                                </div>
+                                                <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                    <span class="kt-widget14__bullet kt-bg-warning"></span>
+                                                    <span class="kt-widget14__stats">Mantenimiento deficiente</span>
+                                                </div>
+                                                <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                    <span class="kt-widget14__bullet kt-bg-brand"></span>
+                                                    <span class="kt-widget14__stats">Atraso en la llegada de los suministros</span>
+                                                </div>
+                                                <div class="kt-widget14__legend">
+                                                    <span class="kt-widget14__bullet kt-bg-info" style="background-color: #36a3f7 !important;"></span>
+                                                    <span class="kt-widget14__stats">Fugas, sobrecalentamientos</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- FIN GRAFICO -->                                                       
+                        </div>
+                        <div class="col-md-6">
+                            <!-- INICIO GRAFICO -->
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title">
+                                            Causas Valorizadas
+                                        </h3>
+                                        <span class="kt-widget14__desc">
+                                            Valores en KUS$
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">
+                                        <div class="kt-widget14__chart">
+                                            <div id="grafico_22" style="height: 200px; width: 200px;"></div>
+                                        </div>
+                                        <div class="kt-widget14__legends" style="margin-left: -7%;">
+                                            <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                <span class="kt-widget14__bullet kt-bg-success"></span>
+                                                <span class="kt-widget14__stats">Deficiente Análisis y modelación</span>
+                                            </div>
+                                            <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                <span class="kt-widget14__bullet kt-bg-danger" style="background-color: #fd3995; color: #fd3995;"></span>
+                                                <span class="kt-widget14__stats">Subestimación de los plazos de licitación</span>
+                                            </div>
+                                            <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                <span class="kt-widget14__bullet kt-bg-warning"></span>
+                                                <span class="kt-widget14__stats">Plan de ejecución deficiente</span>
+                                            </div>
+                                            <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                <span class="kt-widget14__bullet kt-bg-brand"></span>
+                                                <span class="kt-widget14__stats">Falla redes eléctricas</span>
+                                            </div>
+                                            <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                <span class="kt-widget14__bullet kt-bg-info" style="background-color: #36a3f7 !important;"></span>
+                                                <span class="kt-widget14__stats">Falla correa</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- FIN GRAFICO -->  
+                        </div>
+                        <div class="col-md-6">
+                            <!-- INICIO GRAFICO -->
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title">
+                                            Direcciones/SuperIntendencias Con Más Riesgos
+                                        </h3>
+                                        <span class="kt-widget14__desc">
+                                            Riesgos Críticos
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">
+                                        <div class="kt-widget14__chart">
+                                            <div id="grafico_33" style="height: 200px; width: 200px;"></div>
+                                        </div>
+                                        <div class="kt-widget14__legends">
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-success"></span>
+                                                <span class="kt-widget14__stats">Dirección Proyectos Planta e Infraestr.</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-danger" style="background-color: #fd3995; color: #fd3995;"></span>
+                                                <span class="kt-widget14__stats">Suptcia. Mina Norte</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-warning"></span>
+                                                <span class="kt-widget14__stats">Suptcia. Ingeniería Fundición</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-brand"></span>
+                                                <span class="kt-widget14__stats">Suptcia. Mantenimiento - GFUN</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-info" style="background-color: #36a3f7 !important;"></span>
+                                                <span class="kt-widget14__stats">Dirección Proyecto Diamante</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- FIN GRAFICO -->  
+                        </div>
+                        <div class="col-md-6">
+                            <!-- INICIO GRAFICO -->
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title">
+                                            Direcciones/SuperIntendencias Con Mayores Gastos por Riesgos
+                                        </h3>
+                                        <span class="kt-widget14__desc">
+                                            Valores en KUS$
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">
+                                        <div class="kt-widget14__chart">
+                                            <div id="grafico_44" style="height: 200px; width: 200px;"></div>
+                                        </div>
+                                        <div class="kt-widget14__legends">
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-success"></span>
+                                                <span class="kt-widget14__stats">Dirección Proyectos Recursos Norte</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-danger" style="background-color: #fd3995; color: #fd3995;"></span>
+                                                <span class="kt-widget14__stats">Suptcia. Mina Central</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-warning"></span>
+                                                <span class="kt-widget14__stats">Suptcia. Mantenimiento Mina</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-brand"></span>
+                                                <span class="kt-widget14__stats">Suptcia. Planta de Flotación de Escoria</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-info" style="background-color: #36a3f7 !important;"></span>
+                                                <span class="kt-widget14__stats">Suptcia. Ingeniería Fundición</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- FIN GRAFICO -->  
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--**********************MODAL NIVEL 5**********************-->
+<!--Modal detalle Riesgos-->
+<div class="modal fade" id="modal_nivel_5" style="overflow-y: scroll;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Riesgos Materializados - Eventos <span id="id-span-dato-nivel-5-seleccionado"></span>
+                    <div style="float: right">
+                        <span style="font-size: 17px;float: left;cursor: pointer;color: dodgerblue;margin-left: 15px;" id="span_detalle" onclick="verMatriz(0)">Ver Matriz</span>
+                        <span style="font-size: 17px;float: right;cursor: pointer;color: dodgerblue;margin-left: 15px; font-weight: 800;" onclick="$('#modal_nivel_5').modal('hide')" id="span_detalle">Volver</span>
+                    </div>
+
+                </h5>                                 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">                            
+                            <div class="table-responsive">
+                                <table class="table" id="id-tb-nivel-5">
+                                    <thead>
+                                        <th>#</th>
+                                        <th>Dirección/Sup.Intendencia</th>
+                                        <th>Monto KUS$</th>
+                                        <th>% Monto</th>
+                                        <th>Cantidad</th>
+                                        <th>% Cantidad</th>
+                                        <th>Acciones</th>
+                                        <th>Indicador</th>
+                                    </thead>
+                                    <tbody id="id-cuerpo-nivel-5">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- INICIO GRAFICO -->
+                                <div class="kt-portlet kt-portlet--height-fluid">
+                                    <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                        <div class="kt-widget14__header">
+                                            <h3 class="kt-widget14__title">
+                                                Causas de Riesgos Críticos
+                                            </h3>
+                                            <span class="kt-widget14__desc">
+                                                Cantidad de Veces
+                                            </span>
+                                        </div>
+                                        <div class="kt-widget14__content">
+                                            <div class="kt-widget14__chart">
+                                                <div id="grafico_111" style="height: 200px; width: 200px;"></div>
+                                            </div>
+                                            <div class="kt-widget14__legends" style="margin-left: -7%;"> 
+                                                <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                    <span class="kt-widget14__bullet kt-bg-success"></span>
+                                                    <span class="kt-widget14__stats">Falla equipo A</span>
+                                                </div>
+                                                <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                    <span class="kt-widget14__bullet kt-bg-danger" style="background-color: #fd3995; color: #fd3995;"></span>
+                                                    <span class="kt-widget14__stats">Falla equipo B</span>
+                                                </div>
+                                                <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                    <span class="kt-widget14__bullet kt-bg-warning"></span>
+                                                    <span class="kt-widget14__stats">Mantenimiento deficiente</span>
+                                                </div>
+                                                <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                    <span class="kt-widget14__bullet kt-bg-brand"></span>
+                                                    <span class="kt-widget14__stats">Atraso en la llegada de los suministros</span>
+                                                </div>
+                                                <div class="kt-widget14__legend">
+                                                    <span class="kt-widget14__bullet kt-bg-info" style="background-color: #36a3f7 !important;"></span>
+                                                    <span class="kt-widget14__stats">Fugas, sobrecalentamientos</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- FIN GRAFICO -->                                                       
+                        </div>
+                        <div class="col-md-6">
+                            <!-- INICIO GRAFICO -->
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title">
+                                            Causas Valorizadas
+                                        </h3>
+                                        <span class="kt-widget14__desc">
+                                            Valores en KUS$
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">
+                                        <div class="kt-widget14__chart">
+                                            <div id="grafico_222" style="height: 200px; width: 200px;"></div>
+                                        </div>
+                                        <div class="kt-widget14__legends" style="margin-left: -7%;">
+                                            <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                <span class="kt-widget14__bullet kt-bg-success"></span>
+                                                <span class="kt-widget14__stats">Deficiente Análisis y modelación</span>
+                                            </div>
+                                            <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                <span class="kt-widget14__bullet kt-bg-danger" style="background-color: #fd3995; color: #fd3995;"></span>
+                                                <span class="kt-widget14__stats">Subestimación de los plazos de licitación</span>
+                                            </div>
+                                            <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                <span class="kt-widget14__bullet kt-bg-warning"></span>
+                                                <span class="kt-widget14__stats">Plan de ejecución deficiente</span>
+                                            </div>
+                                            <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                <span class="kt-widget14__bullet kt-bg-brand"></span>
+                                                <span class="kt-widget14__stats">Falla redes eléctricas</span>
+                                            </div>
+                                            <div class="kt-widget14__legend" style="margin-left: 15%;">
+                                                <span class="kt-widget14__bullet kt-bg-info" style="background-color: #36a3f7 !important;"></span>
+                                                <span class="kt-widget14__stats">Falla correa</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- FIN GRAFICO -->  
+                        </div>
+                        <div class="col-md-6" id="id-graf-dir-1">
+                            <!-- INICIO GRAFICO -->
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title">
+                                            Direcciones/SuperIntendencias Con Más Riesgos
+                                        </h3>
+                                        <span class="kt-widget14__desc">
+                                            Riesgos Críticos
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">
+                                        <div class="kt-widget14__chart">
+                                            <div id="grafico_3" style="height: 200px; width: 200px;"></div>
+                                        </div>
+                                        <div class="kt-widget14__legends">
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-success"></span>
+                                                <span class="kt-widget14__stats">Dirección Proyectos Planta e Infraestr.</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-danger" style="background-color: #fd3995; color: #fd3995;"></span>
+                                                <span class="kt-widget14__stats">Suptcia. Mina Norte</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-warning"></span>
+                                                <span class="kt-widget14__stats">Suptcia. Ingeniería Fundición</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-brand"></span>
+                                                <span class="kt-widget14__stats">Suptcia. Mantenimiento - GFUN</span>
+                                            </div>
+                                            <div class="kt-widget14__legend">
+                                                <span class="kt-widget14__bullet kt-bg-info" style="background-color: #36a3f7 !important;"></span>
+                                                <span class="kt-widget14__stats">Dirección Proyecto Diamante</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- FIN GRAFICO -->  
+                        </div>
+                        <div class="col-md-6" id="id-graf-dir-2">
+                            <!-- INICIO GRAFICO -->
+                            <div class="kt-portlet kt-portlet--height-fluid">
+                                <div class="kt-widget14" style="border: 2px solid whitesmoke;">
+                                    <div class="kt-widget14__header">
+                                        <h3 class="kt-widget14__title">
+                                            Direcciones/SuperIntendencias Con Mayores Gastos por Riesgos
+                                        </h3>
+                                        <span class="kt-widget14__desc">
+                                            Valores en KUS$
+                                        </span>
+                                    </div>
+                                    <div class="kt-widget14__content">
+                                        <div class="kt-widget14__chart">
+                                            <div id="grafico_4" style="height: 200px; width: 200px;"></div>
+                                        </div>
+                                        <div class="kt-widget14__legends">
+                                            
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- FIN GRAFICO -->  
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
