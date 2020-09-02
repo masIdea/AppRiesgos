@@ -7,7 +7,12 @@
 {% endblock %}
 
 {% block page_content %}
+
+
+
 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+    
 
     <!-- begin:: Content Head -->
     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
@@ -30,105 +35,509 @@
 
     <!-- begin:: Content -->
     <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+        
         <div class="row">
             <div class="col-md-12">
 
-                <!--begin::Portlet-->
-                <div class="kt-portlet">                    
-
-                    <!--begin::Form-->
-                    <form class="kt-form" method="POST" action="{% url 'save_kpi' %}">
-                        {% csrf_token %}
-                        <div class="kt-portlet__body">                            
-                            <div class="form-group">
-                                <label>Tipo</label>                                
-                                <select class="form-control" name="tipo" id="id-tipo">
-                                    <option value="" selected>Seleccione una Opción</option>
-                                    <option value="Costo Presupuesto">Costo Presupuesto</option>
-                                    <option value="Producción">Producción</option>
-                                    <option value="Seguridad">Seguridad</option>
-                                    <option value="Ambiental">Ambiental</option>
-                                </select>
-
-                                <label style="margin-top: 2%;">Valor</label>
-                                <input type="number" class="form-control" name="valor" id="id-valor">                                
-
-                                <label style="margin-top: 2%;">Porcentaje de Avance (%)</label>
-                                <input type="number" step="0.1" max="100" min="0" class="form-control" name="porcavance" id="id-porc-avance">                                
-                                                                                                
-                            </div>
-                        </div>
-                        <div class="kt-portlet__foot">
-                            <div class="kt-form__actions">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                <button type="reset" class="btn btn-secondary">Cancelar</button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <div class="kt-portlet kt-portlet--mobile">
-                        <div class="kt-portlet__head kt-portlet__head--lg">
-                            <div class="kt-portlet__head-label">
-                                <span class="kt-portlet__head-icon">
-                                    <i class="kt-font-brand flaticon2-line-chart"></i>
-                                </span>
-                                <h3 class="kt-portlet__head-title">
-                                    Registros
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="kt-portlet__body">
-
-                            <!--begin: Datatable -->                            
-                            <table class="table" id="id-table-kpis">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Tipo
-                                        </th>
-                                        <th>
-                                            Valor
-                                        </th>
-                                        <th>
-                                            % Avance
-                                        </th>
-                                        <th>
-                                            Mes
-                                        </th>
-                                        <th>
-                                            Ano
-                                        </th>
-                                    </tr>                                       
-                                </thead>
-                                <tbody id="cuerpo_kpis">
-                                    {% for kpi in registros_kpi %}
-                                        <tr>
-                                            <td>
-                                                {{kpi.tipo}}
-                                            </td>
-                                            <td>
-                                                {{kpi.valor}}
-                                            </td>
-                                            <td>
-                                                {{kpi.porcavance}}
-                                            </td>
-                                            <td>
-                                                {{kpi.mes}}
-                                            </td>
-                                            <td>
-                                                {{kpi.ano}}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-
-                            <!--end: Datatable -->
+                <div class="kt-portlet ">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                KPI's Dashboard
+                            </h3>
                         </div>
                     </div>
+                    <div class="kt-portlet__body">
 
-                    <!--end::Form-->
+                        <!--begin::Accordion-->
+                        <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample6">
+                            <div class="card">
+                                <div class="card-header" id="headingOne6">
+                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseOne6" aria-expanded="false" aria-controls="collapseOne6">
+                                        <i class="flaticon-pie-chart-1"></i> KPI's Cabecera
+                                    </div>
+                                </div>
+                                <div id="collapseOne6" class="collapse" aria-labelledby="headingOne6" data-parent="#accordionExample6" style="">
+                                    <div class="card-body">
+                                        <form class="kt-form" method="POST" action="{% url 'save_kpi' %}">
+                                            {% csrf_token %}
+                                            <div class="kt-portlet__body">                                                                           
+                                                <div class="form-group">
+                                                    <label>Tipo</label>                                
+                                                    <select class="form-control" name="tipo" id="id-tipo">
+                                                        <option value="" selected>Seleccione una Opción</option>
+                                                        <option value="Costo Presupuesto">Costo Presupuesto</option>
+                                                        <option value="Producción">Producción</option>
+                                                        <option value="Seguridad">Seguridad</option>
+                                                        <option value="Ambiental">Ambiental</option>
+                                                    </select>
+                    
+                                                    <label style="margin-top: 2%;">Valor</label>
+                                                    <input type="number" class="form-control" name="valor" id="id-valor">                                
+                    
+                                                    <label style="margin-top: 2%;">Porcentaje de Avance (%)</label>
+                                                    <input type="number" step="0.1" max="100" min="0" class="form-control" name="porcavance" id="id-porc-avance">                                
+                                                                                                                    
+                                                </div>
+                                            </div>
+                                            <div class="kt-portlet__foot">
+                                                <div class="kt-form__actions">
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                    <button type="reset" class="btn btn-secondary">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                    
+                                        <div class="kt-portlet kt-portlet--mobile">
+                                            <div class="kt-portlet__head kt-portlet__head--lg">
+                                                <div class="kt-portlet__head-label">
+                                                    <span class="kt-portlet__head-icon">
+                                                        <i class="kt-font-brand flaticon2-line-chart"></i>
+                                                    </span>
+                                                    <h3 class="kt-portlet__head-title">
+                                                        Registros
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="kt-portlet__body">
+                    
+                                                <!--begin: Datatable -->                            
+                                                <table class="table" id="id-table-kpis">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                Tipo
+                                                            </th>
+                                                            <th>
+                                                                Valor
+                                                            </th>
+                                                            <th>
+                                                                % Avance
+                                                            </th>
+                                                            <th>
+                                                                Mes
+                                                            </th>
+                                                            <th>
+                                                                Ano
+                                                            </th>
+                                                        </tr>                                       
+                                                    </thead>
+                                                    <tbody id="cuerpo_kpis">
+                                                        {% for kpi in registros_kpi %}
+                                                            <tr>
+                                                                <td>
+                                                                    {{kpi.tipo}}
+                                                                </td>
+                                                                <td>
+                                                                    {{kpi.valor}}
+                                                                </td>
+                                                                <td>
+                                                                    {{kpi.porcavance}}
+                                                                </td>
+                                                                <td>
+                                                                    {{kpi.mes}}
+                                                                </td>
+                                                                <td>
+                                                                    {{kpi.ano}}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                    
+                                                <!--end: Datatable -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo6">
+                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseTwo6" aria-expanded="false" aria-controls="collapseTwo6">
+                                        <i class="flaticon2-notification"></i> Colores Indicadores
+                                    </div>
+                                </div>
+                                <div id="collapseTwo6" class="collapse" aria-labelledby="headingTwo6" data-parent="#accordionExample6">
+                                    <div class="card-body">
+                                        <form class="kt-form" method="POST" action="{% url 'save_colores' %}">
+                                            {% csrf_token %}
+                                            <div class="kt-portlet__body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>Tipo</label><br>
+                                                        <label style="font-weight: 800;">Atraso Proyecto</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>Riesgo</label>
+                                                        <select class="form-control" id="id-select-riesgo-atraso" name="name-select-riesgo-atraso">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>Vulnerabilidad</label>
+                                                        <select class="form-control" id="id-select-vulnerabilidad-atraso" name="name-select-vulnerabilidad-atraso">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label></label><br>
+                                                        <label style="font-weight: 800;">Probidad y Transparencia</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-riesgo-probidad" name="name-select-riesgo-probidad">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-vulnerabilidad-probidad" name="name-select-vulnerabilidad-probidad">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label></label><br>
+                                                        <label style="font-weight: 800;">Falta Agua</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-riesgo-agua" name="name-select-riesgo-agua">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-vulnerabilidad-agua" name="name-select-vulnerabilidad-agua">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label></label><br>
+                                                        <label style="font-weight: 800;">Falla Equipo Crítico</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-riesgo-equipo" name="name-select-riesgo-equipo">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-vulnerabilidad-equipo" name="name-select-vulnerabilidad-equipo">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label></label><br>
+                                                        <label style="font-weight: 800;">Incendio</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-riesgo-incendio" name="name-select-riesgo-incendio">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-vulnerabilidad-incendio" name="name-select-vulnerabilidad-incendio">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label></label><br>
+                                                        <label style="font-weight: 800;">Pandemia</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-riesgo-pandemia" name="name-select-riesgo-pandemia">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-vulnerabilidad-pandemia" name="name-select-vulnerabilidad-pandemia">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label></label><br>
+                                                        <label style="font-weight: 800;">Falta Producción</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-riesgo-produccion" name="name-select-riesgo-produccion">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-vulnerabilidad-produccion" name="name-select-vulnerabilidad-produccion">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label></label><br>
+                                                        <label style="font-weight: 800;">Cumplimiento Transformación Cultural</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-riesgo-cultural" name="name-select-riesgo-cultural">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-vulnerabilidad-cultural" name="name-select-vulnerabilidad-cultural">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label></label><br>
+                                                        <label style="font-weight: 800;">Otros</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-riesgo-otros" name="name-select-riesgo-otros">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label></label>
+                                                        <select class="form-control" id="id-select-vulnerabilidad-otros" name="name-select-vulnerabilidad-otros">
+                                                            <option value="" selected disabled>Color</option>
+                                                            <option value="green" style="background-color:green; color:white;">Verde</option>
+                                                            <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
+                                                            <option value="red" style="background-color:red; color:white;">Rojo</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                
+                                                
+                                            </div>
+                                            <div class="kt-portlet__foot">
+                                                <div class="kt-form__actions">
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                    <button type="reset" class="btn btn-secondary">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree6">
+                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6">
+                                        <i class="flaticon2-chart"></i> KUS$ NETO Con Mitigación
+                                    </div>
+                                </div>
+                                <div id="collapseThree6" class="collapse" aria-labelledby="headingThree6" data-parent="#accordionExample6">
+                                    <div class="card-body">
+                                        <form class="kt-form" method="POST" action="{% url 'save_kus_neto' %}">
+                                            {% csrf_token %}
+                                            <div class="kt-portlet__body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>Tipo</label><br>
+                                                        <label style="font-weight: 800;">KUS$ NETO</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>Valor</label>
+                                                        <input type="number" name="name-kus-neto" id="id-kus-neto" class="form-control" />
+                                                    </div>
+                                                </div>                                                
+                                                
+                                            </div>
+                                            <div class="kt-portlet__foot">
+                                                <div class="kt-form__actions">
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                    <button type="reset" class="btn btn-secondary">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <div class="kt-portlet kt-portlet--mobile">
+                                            <div class="kt-portlet__head kt-portlet__head--lg">
+                                                <div class="kt-portlet__head-label">
+                                                    <span class="kt-portlet__head-icon">
+                                                        <i class="kt-font-brand flaticon2-line-chart"></i>
+                                                    </span>
+                                                    <h3 class="kt-portlet__head-title">
+                                                        Registros
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="kt-portlet__body">
+                    
+                                                <!--begin: Datatable -->                            
+                                                <table class="table">
+                                                    <thead>
+                                                        <th>Nº</th>
+                                                        <th>Fecha</th>
+                                                        <th>Valor</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for valor in valores_kus %}
+                                                        <tr>
+                                                            <td>{{ forloop.counter }}</td>
+                                                            <td>{{valor.valor}}</td>
+                                                            <td>{{valor.fecreg}}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                    
+                                                <!--end: Datatable -->
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingFour6">
+                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseFour6" aria-expanded="false" aria-controls="collapseFour6">
+                                        <i class="flaticon-pie-chart-1"></i> TMF Con Mitigación
+                                    </div>
+                                </div>
+                                <div id="collapseFour6" class="collapse" aria-labelledby="headingFour6" data-parent="#accordionExample6" style="">
+                                    <div class="card-body">
+                                        <form class="kt-form" method="POST" action="{% url 'save_tmf_sin_mitigar' %}">
+                                            {% csrf_token %}
+                                            <div class="kt-portlet__body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>Tipo</label><br>
+                                                        <label style="font-weight: 800;">TMF Con Mitigación</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>Valor</label>
+                                                        <input type="number" name="name-tmf-sin" id="id-tmf-sin" class="form-control" />
+                                                    </div>
+                                                </div>                                                
+                                                
+                                            </div>
+                                            <div class="kt-portlet__foot">
+                                                <div class="kt-form__actions">
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                    <button type="reset" class="btn btn-secondary">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <div class="kt-portlet kt-portlet--mobile">
+                                            <div class="kt-portlet__head kt-portlet__head--lg">
+                                                <div class="kt-portlet__head-label">
+                                                    <span class="kt-portlet__head-icon">
+                                                        <i class="kt-font-brand flaticon2-line-chart"></i>
+                                                    </span>
+                                                    <h3 class="kt-portlet__head-title">
+                                                        Registros
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="kt-portlet__body">
+                    
+                                                <!--begin: Datatable -->                            
+                                                <table class="table">
+                                                    <thead>
+                                                        <th>Nº</th>
+                                                        <th>Fecha</th>
+                                                        <th>Valor</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for valor in valores_tmf %}
+                                                        <tr>
+                                                            <td>{{ forloop.counter }}</td>
+                                                            <td>{{valor.valor}}</td>
+                                                            <td>{{valor.fecreg}}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                    
+                                                <!--end: Datatable -->
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--end::Accordion-->
+                    </div>
                 </div>
+
+                <!--begin::Portlet-->                
 
                 <!--end::Portlet-->
 
@@ -162,6 +571,23 @@
 <script>
     $(document).ready(function(){
         createDatatable("id-table-kpis", 5);
+        $.ajax({
+            url:'/dashboard/get-color-indicadores',
+            data:{},
+            type:"GET",
+            dataType:"json",
+            success:function(data){                                
+                for(var i=0; i<data.length; i++){
+                    $("#id-select-riesgo-"+data[i].tipoindicador).val(data[i].riesgo);
+                    $("#id-select-vulnerabilidad-"+data[i].tipoindicador).val(data[i].vulnerabilidad);
+                }
+               
+
+
+            }, error:function(err){
+                console.error(err);
+            }
+        });
     });       
 </script>
 

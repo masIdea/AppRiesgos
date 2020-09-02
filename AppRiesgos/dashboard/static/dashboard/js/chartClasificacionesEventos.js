@@ -14,7 +14,7 @@ var datos_graficos = function(){
     datos = $("#id-select-datos-campos").val()
     if(campo !="" && datos != ""){
         $.ajax({
-            url:'datos-clasificacion-eventos',
+            url:'/dashboard/datos-clasificacion-eventos',
             type:"GET",
             dataType:"json",
             data:{"glosa":dato_campo, 'tipo':tipo, 'valor':valor, 'campo':$("#id-select-campos").val()},

@@ -7,7 +7,7 @@ $("#id-select-campos").change(function(){
     tipo = $("#id-tipo-nivel").val();
     $("#id-select-datos-campos").html("<option value=''>Seleccione</option>");
     $.ajax({
-        url:'datos-campos',
+        url:'/dashboard/datos-campos',
         type:"GET",
         dataType:"json",
         data:{"campo":this.value, 'tipo':tipo, 'valor':valor, },

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from kpiDashboard.models import RiesgoKpi
-from core.models import Riesgo, RiesgoListas, RiesgoCargasistemacio, RiesgoCargasisteman1, Gerencias, RiesgoEvaluacioncualitativainherente, RiesgoEvaluacioncualitativaresidual, RiesgoEvaluacioncualitativaobjetivo, RiesgoProbImp, RiesgoNCausariesgo, RiesgoCausas, RiesgoUnifica
+from core.models import Riesgo, RiesgoListas, RiesgoCargasistemacio, RiesgoCargasisteman1, Gerencias, RiesgoEvaluacioncualitativainherente, RiesgoEvaluacioncualitativaresidual, RiesgoEvaluacioncualitativaobjetivo, RiesgoProbImp, RiesgoNCausariesgo, RiesgoCausas, RiesgoUnifica, RiesgoColorindicadores
 from datetime import datetime
 from django.http import JsonResponse
 from collections import OrderedDict
@@ -89,7 +89,16 @@ def inicio(request):
     #cantidad_riesgos_acumulados = len(list(Riesgo.objects.all().values()))
     #cantidad_riesgos_mes = len(list(Riesgo.objects.filter(fechadigita__year=datetime.now().year, fechadigita__month=datetime.now().month).values()))
 
-    eventos_materializados = impactoFinancieroEventosMaterializados()    
+    eventos_materializados = impactoFinancieroEventosMaterializados()
+    kusNeto = 0
+    tmfSin = 0
+    if RiesgoKpi.objects.filter(tipo='KUSNETO').exists():
+        kusNeto = RiesgoKpi.objects.filter(tipo='KUSNETO').order_by('-fecreg').first().valor
+    if RiesgoKpi.objects.filter(tipo='TMFSIN').exists():
+        tmfSin = RiesgoKpi.objects.filter(tipo='TMFSIN').order_by('-fecreg').first().valor
+    
+    gerencias = list(RiesgoUnifica.objects.all().values('gerencia').distinct())
+    
 
 
     data = {
@@ -113,10 +122,132 @@ def inicio(request):
         'totalUnifica':totalUnifica,
         'qUnifica':qUnifica,
         'totalTmf':totalTmf,
+        'kusNeto':kusNeto,
+        'tmfSin':tmfSin,
+        'gerencias':gerencias,
     }
     
-
+    
     return render(request, "dashboard/index.html", data)
+
+def inicioResponsive(request):
+    mes = datetime.now().month
+    ano = datetime.now().year                
+    kpi_costo_presupuesto = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Costo Presupuesto").order_by('-fecreg').values())
+    kpi_produccion = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Producción").order_by('-fecreg').values())
+    kpi_seguridad = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Seguridad").order_by('-fecreg').values())
+    kpi_ambiental = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Ambiental").order_by('-fecreg').values())
+    clasificaciones = RiesgoListas.objects.filter(tipo="Clasificaciones", estado="ACTIVO").values("glosa")
+
+    atraso_proyecto = kpiAtrasoProyecto("directi")
+    probidad_transparencia = kpiProbidadTransparencia("directi")
+    falta_agua = kpiFaltaAgua("directi")
+    falla_equipo_critico = kpiFallaEquipoCritico("directi")
+    incendio = kpiIncendio("directi")
+    pandemia = kpiUnifica("directi", "pandemia")
+    #riesgos_totales = riesgosGerencias()
+    #clasificaciones_riesgos = getRiesgoClasificaciones()
+
+    cantidad_riesgos_acumulados_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+    cantidad_riesgos_mensuales_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+    cantidad_riesgos_acumulados = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_acumulados_alto, directic=1).values()))
+    cantidad_riesgos_mes = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_mensuales_alto, directic=1).values()))    
+    cantidad_total_registros = len(list(Riesgo.objects.filter(estadoregistro='Vigente', directic=1).values()))
+
+    ano=datetime.now().year
+    dicccionarioMesesSemestre1 = {}
+    dicccionarioMesesSemestre2 = {}
+    dicccionarioMesesSemestre1[1]={'mes':'Enero','valor':0,}
+    dicccionarioMesesSemestre1[2]={'mes':'Febrero','valor':0,}
+    dicccionarioMesesSemestre1[3]={'mes':'Marzo','valor':0,}
+    dicccionarioMesesSemestre1[4]={'mes':'Abril','valor':0,}
+    dicccionarioMesesSemestre1[5]={'mes':'Mayo','valor':0,}
+    dicccionarioMesesSemestre1[6]={'mes':'Junio','valor':0,}
+
+    dicccionarioMesesSemestre2[7]={'mes':'Julio','valor':0,}
+    dicccionarioMesesSemestre2[8]={'mes':'Agosto','valor':0,}
+    dicccionarioMesesSemestre2[9]={'mes':'Septiembre','valor':0,}
+    dicccionarioMesesSemestre2[10]={'mes':'Octubre','valor':0,}
+    dicccionarioMesesSemestre2[11]={'mes':'Noviembre','valor':0,}
+    dicccionarioMesesSemestre2[12]={'mes':'Diciembre','valor':0,}
+
+    eventosSemestres = list(RiesgoUnifica.objects.all().values())
+    totalUnifica = 0
+    totalTmf = 0
+    qUnifica = 0
+    for k, v in dicccionarioMesesSemestre1.items():
+        valoresMes = RiesgoUnifica.objects.filter(fecha__year=ano, fecha__month=k).values()
+        for valor in valoresMes:
+            totalUnifica+=float(valor['montoperdidakusd'])
+            totalTmf+=float(valor['qtmfperdida'])
+            qUnifica+=1
+            v['valor']+=float(valor['montoperdidakusd'])
+    
+    for k, v in dicccionarioMesesSemestre2.items():
+        valoresMes = RiesgoUnifica.objects.filter(fecha__year=ano, fecha__month=k).values()
+        for valor in valoresMes:
+            totalUnifica+=float(valor['montoperdidakusd'])
+            totalTmf+=float(valor['qtmfperdida'])
+            qUnifica+=1
+            v['valor']+=float(valor['montoperdidakusd'])
+    
+    print(dicccionarioMesesSemestre2)
+
+    """riesgos_acumulados = list(RiesgoUnifica.objects.all().values())
+    cantidad_riesgos_acumulados = 0
+    for cantidad in riesgos_acumulados:
+        if float(cantidad['montoperdidakusd']) > 0:
+            cantidad_riesgos_acumulados+=1        
+    
+    riesgos_mes = list(RiesgoUnifica.objects.filter(fecha__year=datetime.now().year, fecha__month=datetime.now().month).values())
+    cantidad_riesgos_mes = 0
+    for cantidad_mes in riesgos_mes:
+        if float(cantidad_mes['montoperdidakusd']) > 0:
+            cantidad_riesgos_mes+=1"""
+
+    #cantidad_riesgos_acumulados = len(list(Riesgo.objects.all().values()))
+    #cantidad_riesgos_mes = len(list(Riesgo.objects.filter(fechadigita__year=datetime.now().year, fechadigita__month=datetime.now().month).values()))
+
+    eventos_materializados = impactoFinancieroEventosMaterializados()
+    kusNeto = 0
+    tmfSin = 0
+    if RiesgoKpi.objects.filter(tipo='KUSNETO').exists():
+        kusNeto = RiesgoKpi.objects.filter(tipo='KUSNETO').order_by('-fecreg').first().valor
+    if RiesgoKpi.objects.filter(tipo='TMFSIN').exists():
+        tmfSin = RiesgoKpi.objects.filter(tipo='TMFSIN').order_by('-fecreg').first().valor
+    
+    gerencias = list(RiesgoUnifica.objects.all().values('gerencia').distinct())
+    
+
+
+    data = {
+        'kpi_costo_presupuesto':kpi_costo_presupuesto,
+        'kpi_produccion':kpi_produccion,
+        'kpi_seguridad':kpi_seguridad,
+        'kpi_ambiental':kpi_ambiental,
+
+        'atraso_proyecto':atraso_proyecto,
+        'probidad_transparencia':probidad_transparencia,
+        'falta_agua':falta_agua,
+        'falla_equipo_critico':falla_equipo_critico,
+        'incendio':incendio,
+        'cantidad_riesgos_acumulados':cantidad_riesgos_acumulados,
+        'cantidad_riesgos_mes':cantidad_riesgos_mes,
+        'eventos_materializados':eventos_materializados,
+        'clasificaciones':clasificaciones,
+        'cantidad_total_registros':cantidad_total_registros,        
+        'dicccionarioMesesSemestre1':dicccionarioMesesSemestre1,
+        'dicccionarioMesesSemestre2':dicccionarioMesesSemestre2,
+        'totalUnifica':totalUnifica,
+        'qUnifica':qUnifica,
+        'totalTmf':totalTmf,
+        'kusNeto':kusNeto,
+        'tmfSin':tmfSin,
+        'gerencias':gerencias,
+    }
+    
+    
+    return render(request, "dashboard/indexResponsive.html", data)
 
 def inicio2(request):
     mes = datetime.now().month
@@ -138,8 +269,9 @@ def inicio2(request):
     cantidad_riesgos_acumulados = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_acumulados_alto, directic=1).values()))
     cantidad_riesgos_mes = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_mensuales_alto, directic=1).values()))
 
-    eventos_materializados = impactoFinancieroEventosMaterializados()    
-
+    eventos_materializados = impactoFinancieroEventosMaterializados()
+    
+    
 
     data = {
         'kpi_costo_presupuesto':kpi_costo_presupuesto,
@@ -155,10 +287,9 @@ def inicio2(request):
         'cantidad_riesgos_acumulados':cantidad_riesgos_acumulados,
         'cantidad_riesgos_mes':cantidad_riesgos_mes,
         'eventos_materializados':eventos_materializados,
-        'clasificaciones':clasificaciones,
+        'clasificaciones':clasificaciones,        
     }
-    
-
+        
     return render(request, "dashboard/index.html", data)
 
 def kpiAtrasoProyecto(tipo):
@@ -1005,52 +1136,89 @@ def datosClasificacionEventos(request):
 
 def listadoClasificacionTipoEvento(request):
     if request.method == "GET":
-        meses = request.GET['meses']
-        datos = list(RiesgoUnifica.objects.filter(fecha__month=meses).values())
+        meses = request.GET.getlist('meses[]')
+        print(meses)
+        #datos = list(RiesgoUnifica.objects.filter(fecha__month__in=meses).values())
+        #print(datos)
+        datos = []
+        for mes in meses:
+            clasificaciones = list(RiesgoUnifica.objects.filter(fecha__month=mes).values('clasificacion').distinct())
+            dictDatos = {}
+            
+            for clasificacion in clasificaciones:
+                dictDatos[clasificacion['clasificacion']] = {}
+                datosClasificacion = list(RiesgoUnifica.objects.filter(fecha__month=mes, clasificacion=clasificacion['clasificacion']).values())
+                for datosClas in datosClasificacion:
+                    if datosClas['evento'] in dictDatos[clasificacion['clasificacion']]:
+                        dictDatos[clasificacion['clasificacion']][datosClas['evento']]['valor']+=round(float(datosClas['montoperdidakusd']), 1)
+                        dictDatos[clasificacion['clasificacion']][datosClas['evento']]['q']+=1
+                        dictDatos[clasificacion['clasificacion']][datosClas['evento']]['mes']=str(datosClas['fecha'].month)
+                    else:
+                        dictDatos[clasificacion['clasificacion']][datosClas['evento']]={
+                            'valor':round(float(datosClas['montoperdidakusd']), 1),
+                            'q':1,
+                            'mes':str(datosClas['fecha'].month)
+                        }
+            datos.append(dictDatos)
         
-        clasificaciones = list(RiesgoUnifica.objects.filter(fecha__month=meses).values('clasificacion').distinct())
-        dictDatos = {}
-        
-        for clasificacion in clasificaciones:
-            dictDatos[clasificacion['clasificacion']] = {}
-            datosClasificacion = list(RiesgoUnifica.objects.filter(fecha__month=meses, clasificacion=clasificacion['clasificacion']).values())
-            for datosClas in datosClasificacion:
-                if datosClas['evento'] in dictDatos[clasificacion['clasificacion']]:
-                    dictDatos[clasificacion['clasificacion']][datosClas['evento']]['valor']+=round(float(datosClas['montoperdidakusd']), 1)
-                    dictDatos[clasificacion['clasificacion']][datosClas['evento']]['q']+=1
-                else:
-                    dictDatos[clasificacion['clasificacion']][datosClas['evento']]={
-                        'valor':round(float(datosClas['montoperdidakusd']), 1),
-                        'q':1
-                    }                    
-        
-        return JsonResponse(dictDatos, safe=False)
+        return JsonResponse(datos, safe=False)
 
 
 
 def listadoClasificacionGerencia(request):
     if request.method == "GET":
-        meses = request.GET['meses']
-        datos = list(RiesgoUnifica.objects.filter(fecha__month=meses).values())
-        
-        gerencias = list(RiesgoUnifica.objects.filter(fecha__month=meses).values('gerencia').distinct())
+        meses = request.GET.getlist('meses[]')
+        gerencia = request.GET['gerencia']
+        #datos = list(RiesgoUnifica.objects.filter(fecha__month__in=meses).values())
+        print(meses)
+        #gerencias = list(RiesgoUnifica.objects.filter(fecha__month__in=meses,).values('gerencia').distinct())
         dictDatos = {}
-        
-        for gerencia in gerencias:
-            dictDatos[gerencia['gerencia']] = {}
-            datosClasificacion = list(RiesgoUnifica.objects.filter(fecha__month=meses, gerencia=gerencia['gerencia']).values())
+        datos = []
+        for mes in meses:            
+            datosClasificacion = list(RiesgoUnifica.objects.filter(fecha__month=mes, gerencia=gerencia).values())
             for datosClas in datosClasificacion:
-                if datosClas['clasificacion'] in dictDatos[gerencia['gerencia']]:
-                    dictDatos[gerencia['gerencia']][datosClas['clasificacion']]['valor']+=round(float(datosClas['montoperdidakusd']), 1)
-                    dictDatos[gerencia['gerencia']][datosClas['clasificacion']]['q']+=1
+                if datosClas['clasificacion'] in dictDatos:
+                    dictDatos[datosClas['clasificacion']]['valor']+=round(float(datosClas['montoperdidakusd']), 1)
+                    dictDatos[datosClas['clasificacion']]['q']+=1
+                    dictDatos[datosClas['clasificacion']]['mes']=str(mes)
                 else:
-                    dictDatos[gerencia['gerencia']][datosClas['clasificacion']]={
+                    dictDatos[datosClas['clasificacion']]={
                         'valor':round(float(datosClas['montoperdidakusd']), 1),
-                        'q':1
-                    }                    
-        print(dictDatos)
-        return JsonResponse(dictDatos, safe=False)
+                        'q':1,
+                        'mes':str(mes)
+                        }
+            datos.append(dictDatos.copy())
+                
+        arregloMeses = []
+        for mes in meses:
+            print(mes)
+            dictDatosGerencia = {}
+            datosClasificacion = []
+            if RiesgoUnifica.objects.filter(fecha__month=mes, gerencia=gerencia).exists():
+                datosClasificacion = list(RiesgoUnifica.objects.filter(fecha__month=mes, gerencia=gerencia).values())
+            for dato in datosClasificacion:
+                if dato['clasificacion'] in dictDatosGerencia:
+                    dictDatosGerencia[dato['clasificacion']]['valor']+=round(float(dato['montoperdidakusd']), 1)
+                    dictDatosGerencia[dato['clasificacion']]['q']+=1
+                    dictDatosGerencia[dato['clasificacion']]['mes']=str(dato['fecha'].month)
+                else:
+                    dictDatosGerencia[dato['clasificacion']]={
+                        'valor':round(float(dato['montoperdidakusd']), 1),
+                        'q':1,
+                        'mes':str(dato['fecha'].month)
+                    }
+                
+            arregloMeses.append(dictDatosGerencia.copy())
+        print(arregloMeses)
+
+
+        
+        return JsonResponse(arregloMeses, safe=False)
         
 
+def getColorIndicadores(request):
+    if request.method == "GET":
+        data = list(RiesgoColorindicadores.objects.all().values())
 
+        return JsonResponse(data, safe=False)
 

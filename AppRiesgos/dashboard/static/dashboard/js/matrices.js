@@ -2,7 +2,7 @@ var trae_matrices = function(valor, tipo, directic=1){
     $(".r-circle").css("display", "none");
     $(".r-circle").html("");
     $.ajax({
-        url:'trae-matrices',
+        url:'/dashboard/trae-matrices',
         type:"GET",
         dataType:"json",
         data:{'valor':valor, 'tipo':tipo, 'directic':directic},

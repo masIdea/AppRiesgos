@@ -657,3 +657,17 @@ class RiesgoUnificaControles(models.Model):
     class Meta:
         managed = False
         db_table = 'RIESGO_UNIFICA_CONTROLES'
+
+
+class RiesgoColorindicadores(models.Model):
+    idcolor = models.CharField(db_column='IdColor', max_length=255, primary_key=True)  # Field name made lowercase.
+    tipoindicador = models.CharField(db_column='tipoIndicador', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    vulnerabilidad = models.CharField(max_length=255, blank=True, null=True)
+    riesgo = models.CharField(max_length=255, blank=True, null=True)
+    usuariocrea = models.CharField(db_column='usuarioCrea', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    fecreg = models.DateTimeField(db_column='fecReg', blank=True, null=True)  # Field name made lowercase.
+    fecmod = models.DateTimeField(db_column='fecMod', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'riesgo_colorindicadores'

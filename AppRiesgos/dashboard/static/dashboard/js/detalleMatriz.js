@@ -10,7 +10,7 @@ $(".r-circle").click(function(){
     gerencia = $("#id-txt-gerencia-matriz").val();
     $("#id-cuerpo-detalle-riesgos-matriz").html("");
     $.ajax({
-        url:'detalle-coordenada-matriz',
+        url:'/dashboard/detalle-coordenada-matriz',
         type:"GET",
         dataType:"json",
         data:{'X':x, "Y":y, "tipo_matriz":tipo_matriz, "gerencia":gerencia, "directic":directic},

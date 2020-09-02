@@ -17,7 +17,7 @@ $(".tipo-riesgos-dashboard").click(function(){
 
 var datos_dashboard_tipo = function(tipo){
     $.ajax({
-        url:'datos-dashboard-tipo-riesgo',
+        url:'/dashboard/datos-dashboard-tipo-riesgo',
         type:"GET",
         dataType:"json",
         data:{'tipo':tipo},

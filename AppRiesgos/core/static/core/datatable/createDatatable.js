@@ -39,7 +39,5 @@ var createDatatable = function(id_table, length=10){
             },
         ]
     });
-
-
 }
 
