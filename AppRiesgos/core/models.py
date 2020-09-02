@@ -670,4 +670,4 @@ class RiesgoColorindicadores(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'riesgo_colorindicadores'
+        db_table = 'RIESGO_colorIndicadores'
