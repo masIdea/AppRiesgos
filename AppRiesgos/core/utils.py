@@ -4,7 +4,9 @@ from datetime import datetime, timedelta, date
 
 
 def id_generator(size=18, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
+    date = datetime.now()
+    date = str(date.strftime('%d%m%Y')+date.strftime('%M%S%f'))+'XX'
+    return date+''.join(random.choice(chars) for _ in range(size))
 
 def comprobeConvertedFloat(string):
     try:

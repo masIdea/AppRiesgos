@@ -70,9 +70,9 @@ def saveColores(request):
         vulnPandemia = request.POST.get("name-select-vulnerabilidad-pandemia")
         RiesgoColorindicadores.objects.filter(tipoindicador='pandemia').update(vulnerabilidad=vulnPandemia, riesgo=riesgoPandemia)
 
-        riesgoProduccion = request.POST.get("name-select-riesgo-produccion")
-        vulnProduccion = request.POST.get("name-select-vulnerabilidad-produccion")
-        RiesgoColorindicadores.objects.filter(tipoindicador='produccion').update(vulnerabilidad=vulnProduccion, riesgo=riesgoProduccion)
+        riesgoMineral = request.POST.get("name-select-riesgo-mineral")
+        vulnMineral = request.POST.get("name-select-vulnerabilidad-mineral")
+        RiesgoColorindicadores.objects.filter(tipoindicador='mineral').update(vulnerabilidad=vulnMineral, riesgo=riesgoMineral)
 
         riesgoCultural = request.POST.get("name-select-riesgo-cultural")
         vulnCultural = request.POST.get("name-select-vulnerabilidad-cultural")

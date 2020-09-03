@@ -16,6 +16,7 @@ from crearRiesgo.queries import QueryRiesgoSimilar, QueryFamilia, QuerySubproces
 from core.clases.core.bulk import BulkCreateManager
 from core.utils import id_generator
 from django.contrib.auth.decorators import login_required
+import os.path
 
 # Create your views here.
 @login_required
@@ -265,18 +266,24 @@ def cargaDatos(request):
     if request.method == "POST":
         archivo = request.POST.get("radio-carga-datos")        
         myfile = request.FILES['archivo']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        path = settings.MEDIA_ROOT+'//'+myfile.name
-        print("EL PATH ES ", path)
+
+        fs = FileSystemStorage()        
+        el_name = os.path.splitext(myfile.name)[0]
+        la_extension = os.path.splitext(myfile.name)[1]
+        id_name = id_generator()
+        nombre_completo = el_name+id_name+la_extension
+
+        if os.path.isfile(settings.MEDIA_ROOT+'//'+nombre_completo):                
+            data = {"msg":"Ya existe un archivo con el mismo nombre, por favor cambie el nombre del archivo.", 'valida':False}
+            return JsonResponse(data, safe=False)
+
+        filename = fs.save(nombre_completo, myfile)
+        path = settings.MEDIA_ROOT+'//'+nombre_completo     
         wb_obj = openpyxl.load_workbook(path) 
         sheet_obj = wb_obj.active 
-        max_col = sheet_obj.max_column
-        print("MAXIMO COLUMNAS ", max_col)
+        max_col = sheet_obj.max_column        
         m_row = sheet_obj.max_row
 
-
- 
 
         if archivo == "ArchivoCargaSistemaCIO":
             id_carga = GetId('RiesgoCargasistemacio', 'RCARCIO', 'idcargacio').get_id()

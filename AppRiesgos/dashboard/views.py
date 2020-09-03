@@ -962,6 +962,7 @@ def getDatosDashboardTipoRiesgo(request):
         incendio = kpiIncendio(tipo)
         pandemia = kpiUnifica("eventos", "pandemia")
         otro = kpiUnifica("eventos", "otro")
+        falta_mineral = kpiUnifica("eventos", "falta mineral")
 
         
         if tipo == "eventos":
@@ -997,7 +998,7 @@ def getDatosDashboardTipoRiesgo(request):
             cantidad_riesgos_acumulados = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_acumulados_alto, directic=1).values()))
             cantidad_riesgos_mes = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_mensuales_alto, directic=1).values()))
                   
-        data = {'atraso_proyecto':atraso_proyecto, 'probidad_transparencia':probidad_transparencia, 'falta_agua':falta_agua, 'falla_equipo_critico':falla_equipo_critico, 'incendio':incendio, 'pandemia':pandemia, 'otro':otro, 'cantidad_riesgos_acumulados':cantidad_riesgos_acumulados, 'cantidad_riesgos_mes':cantidad_riesgos_mes, 'cantidad_total_registros':cantidad_total_registros, "glosa":glosa}
+        data = {'atraso_proyecto':atraso_proyecto, 'probidad_transparencia':probidad_transparencia, 'falta_agua':falta_agua, 'falla_equipo_critico':falla_equipo_critico, 'incendio':incendio, 'pandemia':pandemia, 'otro':otro, 'cantidad_riesgos_acumulados':cantidad_riesgos_acumulados, 'cantidad_riesgos_mes':cantidad_riesgos_mes, 'cantidad_total_registros':cantidad_total_registros, "glosa":glosa, "falta_mineral":falta_mineral}
 
         return JsonResponse(data, safe=False)
 

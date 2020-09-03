@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.inicio, name="inicio_dashboard"),
     path("report-dashboard/", views.inicio2, name="inicio_dashboard2"),
-    path("dashboard-resp/", views.inicioResponsive, name="inicio_responsive"),
+    path("mobile/", views.inicioResponsive, name="inicio_responsive"),
         
     path("trae-riesgos-criticos/", views.getRiesgosCriticosPorGerencia, name="trae_riesgos_criticos"),
     path("trae-detalle-criticos/", views.getDetalleRiesgosCriticos, name="trae_detalle_criticos"),

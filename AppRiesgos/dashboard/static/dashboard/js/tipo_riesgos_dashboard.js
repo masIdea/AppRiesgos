@@ -69,6 +69,10 @@ var datos_dashboard_tipo = function(tipo){
             $("#id-spn-mes-pandemia").html("En el mes " + data.pandemia.num_mes + " - KUS$ " + numberWithCommas(data.pandemia.suma_mes));
             $("#id-spn-tmf-pandemia").html("TMF En el mes " + data.pandemia.suma_mes_tmf + " - TMF Acumulado  " + numberWithCommas(data.pandemia.suma_tmf_total));
 
+            $("#id-spn-acum-mineral").html("Acumulado " + data.falta_mineral.num_acumulado + " - KUS$ " + numberWithCommas(data.falta_mineral.suma_acum));
+            $("#id-spn-mes-mineral").html("En el mes " + data.falta_mineral.num_mes + " - KUS$ " + numberWithCommas(data.falta_mineral.suma_mes));
+            $("#id-spn-tmf-mineral").html("TMF En el mes " + data.falta_mineral.suma_mes_tmf + " - TMF Acumulado  " + numberWithCommas(data.falta_mineral.suma_tmf_total));
+
             $("#id-spn-acum-otros").html("Acumulado " + data.otro.num_acumulado + " - KUS$ " + numberWithCommas(data.otro.suma_acum));
             $("#id-spn-mes-otros").html("En el mes " + data.otro.num_mes + " - KUS$ " + numberWithCommas(data.otro.suma_mes));
             $("#id-spn-tmf-otros").html("TMF En el mes " + data.otro.suma_mes_tmf + " - TMF Acumulado  " + numberWithCommas(data.otro.suma_tmf_total));
