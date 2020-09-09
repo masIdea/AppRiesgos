@@ -69,6 +69,10 @@ var datos_dashboard_tipo = function(tipo){
             $("#id-spn-mes-pandemia").html("En el mes " + data.pandemia.num_mes + " - KUS$ " + numberWithCommas(data.pandemia.suma_mes));
             $("#id-spn-tmf-pandemia").html("TMF En el mes " + data.pandemia.suma_mes_tmf + " - TMF Acumulado  " + numberWithCommas(data.pandemia.suma_tmf_total));
 
+            console.log(data.falta_mineral.num_acumulado);
+            console.log(data.falta_mineral.num_mes);
+            console.log(data.falta_mineral.suma_mes_tmf);
+            
             $("#id-spn-acum-mineral").html("Acumulado " + data.falta_mineral.num_acumulado + " - KUS$ " + numberWithCommas(data.falta_mineral.suma_acum));
             $("#id-spn-mes-mineral").html("En el mes " + data.falta_mineral.num_mes + " - KUS$ " + numberWithCommas(data.falta_mineral.suma_mes));
             $("#id-spn-tmf-mineral").html("TMF En el mes " + data.falta_mineral.suma_mes_tmf + " - TMF Acumulado  " + numberWithCommas(data.falta_mineral.suma_tmf_total));
@@ -77,7 +81,9 @@ var datos_dashboard_tipo = function(tipo){
             $("#id-spn-mes-otros").html("En el mes " + data.otro.num_mes + " - KUS$ " + numberWithCommas(data.otro.suma_mes));
             $("#id-spn-tmf-otros").html("TMF En el mes " + data.otro.suma_mes_tmf + " - TMF Acumulado  " + numberWithCommas(data.otro.suma_tmf_total));
 
-            
+            $("#id-spn-acum-cumtrcult").html("Acumulado " + data.transformacion_cultural.num_acumulado + " - KUS$ " + numberWithCommas(data.transformacion_cultural.suma_acum));
+            $("#id-spn-mes-cumtrcult").html("En el mes " + data.transformacion_cultural.num_mes + " - KUS$ " + numberWithCommas(data.transformacion_cultural.suma_mes));
+            $("#id-spn-tmf-cumtrcult").html("TMF En el mes " + data.transformacion_cultural.suma_mes_tmf + " - TMF Acumulado  " + numberWithCommas(data.transformacion_cultural.suma_tmf_total));
 
 
         },error:function(err){

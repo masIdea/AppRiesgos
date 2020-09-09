@@ -364,16 +364,16 @@
                                         <!-- EVENTOS -->
                                             <div class="row" style="display: none; padding-bottom: 5px;" id="id-div-indicadores-2">
                                                 <div class="col-md-6" style="margin-bottom: 5px;">
-                                                    <div style="height: 80px;border: 1px solid;border-radius: 7px;margin-left: 5px; position: relative;"><center><label style="font-size: 36px;margin-top: 14px;">{{tmfSin|floatformat:"0"|intcomma}}</label></center><span style="position: absolute;bottom: 0;font-weight: 800;font-size: 12px;left: 31%;">TMF Con Mitigación</span></div>
+                                                    <div style="height: 80px;border: 1px solid;border-radius: 7px;margin-left: 5px; position: relative;"><center><label style="font-size: 36px;margin-top: 14px;">{{tmfSin|floatformat:"0"|intcomma}}</label></center><span style="position: absolute;bottom: 0;font-weight: 800;left: 31%;">TMF Con Mitigación</span></div>
                                                 </div>
                                                 <div class="col-md-6" style="margin-bottom: 5px;">
                                                     <div style="height: 80px;border: 1px solid;border-radius: 7px;margin-left: 5px; position: relative;"><center><label style="font-size: 36px;margin-top: 14px;">{{qUnifica}}</label></center><span style="position: absolute;bottom: 0;right: 38px;font-weight: 800;left: 43%;">Q Total</span></div>
                                                 </div>
                                                 <div class="col-md-6" style="margin-bottom: 5px;">
-                                                    <div style="height: 80px;border: 1px solid;border-radius: 7px;margin-left: 5px; position: relative;"><center><label style="font-size: 28px;margin-top: 14px;">{{totalUnifica|floatformat:"0"|intcomma}}</label></center><span style="position: absolute;bottom: 0;left: 43%;font-weight: 800;">KUS$ BRUTO</span></div>
+                                                    <div style="height: 80px;border: 1px solid;border-radius: 7px;margin-left: 5px; position: relative;"><center><label style="font-size: 36px;margin-top: 14px;">{{totalUnifica|floatformat:"0"|intcomma}}</label></center><span style="position: absolute;bottom: 0;left: 43%;font-weight: 800;">KUS$ BRUTO</span></div>
                                                 </div>
                                                 <div class="col-md-6" style="margin-bottom: 5px;">
-                                                    <div style="height: 80px;border: 1px solid;border-radius: 7px;margin-left: 5px;position: relative;"><center><label style="font-size: 36px;margin-top: 14px;">{{kusNeto|floatformat:"0"|intcomma}}</label></center><span style="position: absolute;bottom: 0;font-size: 10px;font-weight: 800;left: 35%;">KUS$ Con Mitigación</span></div>
+                                                    <div style="height: 80px;border: 1px solid;border-radius: 7px;margin-left: 5px;position: relative;"><center><label style="font-size: 36px;margin-top: 14px;">{{kusNeto|floatformat:"0"|intcomma}}</label></center><span style="position: absolute;bottom: 0;font-weight: 800;left: 35%;">KUS$ Con Mitigación</span></div>
                                                 </div>        
                                             </div>
                                         <!-- FIN EVENTOS -->
@@ -471,14 +471,14 @@
                                         <span class="kt-widget17__subtitle">
                                             <strong>Atraso Proyecto</strong>
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-acum-atraso-proyecto">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-acum-atraso-proyecto">
                                             Acumulado {{atraso_proyecto.num_acumulado}} - KUS$ {{atraso_proyecto.suma_acum}}
                                         </span>                                        
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-mes-atraso-proyecto">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-mes-atraso-proyecto">
                                             En el Mes {{atraso_proyecto.num_mes}} - KUS$ {{atraso_proyecto.suma_mes}}
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-tmf-atraso-proyecto">
-                                            tmf {{atraso_proyecto.tmf}} 
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-tmf-atraso-proyecto">
+                                            TMF En el mes 0  - TMF Acumulado 0
                                         </span>
                                     </div>
                                     <div class="kt-widget17__item">
@@ -504,14 +504,14 @@
                                         <span class="kt-widget17__subtitle">
                                             <strong>Probidad y Transparencia</strong>
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-acum-probidad">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-acum-probidad">
                                             Acumulado {{probidad_transparencia.num_acumulado}} - KUS$ {{probidad_transparencia.suma_acum}}
                                         </span>                                        
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-mes-probidad">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-mes-probidad">
                                             En el Mes {{probidad_transparencia.num_mes}} - KUS$ {{probidad_transparencia.suma_mes}}
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-tmf-probidad">
-                                            tmf {{probidad_transparencia.tmf}}
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-tmf-probidad">
+                                            TMF En el mes 0  - TMF Acumulado 0
                                         </span>
                                     </div>
 
@@ -543,14 +543,14 @@
                                         <span class="kt-widget17__subtitle">
                                             <strong>Falta Agua</strong>
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-acum-falta-agua">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-acum-falta-agua">
                                             Acumulado {{falta_agua.num_acumulado}} - KUS$ {{falta_agua.suma_acum}}
                                         </span>                                        
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-mes-falta-agua">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-mes-falta-agua">
                                             En el Mes {{falta_agua.num_mes}} - KUS$ {{falta_agua.suma_mes}}
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-tmf-agua">
-                                            tmf {{falta_agua.tmf}}
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-tmf-agua">
+                                            TMF En el mes 0  - TMF Acumulado 0
                                         </span>
                                     </div>
 
@@ -577,14 +577,14 @@
                                         <span class="kt-widget17__subtitle">
                                             <strong>Falla Equipo Crítico</strong>
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-acum-equipo">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-acum-equipo">
                                             Acumulado {{falla_equipo_critico.num_acumulado}} - KUS$ {{falla_equipo_critico.suma_acum|intcomma}}
                                         </span>                                        
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-mes-equipo">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-mes-equipo">
                                             En el Mes {{falla_equipo_critico.num_mes}} - KUS$ {{falla_equipo_critico.suma_mes|intcomma}}
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-tmf-equipo">
-                                            tmf {{falla_equipo_critico.tmf}}
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-tmf-equipo">
+                                            TMF En el mes 0  - TMF Acumulado 0
                                         </span>
                                     </div>
                                 </div>
@@ -612,14 +612,14 @@
                                         <span class="kt-widget17__subtitle">
                                             <strong>Incendio</strong>
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-acum-incendio">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-acum-incendio">
                                             Acumulado {{incendio.num_acumulado}} - KUS$ {{incendio.suma_acum}}
                                         </span>                                        
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-mes-incendio">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-mes-incendio">
                                             En el Mes {{incendio.num_mes}} - KUS$ {{incendio.suma_mes}}
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-tmf-incendio">
-                                            tmf {{incendio.tmf}}
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-tmf-incendio">
+                                            TMF En el mes 0  - TMF Acumulado 0
                                         </span>
                                     </div>
 
@@ -648,14 +648,14 @@
                                         <span class="kt-widget17__subtitle">
                                             <strong>Pandemia</strong>
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-acum-pandemia">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-acum-pandemia">
                                             Acumulado {{pandemia.num_acumulado}} - KUS$ {{pandemia.suma_acum}}
                                         </span>                                        
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-mes-pandemia">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-mes-pandemia">
                                             En el Mes {{pandemia.num_mes}} - KUS$ {{pandemia.suma_mes}}
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-tmf-pandemia">
-                                            tmf {{pandemia.tmf}}
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-tmf-pandemia">
+                                            TMF En el mes 0  - TMF Acumulado 0
                                         </span>
                                     </div>
                                 </div>
@@ -685,15 +685,15 @@
                                         <span class="kt-widget17__subtitle">
                                             <strong>Falta Mineral</strong>
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-acum-falta-produccion">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-acum-mineral">
                                             Acumulado {{falta_mineral.num_acumulado}} - KUS$ {{falta_mineral.suma_acum}}
                                         </span>                                        
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-mes-falta-produccion">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-mes-mineral">
                                             En el Mes {{falta_mineral.num_mes}} - KUS$ {{falta_mineral.suma_mes}}
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-mes-produccion">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-tmf-mineral">
                                             <!--tmf {{falta_produccion.tmf}}-->
-                                            TMF En el mes  - TMF Acumulado 
+                                            TMF En el mes 0  - TMF Acumulado 0
                                         </span>
                                     </div>
                                     <div class="kt-widget17__item">
@@ -721,14 +721,13 @@
                                         <span class="kt-widget17__subtitle">
                                             <strong>Cumplimiento Transformación Cultural</strong>
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-acum-cumtrcult">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-acum-cumtrcult">
                                             Acumulado {{cumtrcult.num_acumulado}} - KUS$ {{cumtrcult.suma_acum|intcomma}}
                                         </span>                                        
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-mes-cumtrcult">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-mes-cumtrcult">
                                             En el Mes {{cumtrcult.num_mes}} - KUS$ {{cumtrcult.suma_mes|intcomma}}
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-tmf-cumtrcult">
-                                            <!--tmf {{cumtrcult.tmf}}-->
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-tmf-cumtrcult">                                            
                                             TMF En el mes 0  - TMF Acumulado 0
                                         </span>
                                     </div>
@@ -758,14 +757,14 @@
                                         <span class="kt-widget17__subtitle">
                                             <strong>Otros</strong>
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-acum-otros">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-acum-otros">
                                             Acumulado {{otros.num_acumulado}} - KUS$ {{otros.suma_acum}}
                                         </span>                                        
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-mes-otros">
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-mes-otros">
                                             En el Mes {{otros.num_mes}} - KUS$ {{otros.suma_mes}}
                                         </span>
-                                        <span class="kt-widget17__desc" style="font-size: 12px;" id="id-spn-tmf-otros">
-                                            tmf {{otros.tmf}}
+                                        <span class="kt-widget17__desc" style="font-size: 13px;" id="id-spn-tmf-otros">
+                                            TMF En el mes 0  - TMF Acumulado 0
                                         </span>
                                     </div>
                                 </div>
@@ -902,24 +901,59 @@
                         <div class="kt-widget14__header">
                             <h3 class="kt-widget14__title">
                                 Listado Por Clasificación y Tipo de Evento
-                            </h3>
-                            <div class="row" style="margin-top: 5px;">
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-enero" class="btnTipoClasificacion" type="button" value="Enero" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-febrero" class="btnTipoClasificacion" type="button" value="Febrero" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-marzo" class="btnTipoClasificacion" type="button" value="Marzo" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-abril" class="btnTipoClasificacion" type="button" value="Abril" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-mayo" class="btnTipoClasificacion" type="button" value="Mayo" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-junio" class="btnTipoClasificacion" type="button" value="Junio" /></div>
+                            </h3>                            
+
+                            <div class="container" style="margin-top: 8px;">
+                                <div class="row">
+                                  <div class="col">
+                                    <input style="width: 100%;" id="id-btn-clasificacion-enero" class="btnTipoClasificacion" type="button" value="Enero" />
+                                  </div>
+                                  <div class="col">
+                                    <input style="width: 100%;" id="id-btn-clasificacion-febrero" class="btnTipoClasificacion" type="button" value="Febrero" />
+                                  </div>
+                                  <div class="col">
+                                    <input style="width: 100%;" id="id-btn-clasificacion-marzo" class="btnTipoClasificacion" type="button" value="Marzo" />
+                                  </div>                                 
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-clasificacion-abril" class="btnTipoClasificacion" type="button" value="Abril" />
+                                    </div>
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-clasificacion-mayo" class="btnTipoClasificacion" type="button" value="Mayo" />
+                                    </div>
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-clasificacion-junio" class="btnTipoClasificacion" type="button" value="Junio" />
+                                    </div>                                 
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-clasificacion-julio" class="btnTipoClasificacion" type="button" value="Julio" />
+                                    </div>
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-clasificacion-agosto" class="btnTipoClasificacion" type="button" value="Agosto" />
+                                    </div>
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-clasificacion-septiembre" class="btnTipoClasificacion" type="button" value="Septiembre" />
+                                    </div>                                 
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-clasificacion-octubre" class="btnTipoClasificacion" type="button" value="Octubre" />
+                                    </div>
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-clasificacion-noviembre" class="btnTipoClasificacion" type="button" value="Noviembre" />
+                                    </div>
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-clasificacion-diciembre" class="btnTipoClasificacion" type="button" value="Diciembre" />
+                                    </div>                                 
+                                </div>
+
                             </div>
-                            
-                            <div class="row" style="margin-top: 5px;">
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-julio" class="btnTipoClasificacion" type="button" value="Julio" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-agosto" class="btnTipoClasificacion" type="button" value="Agosto" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-septiembre" class="btnTipoClasificacion" type="button" value="Septiembre" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-octubre" class="btnTipoClasificacion" type="button" value="Octubre" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-noviembre" class="btnTipoClasificacion" type="button" value="Noviembre" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-clasificacion-diciembre" class="btnTipoClasificacion" type="button" value="Diciembre" /></div>
-                            </div>
+
                         </div>
                         <div class="kt-widget14__content">
                             <div class="table-responsive">
@@ -954,33 +988,70 @@
                             <h3 class="kt-widget14__title">
                                 Listado Por Gerencia
                             </h3>
-                            <div class="row">
-                                <div class="col-md-4">
+                            <div class="container" style="margin-top: 8px;">
+                                <div class="row">
+                                  <div class="col">
                                     <select class="form-control" id="id-select-listado-gerencia">
                                         <option selected disabled>Gerencia</option>
                                         {% for gerencia in gerencias %}
                                         <option value="{{gerencia.gerencia}}">{{gerencia.gerencia}}</option>
                                         {% endfor %}
                                     </select>
+                                    <span style="color:red; display: none;" id="id-spn-seleccione-gerencia">Seleccione una gerencia.</span>
+                                  </div>
                                 </div>
                             </div>
-                            <div class="row" style="margin-top: 5px;">                                
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-enero" class="btnTipoClasificacionGerencia" type="button" value="Enero" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-febrero" class="btnTipoClasificacionGerencia" type="button" value="Febrero" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-marzo" class="btnTipoClasificacionGerencia" type="button" value="Marzo" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-abril" class="btnTipoClasificacionGerencia" type="button" value="Abril" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-mayo" class="btnTipoClasificacionGerencia" type="button" value="Mayo" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-junio" class="btnTipoClasificacionGerencia" type="button" value="Junio" /></div>
+
+                            <div class="container" style="margin-top: 8px;">
+                                <div class="row">
+                                  <div class="col">
+                                    <input style="width: 100%;" id="id-btn-gerencia-enero" class="btnTipoClasificacionGerencia" type="button" value="Enero" />
+                                  </div>
+                                  <div class="col">
+                                    <input style="width: 100%;" id="id-btn-gerencia-febrero" class="btnTipoClasificacionGerencia" type="button" value="Febrero" />
+                                  </div>
+                                  <div class="col">
+                                    <input style="width: 100%;" id="id-btn-gerencia-marzo" class="btnTipoClasificacionGerencia" type="button" value="Marzo" />
+                                  </div>                                 
+                                </div>
+
+                                <div class="row">
+                                <div class="col">
+                                    <input style="width: 100%;" id="id-btn-gerencia-abril" class="btnTipoClasificacionGerencia" type="button" value="Abril" />
+                                    </div>
+                                  <div class="col">
+                                    <input style="width: 100%;" id="id-btn-gerencia-mayo" class="btnTipoClasificacionGerencia" type="button" value="Mayo" />
+                                  </div>
+                                  <div class="col">
+                                    <input style="width: 100%;" id="id-btn-gerencia-junio" class="btnTipoClasificacionGerencia" type="button" value="Junio" />
+                                  </div>                                  
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-gerencia-julio" class="btnTipoClasificacionGerencia" type="button" value="Julio" />
+                                    </div>
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-gerencia-agosto" class="btnTipoClasificacionGerencia" type="button" value="Agosto" />
+                                    </div>
+                                  <div class="col">
+                                    <input style="width: 100%;" id="id-btn-gerencia-septiembre" class="btnTipoClasificacionGerencia" type="button" value="Septiembre" />
+                                  </div>                                  
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-gerencia-octubre" class="btnTipoClasificacionGerencia" type="button" value="Octubre" />
+                                    </div>
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-gerencia-noviembre" class="btnTipoClasificacionGerencia" type="button" value="Noviembre" />
+                                    </div>
+                                    <div class="col">
+                                        <input style="width: 100%;" id="id-btn-gerencia-diciembre" class="btnTipoClasificacionGerencia" type="button" value="Diciembre" />
+                                    </div>
+                                </div>
                             </div>
-                            
-                            <div class="row" style="margin-top: 5px;">
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-julio" class="btnTipoClasificacionGerencia" type="button" value="Julio" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-agosto" class="btnTipoClasificacionGerencia" type="button" value="Agosto" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-septiembre" class="btnTipoClasificacionGerencia" type="button" value="Septiembre" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-octubre" class="btnTipoClasificacionGerencia" type="button" value="Octubre" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-noviembre" class="btnTipoClasificacionGerencia" type="button" value="Noviembre" /></div>
-                                <div class="col-md-2"><input style="width: 100%;" id="id-btn-gerencia-diciembre" class="btnTipoClasificacionGerencia" type="button" value="Diciembre" /></div>
-                            </div>
+
                         </div>
                         <div class="kt-widget14__content">
                             <div class="table-responsive">

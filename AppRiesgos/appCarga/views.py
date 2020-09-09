@@ -21,10 +21,10 @@ import os.path
 # Create your views here.
 @login_required
 def inicio(request):
-    if 'readcreate' in request.session:        
-        return render(request, "appCarga/inicio.html")
-    else:
-        return HttpResponseRedirect(reverse('inicio_dashboard'))
+    #if 'readcreate' in request.session:        
+    return render(request, "appCarga/inicio.html")
+    #else:
+        #return HttpResponseRedirect(reverse('inicio_dashboard'))
 
 @login_required
 def datosCIO(request):

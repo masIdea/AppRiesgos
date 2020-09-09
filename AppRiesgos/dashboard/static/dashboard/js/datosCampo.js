@@ -5,6 +5,8 @@ $("#id-select-campos").change(function(){
     $("#id-sub-title-chart-montokus").html("Montos Pérdidas KUS$");
     valor = $("#id-txt-gerencia-eventos").val();
     tipo = $("#id-tipo-nivel").val();
+    $("#id-title-chart-cantidad").html("");
+    $("#id-title-chart-montokus").html("");
     $("#id-select-datos-campos").html("<option value=''>Seleccione</option>");
     $.ajax({
         url:'/dashboard/datos-campos',

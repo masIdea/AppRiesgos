@@ -322,7 +322,7 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label></label>
-                                                        <select class="form-control" id="id-select-vulnerabilidad-produccion" name="name-select-vulnerabilidad-produccion">
+                                                        <select class="form-control" id="id-select-vulnerabilidad-mineral" name="name-select-vulnerabilidad-mineral">
                                                             <option value="" selected disabled>Color</option>
                                                             <option value="green" style="background-color:green; color:white;">Verde</option>
                                                             <option value="yellow" style="background-color:yellow; color:black">Amarillo</option>
@@ -576,7 +576,8 @@
             data:{},
             type:"GET",
             dataType:"json",
-            success:function(data){                                
+            success:function(data){
+                console.log(data)
                 for(var i=0; i<data.length; i++){
                     $("#id-select-riesgo-"+data[i].tipoindicador).val(data[i].riesgo);
                     $("#id-select-vulnerabilidad-"+data[i].tipoindicador).val(data[i].vulnerabilidad);

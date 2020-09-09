@@ -56,14 +56,16 @@ $(".btnTipoClasificacion").click(function(){
                         }
                         
                     }
-                    var tfoot = '<tr>';
-                    tfoot += '<td colspan="3"><strong>Total:</strong></td>';
-                    tfoot += '<td><strong>'+numberWithCommas(total)+'</strong></td>';
-                    tfoot += '<td><strong>'+numberWithCommas(totalQ)+'</strong></td>';
-                    tfoot += '</tr>';
-                    $("#id-tfoot-clasificacion-evento").html(tfoot);
+                    
                 }
             }
+
+            var tfoot = '<tr>';
+            tfoot += '<td colspan="3"><strong>Total:</strong></td>';
+            tfoot += '<td><strong>'+numberWithCommas(total)+'</strong></td>';
+            tfoot += '<td><strong>'+numberWithCommas(totalQ)+'</strong></td>';
+            tfoot += '</tr>';
+            $("#id-tfoot-clasificacion-evento").html(tfoot);
             
             $("#id-tbody-clasificacion-evento").html(tbody);            
             $('#id-tb-clasificacion-evento').DataTable({

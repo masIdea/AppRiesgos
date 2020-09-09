@@ -24,26 +24,26 @@
                 type: 'bubble',
                 plotBorderWidth: 1,
                 zoomType: 'xy',
-                backgroundColor: 'rgba(0,0,0,0)',                
-                plotBackgroundImage: '/static/core/highcharts/imgs/degrade.jpg',
+                backgroundColor: 'rgba(0,0,0,0)',
+                plotBackgroundImage: '/static/core/highcharts/imgs/degrade_.jpg',
                 renderTo: 'chartcontainer'
             },
 
             credits:false,
             exporting:false,
-        
+
             legend: {
                 enabled: false
             },
-        
+
             title: {
                 text: ''
             },
-        
+
             subtitle: {
                 text: ''
             },
-        
+
             xAxis: {
                 gridLineWidth: 0,
                 title: {
@@ -52,9 +52,9 @@
                 labels: {
                     format: '{value}'
                 },
-                
+
             },
-        
+
             yAxis: {
                 gridLineWidth: 0,
                 startOnTick: false,
@@ -66,20 +66,20 @@
                     format: '{value}'
                 },
                 maxPadding: 0.2,
-                
+
             },
-        
+
             tooltip: {
                 useHTML: true,
                 headerFormat: '<table>',
                 pointFormat: '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>' +
                     '<tr><th>Eventos:</th><td>{point.x}</td></tr>' +
                     '<tr><th>KUS$:</th><td>{point.y}</td></tr>',
-                    
+
                 footerFormat: '</table>',
                 followPointer: true
             },
-        
+
             plotOptions: {
                 series: {
                     dataLabels: {
@@ -88,21 +88,15 @@
                     }
                 }
             },
-        
+
             series: [{
                 data: [
-                    { x: 688, y: 74646, z:45, name: 'GPTA', country: 'GPTA' },
-                    { x: 223, y: 12466, z:30, name: 'PLANTA', country: 'PLANTA' },
-                    { x: 78, y: 34739, z:40, name: 'SEWELL', country: 'SEWELL' },                    
+                      { x: 438, y: 141497, z:45, name: 'GPTA', country: 'GPTA' },
+                    { x: 145, y: 103100, z:41, name: 'GMIN', country: 'GMIN' },
+                    { x: 227, y: 83405, z:38, name: 'GRSW', country: 'GRSW' },
                 ]
             }]
-        
+
         });
     });
 
-
-
-
-
-
-    

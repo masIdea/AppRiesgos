@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from kpiDashboard.models import RiesgoKpi
 from core.models import Riesgo, RiesgoListas, RiesgoCargasistemacio, RiesgoCargasisteman1, Gerencias, RiesgoEvaluacioncualitativainherente, RiesgoEvaluacioncualitativaresidual, RiesgoEvaluacioncualitativaobjetivo, RiesgoProbImp, RiesgoNCausariesgo, RiesgoCausas, RiesgoUnifica, RiesgoColorindicadores
-from datetime import datetime
+from datetime import datetime, date
 from django.http import JsonResponse
 from collections import OrderedDict
 import operator
@@ -684,9 +684,9 @@ def kpiUnifica(tipo, clasificacion):
 def impactoFinancieroEventosMaterializados():
     listas_clasificaciones = list(RiesgoListas.objects.filter(tipo="Clasificaciones").values_list("glosa", flat=True))
     total = 0
-    diccionario = dict()
+    diccionario = OrderedDict()
     i = 0
-    arreglo_colores = ['success', 'danger', 'warning', 'brand', 'info', 'red']
+    arreglo_colores = ['success', 'danger', 'warning', 'brand', 'info', 'primary', 'success', 'danger', 'warning', 'brand', 'info', 'red']
     for clasificacion in listas_clasificaciones:
         valores = list(RiesgoUnifica.objects.filter(clasificacion=clasificacion).values_list("montoperdidakusd", flat=True))
         #valoreS_n1 = list(RiesgoCargasisteman1.objects.filter(clasificacion=clasificacion).values_list("montodeperdidakusd", flat=True))        
@@ -697,12 +697,13 @@ def impactoFinancieroEventosMaterializados():
             else:                
                 valor = float(x)
             valores_unifica.append(valor)
-            #float(x or 0)
+        #float(x or 0)
         #valores_unifica = [float(x or 0) for x in valores]
         #n1list = [float(x) for x in valoreS_n1]
-        diccionario[clasificacion] = {
-            'valor':sum(valores_unifica),
-            'color': arreglo_colores[i]
+        if sum(valores_unifica) > 0:
+            diccionario[clasificacion] = {
+                'valor':sum(valores_unifica),
+                'color': arreglo_colores[i]
             }
        
         total += sum(valores_unifica)
@@ -758,7 +759,6 @@ def getRiesgoClasificaciones():
             if i == len(dict_riesgos_cantidad_clasificacion):
                 arreglo_llaves.append(llave)
     
-
     return clasificaciones
 
 def getRiesgosCriticosPorGerencia(request):
@@ -773,7 +773,7 @@ def getRiesgosCriticosPorGerencia(request):
             amarillos = 0
             nombre_color = ''
             riesgos_gerencia = list(Riesgo.objects.filter(gerencia=gerencia['sigla']).values())            
-                        
+
             for riesgo in riesgos_gerencia:                
                 if RiesgoEvaluacioncualitativaresidual.objects.filter(idriesgo=riesgo['idriesgo']).exists():
                     resultado_inherente_riesgo = list(RiesgoEvaluacioncualitativaresidual.objects.filter(idriesgo=riesgo['idriesgo']).values('probabilidadresidual', 'impactoresidual'))
@@ -782,7 +782,7 @@ def getRiesgosCriticosPorGerencia(request):
                     color = list(RiesgoProbImp.objects.filter(probabilidad=probabilidad, impacto=impacto).values('color_hex', 'color'))
 
                     if len(color) > 0:
-                        nombre_color = color[0]['color']                    
+                        nombre_color = color[0]['color']
                     if nombre_color == 'rojo':                    
                         rojos+=1 
             dict_criticos[gerencia['gerencia']] = rojos
@@ -962,7 +962,8 @@ def getDatosDashboardTipoRiesgo(request):
         incendio = kpiIncendio(tipo)
         pandemia = kpiUnifica("eventos", "pandemia")
         otro = kpiUnifica("eventos", "otro")
-        falta_mineral = kpiUnifica("eventos", "falta mineral")
+        falta_mineral = kpiUnifica("eventos", "Falta Mineral")
+        transformacion_cultural = kpiUnifica("eventos", "Transformacion Cultural")
 
         
         if tipo == "eventos":
@@ -998,7 +999,7 @@ def getDatosDashboardTipoRiesgo(request):
             cantidad_riesgos_acumulados = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_acumulados_alto, directic=1).values()))
             cantidad_riesgos_mes = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_mensuales_alto, directic=1).values()))
                   
-        data = {'atraso_proyecto':atraso_proyecto, 'probidad_transparencia':probidad_transparencia, 'falta_agua':falta_agua, 'falla_equipo_critico':falla_equipo_critico, 'incendio':incendio, 'pandemia':pandemia, 'otro':otro, 'cantidad_riesgos_acumulados':cantidad_riesgos_acumulados, 'cantidad_riesgos_mes':cantidad_riesgos_mes, 'cantidad_total_registros':cantidad_total_registros, "glosa":glosa, "falta_mineral":falta_mineral}
+        data = {'atraso_proyecto':atraso_proyecto, 'probidad_transparencia':probidad_transparencia, 'falta_agua':falta_agua, 'falla_equipo_critico':falla_equipo_critico, 'incendio':incendio, 'pandemia':pandemia, 'otro':otro, 'cantidad_riesgos_acumulados':cantidad_riesgos_acumulados, 'cantidad_riesgos_mes':cantidad_riesgos_mes, 'cantidad_total_registros':cantidad_total_registros, "glosa":glosa, "falta_mineral":falta_mineral, "transformacion_cultural":transformacion_cultural}
 
         return JsonResponse(data, safe=False)
 
@@ -1033,10 +1034,11 @@ def getDatosCampo(request):
     if request.method == "GET":
         campo = request.GET['campo']
         datos_campo = list(RiesgoUnifica.objects.values_list(campo, flat=True).distinct())
-        diccionario_datos_contador = {}
-        diccionario_datos_montos = {}
+        diccionario_datos_contador = OrderedDict()
+        diccionario_datos_montos = OrderedDict()
         tipo = request.GET['tipo']
-        valor = request.GET['valor']                
+        valor = request.GET['valor']
+        contador = 0
         for campo_consulta in datos_campo:            
             query = 'list(RiesgoUnifica.objects.filter('+campo+'=\''+str(campo_consulta)+'\').values("evento", "montoperdidakusd"))'
             datos = eval(query)
@@ -1050,36 +1052,25 @@ def getDatosCampo(request):
                 elif tipo == "SUPERINTENDENCIA":
                     query = 'list(RiesgoUnifica.objects.filter(superintendencia=\''+str(valor)+'\','+campo+'=\''+str(campo_consulta)+'\').values("evento", "montoperdidakusd"))'
                     datos = eval(query)
-
-            for dato in datos:
-                if campo_consulta in diccionario_datos_contador:
-                    diccionario_datos_contador[campo_consulta]+=1
-                else:
-                    diccionario_datos_contador[campo_consulta]=1
-                if campo_consulta in diccionario_datos_montos:
-                    if dato['montoperdidakusd'] != "-":
-                        diccionario_datos_montos[campo_consulta] += int(float(dato['montoperdidakusd']))
-                else:
-                    if dato['montoperdidakusd'] != "-":
-                        diccionario_datos_montos[campo_consulta] = int(float(dato['montoperdidakusd']))
-                
                         
-        datos_ordenados_contador = sorted(diccionario_datos_contador.items(), key=operator.itemgetter(1), reverse=True)
-        datos_ordenados_montos = sorted(diccionario_datos_montos.items(), key=operator.itemgetter(1), reverse=True)
-        i_q = 0
-        dict_cantidades = {}
-        for cantidad_ordenada in datos_ordenados_contador:
-            if i_q < 5:
-                dict_cantidades[cantidad_ordenada[0]] = cantidad_ordenada[1]
-            i_q += 1
-        
-        i_m = 0
-        dict_montos = {}
-        for cantidad_ordenada_montos in datos_ordenados_montos:
-            if i_m < 5:
-                dict_montos[cantidad_ordenada_montos[0]] = cantidad_ordenada_montos[1]
-            i_m += 1
-        data = {'cantidad':dict_cantidades, 'montokus':dict_montos, 'datos_campo':datos_campo}        
+            for dato in datos:
+                if contador<10:                    
+                    if isinstance(campo_consulta, date):
+                        campo_consulta = str(campo_consulta.day)+'/'+str(campo_consulta.month)+'/'+str(campo_consulta.year)
+                    
+                    if campo_consulta in diccionario_datos_contador:                        
+                        diccionario_datos_contador[campo_consulta]+=1
+                    else:
+                        diccionario_datos_contador[campo_consulta]=1
+                        contador+=1                        
+                    if campo_consulta in diccionario_datos_montos:
+                        if dato['montoperdidakusd'] != "-":
+                            diccionario_datos_montos[campo_consulta] += int(float(dato['montoperdidakusd']))
+                    else:
+                        if dato['montoperdidakusd'] != "-":
+                            diccionario_datos_montos[campo_consulta] = int(float(dato['montoperdidakusd']))
+                            
+        data = {'cantidad':diccionario_datos_contador, 'montokus':diccionario_datos_montos, 'datos_campo':datos_campo}        
 
         return JsonResponse(data ,safe=False)
 
@@ -1090,8 +1081,9 @@ def datosClasificacionEventos(request):
         valor = request.GET['valor']
         glosa = request.GET['glosa']
         campo = request.GET['campo']
-        diccionario_datos_contador = {}
-        diccionario_datos_montos = {}        
+        diccionario_datos_contador = OrderedDict()
+        diccionario_datos_montos = OrderedDict()
+        print("entra ??")
         if valor == "DET":
             query = 'list(RiesgoUnifica.objects.filter('+campo+'=\''+str(glosa)+'\').values("evento", "montoperdidakusd"))'
             datos = eval(query)
@@ -1102,36 +1094,21 @@ def datosClasificacionEventos(request):
             elif tipo == "SUPERINTENDENCIA":
                 query = 'list(RiesgoUnifica.objects.filter(superintendencia=\''+str(valor)+'\','+campo+'=\''+str(glosa)+'\').values("evento", "montoperdidakusd"))'
                 datos = eval(query)
-        
+        contador = 0
         for dato in datos:
-            if dato['evento'] in diccionario_datos_contador:
-                diccionario_datos_contador[dato['evento']]+=1                
-            else:
-                diccionario_datos_contador[dato['evento']]=1
-            
-            if dato['evento'] in diccionario_datos_montos:
-                diccionario_datos_montos[dato['evento']]+=int(float(dato['montoperdidakusd']))
-            else:
-                diccionario_datos_montos[dato['evento']]=int(float(dato['montoperdidakusd']))
+            if contador<10:
+                if dato['evento'] in diccionario_datos_contador:                    
+                    diccionario_datos_contador[dato['evento']]+=1                    
+                else:
+                    diccionario_datos_contador[dato['evento']]=1
+                    contador += 1
+                
+                if dato['evento'] in diccionario_datos_montos:
+                    diccionario_datos_montos[dato['evento']]+=int(float(dato['montoperdidakusd']))
+                else:
+                    diccionario_datos_montos[dato['evento']]=int(float(dato['montoperdidakusd']))
 
-        datos_ordenados_contador = sorted(diccionario_datos_contador.items(), key=operator.itemgetter(1), reverse=True)
-        datos_ordenados_montos = sorted(diccionario_datos_montos.items(), key=operator.itemgetter(1), reverse=True)
-
-        i_q = 0
-        dict_cantidades = {}
-        for cantidad_ordenada in datos_ordenados_contador:
-            if i_q < 9:
-                dict_cantidades[cantidad_ordenada[0]] = cantidad_ordenada[1]
-            i_q += 1
-        
-        i_m = 0
-        dict_montos = {}
-        for cantidad_ordenada_montos in datos_ordenados_montos:
-            if i_m < 9:
-                dict_montos[cantidad_ordenada_montos[0]] = cantidad_ordenada_montos[1]
-            i_m += 1
-
-        data = {'cantidad':dict_cantidades, 'montokus':dict_montos}        
+        data = {'cantidad':diccionario_datos_contador, 'montokus':diccionario_datos_montos}        
         return JsonResponse(data, safe=False)
 
 
@@ -1170,32 +1147,23 @@ def listadoClasificacionGerencia(request):
     if request.method == "GET":
         meses = request.GET.getlist('meses[]')
         gerencia = request.GET['gerencia']
-        #datos = list(RiesgoUnifica.objects.filter(fecha__month__in=meses).values())
-        print(meses)
-        #gerencias = list(RiesgoUnifica.objects.filter(fecha__month__in=meses,).values('gerencia').distinct())
+        todos = request.GET['todos']        
         dictDatos = {}
         datos = []
-        for mes in meses:            
-            datosClasificacion = list(RiesgoUnifica.objects.filter(fecha__month=mes, gerencia=gerencia).values())
-            for datosClas in datosClasificacion:
-                if datosClas['clasificacion'] in dictDatos:
-                    dictDatos[datosClas['clasificacion']]['valor']+=round(float(datosClas['montoperdidakusd']), 1)
-                    dictDatos[datosClas['clasificacion']]['q']+=1
-                    dictDatos[datosClas['clasificacion']]['mes']=str(mes)
-                else:
-                    dictDatos[datosClas['clasificacion']]={
-                        'valor':round(float(datosClas['montoperdidakusd']), 1),
-                        'q':1,
-                        'mes':str(mes)
-                        }
-            datos.append(dictDatos.copy())
-                
+        ano = datetime.now().year
+        if todos == "false":
+            meses = request.GET.getlist('meses[]')
+        else:
+            meses = []
+            fechas = list(RiesgoUnifica.objects.filter(gerencia=gerencia).values("fecha").distinct())
+            for fecha in fechas:
+                if fecha['fecha'].month not in meses:
+                    meses.append(fecha['fecha'].month)                
         arregloMeses = []
-        for mes in meses:
-            print(mes)
+        for mes in meses:                
             dictDatosGerencia = {}
             datosClasificacion = []
-            if RiesgoUnifica.objects.filter(fecha__month=mes, gerencia=gerencia).exists():
+            if RiesgoUnifica.objects.filter(fecha__month=mes, fecha__year=ano, gerencia=gerencia).exists():
                 datosClasificacion = list(RiesgoUnifica.objects.filter(fecha__month=mes, gerencia=gerencia).values())
             for dato in datosClasificacion:
                 if dato['clasificacion'] in dictDatosGerencia:
@@ -1209,9 +1177,7 @@ def listadoClasificacionGerencia(request):
                         'mes':str(dato['fecha'].month)
                     }
                 
-            arregloMeses.append(dictDatosGerencia.copy())
-        print(arregloMeses)
-
+            arregloMeses.append(dictDatosGerencia.copy())    
 
         
         return JsonResponse(arregloMeses, safe=False)
