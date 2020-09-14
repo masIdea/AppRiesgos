@@ -336,18 +336,8 @@ def cargaDatos(request):
                 for i in range(1, max_col + 1):
                     cell_obj_column = sheet_obj.cell(row = 1, column = i)                 
                     cell_obj = sheet_obj.cell(row = j, column = i)
-                    datos_celda = cell_obj.value                    
-                    
                     column = cell_obj_column.value.lower()
-                    if (column == 'qhorasdetencion' or column == 'qdiasdetencion' or column == 'qktsperdida' or column =='qtmfperdida' or column == 'qlibrasperdida' or column == 'montoperdidakusd') and datos_celda is None:
-                        datos_celda = 0
-                    if column == "fecha" and datos_celda is None:
-                        datos_celda = None
-                    if column == "fecha" and datos_celda is not None:                                                                   
-                        datos_celda = validaFecha(datos_celda)                    
-                    if datos_celda is None:
-                        datos_celda = "-"
-                        
+                    datos_celda = validaDatosColumnas(column, cell_obj.value)   
                     str_query_orm += str(column)+"='"+str(datos_celda)+"',"
                 str_query_orm+=").save()"
                 print(str_query_orm)
@@ -357,9 +347,35 @@ def cargaDatos(request):
 
         return JsonResponse(True, safe=False)
 
+
+def validaDatosColumnas(columna, valor):
+    try:        
+        if (columna == "comentarios"):
+            valor = str(valor)
+            valor = valor.replace(" ", "")
+            valor = valor.lower()
+        if( columna == 'qhorasdetencion' or 
+            columna == 'qdiasdetencion' or 
+            columna == 'qktsperdida' or 
+            columna =='qtmfperdida' or 
+            columna == 'qlibrasperdida' or 
+            columna == 'montoperdidakusd') and valor is None:
+            valor = 0
+        
+        if columna == "fecha" and valor is None:
+            valor = None
+        if columna == "fecha" and valor is not None:                                                                   
+            valor = validaFecha(valor)
+
+        if valor is None:
+            valor =  "__"
+
+        return str(valor).replace("'", " ").replace("“", " ").replace("”", " ").replace('\n', ' ').replace('\r', ' ')
+    except Exception as e:        
+        traceback.print_exc()
+
 def validaFecha(datos_celda):   
-    try:
-        print("la fecha ", datos_celda)
+    try:        
         datos_celda = str(datos_celda.year)+'-'+str(datos_celda.month)+'-'+str(datos_celda.day)
         return datos_celda
     except:

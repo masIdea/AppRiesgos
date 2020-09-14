@@ -144,8 +144,8 @@ $("#id-select-listado-gerencia").change(function(){
                     tbody+="<td>"+data[i][k].q+"</td>"
                     tbody+="</tr>"
                     clasificacion=k;   
-                    total+=parseInt(data[i][k].valor);
-                    totalQ+=parseInt(data[i][k].q);
+                    total+=data[i][k].valor;
+                    totalQ+=data[i][k].q;
 
                     if(todos){
                         if(!mesesSeleccionados.includes(data[i][k].mes)){
@@ -162,8 +162,8 @@ $("#id-select-listado-gerencia").change(function(){
             
             var tfoot = '<tr>';
             tfoot += '<td colspan="3"><strong>Total:</strong></td>';
-            tfoot += '<td><strong>'+numberWithCommas(total)+'</strong></td>';
-            tfoot += '<td><strong>'+numberWithCommas(totalQ)+'</strong></td>';
+            tfoot += '<td><strong>'+numberWithCommas(parseInt(total))+'</strong></td>';
+            tfoot += '<td><strong>'+numberWithCommas(parseInt(totalQ))+'</strong></td>';
             tfoot += '</tr>';
             $("#id-tfoot-clasificacion-gerencia").html(tfoot);                                    
             $("#id-tbody-clasificacion-gerencia").html(tbody);

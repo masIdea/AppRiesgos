@@ -51,8 +51,8 @@ $(".btnTipoClasificacion").click(function(){
                             tbody+="<td>"+data[i][k][kk].q+"</td>"
                             tbody+="</tr>"
                             clasificacion=k;
-                            total+=parseInt(data[i][k][kk].valor);
-                            totalQ+=parseInt(data[i][k][kk].q);
+                            total+=data[i][k][kk].valor;
+                            totalQ+=data[i][k][kk].q;
                         }
                         
                     }
@@ -62,8 +62,8 @@ $(".btnTipoClasificacion").click(function(){
 
             var tfoot = '<tr>';
             tfoot += '<td colspan="3"><strong>Total:</strong></td>';
-            tfoot += '<td><strong>'+numberWithCommas(total)+'</strong></td>';
-            tfoot += '<td><strong>'+numberWithCommas(totalQ)+'</strong></td>';
+            tfoot += '<td><strong>'+numberWithCommas(parseInt(total))+'</strong></td>';
+            tfoot += '<td><strong>'+numberWithCommas(parseInt(totalQ))+'</strong></td>';
             tfoot += '</tr>';
             $("#id-tfoot-clasificacion-evento").html(tfoot);
             
