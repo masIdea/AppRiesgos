@@ -95,15 +95,13 @@ WSGI_APPLICATION = 'Riesgos.wsgi.application'
 
 
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'gestri',
-            'USER': 'usergestri',
-            'PASSWORD': 'MasIdea(123)',
-            'HOST': 'localhost',
-            'PORT': '3306',
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf',
+        },
     }
+}
 """
 DATABASES = {
     'default': {
