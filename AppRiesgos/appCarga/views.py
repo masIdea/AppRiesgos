@@ -329,21 +329,25 @@ def cargaDatos(request):
             
             Auditoria(request.user, "Carga Datos N1", "CargaDatos", id_carga).saveAudit()
         
-        elif archivo == "Unifica":                        
-            for j in range(2, m_row + 1):
-                id_carga = id_generator()
-                str_query_orm = "RiesgoUnifica( idregistro = '"+str(id_carga)+"',"
-                for i in range(1, max_col + 1):
-                    cell_obj_column = sheet_obj.cell(row = 1, column = i)                 
-                    cell_obj = sheet_obj.cell(row = j, column = i)
-                    column = cell_obj_column.value.lower()
-                    datos_celda = validaDatosColumnas(column, cell_obj.value)   
-                    str_query_orm += str(column)+"='"+str(datos_celda)+"',"
-                str_query_orm+=").save()"
-                print(str_query_orm)
-                eval(str_query_orm)
-            
-            Auditoria(request.user, "Carga Datos Unifica", "CargaDatos", id_carga).saveAudit()
+        elif archivo == "Unifica":
+            try:                
+                for j in range(2, m_row + 1):       
+                    id_carga = id_generator()
+                    str_query_orm = "RiesgoUnifica( idregistroarchivo = '"+str(id_name)+"', idregistro = '"+str(id_carga)+"',"
+                    for i in range(1, max_col + 1):
+                        cell_obj_column = sheet_obj.cell(row = 1, column = i)                 
+                        cell_obj = sheet_obj.cell(row = j, column = i)
+                        column = cell_obj_column.value.lower()
+                        datos_celda = validaDatosColumnas(column, cell_obj.value)   
+                        str_query_orm += str(column)+"='"+str(datos_celda)+"',"
+                    str_query_orm+=").save()"
+                    print(str_query_orm)
+                    eval(str_query_orm)
+                
+                Auditoria(request.user, "Carga Datos Unifica", "CargaDatos", id_carga).saveAudit()
+            except Exception as e:                
+                RiesgoUnifica.objects.filter(idregistroarchivo=id_name).delete()
+                return JsonResponse(False, safe=False)
 
         return JsonResponse(True, safe=False)
 
@@ -368,7 +372,7 @@ def validaDatosColumnas(columna, valor):
             valor = validaFecha(valor)
 
         if valor is None:
-            valor =  "__"
+            valor =  0
 
         return str(valor).replace("'", " ").replace("“", " ").replace("”", " ").replace('\n', ' ').replace('\r', ' ')
     except Exception as e:        

@@ -18,7 +18,9 @@ $('#form-carga-datos').submit(function(e){
             if(data){
                 alert("Datos Cargados Exitosamente.");
                 location.reload();
-            }                                    
+            }else{
+                alert("Ha ocurrido un error al cargar el archivo, asegure que los datos sean validos.");
+            }
         }, error:function(err){
             alert("Ha ocurrido un error al cargar el archivo, asegurese de que el archivo corresponde a la opción seleccionada.");
             console.error(err);

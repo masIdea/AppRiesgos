@@ -621,6 +621,7 @@ class RiesgoRbsfamilia(models.Model):
 
 class RiesgoUnifica(models.Model):
     idregistro = models.CharField(db_column='IdRegistro', max_length=100, primary_key=True)  # Field name made lowercase.
+    idregistroarchivo = models.CharField(db_column='IdRegistroArchivo', max_length=100)  # Field name made lowercase.
     fecha = models.DateField(db_column='Fecha', blank=True, null=True)  # Field name made lowercase.
     gerencia = models.CharField(db_column='Gerencia', max_length=100, blank=True, null=True)  # Field name made lowercase.
     superintendencia = models.CharField(db_column='SuperIntendencia', max_length=100, blank=True, null=True)  # Field name made lowercase.
@@ -643,7 +644,9 @@ class RiesgoUnifica(models.Model):
     subproceso = models.CharField(db_column='SubProceso', max_length=255, blank=True, null=True)  # Field name made lowercase.
     clasificacion = models.CharField(db_column='Clasificacion', max_length=255, blank=True, null=True)  # Field name made lowercase.
     tipofalla = models.CharField(db_column='TipoFalla', max_length=255, blank=True, null=True)  # Field name made lowercase.
-
+    fecreg = models.DateTimeField(db_column='FecReg', auto_now=True)
+    fecmod = models.DateTimeField(db_column='FecMod', auto_now_add=True)
+        
     class Meta:
         managed = False
         db_table = 'RIESGO_UNIFICA'
