@@ -17,6 +17,7 @@ from core.clases.core.bulk import BulkCreateManager
 from core.utils import id_generator
 from django.contrib.auth.decorators import login_required
 import os.path
+import traceback
 
 # Create your views here.
 @login_required
@@ -340,19 +341,19 @@ def cargaDatos(request):
                         column = cell_obj_column.value.lower()
                         datos_celda = validaDatosColumnas(column, cell_obj.value)   
                         str_query_orm += str(column)+"='"+str(datos_celda)+"',"
-                    str_query_orm+=").save()"
-                    print(str_query_orm)
+                    str_query_orm+=").save()"                    
                     eval(str_query_orm)
                 
                 Auditoria(request.user, "Carga Datos Unifica", "CargaDatos", id_carga).saveAudit()
-            except Exception as e:                
+            except Exception as e:
+                traceback.print_exc()                                
                 RiesgoUnifica.objects.filter(idregistroarchivo=id_name).delete()
                 return JsonResponse(False, safe=False)
 
         return JsonResponse(True, safe=False)
 
 
-def validaDatosColumnas(columna, valor):
+def validaDatosColumnas(columna, valor):    
     try:        
         if (columna == "comentarios"):
             valor = str(valor)
@@ -372,7 +373,7 @@ def validaDatosColumnas(columna, valor):
             valor = validaFecha(valor)
 
         if valor is None:
-            valor =  0
+            valor =  None
 
         return str(valor).replace("'", " ").replace("“", " ").replace("”", " ").replace('\n', ' ').replace('\r', ' ')
     except Exception as e:        

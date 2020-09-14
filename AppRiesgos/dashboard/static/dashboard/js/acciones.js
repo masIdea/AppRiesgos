@@ -91,9 +91,9 @@
 
             series: [{
                 data: [
-                      { x: 438, y: 141497, z:45, name: 'GPTA', country: 'GPTA' },
-                    { x: 145, y: 103100, z:41, name: 'GMIN', country: 'GMIN' },
-                    { x: 227, y: 83405, z:38, name: 'GRSW', country: 'GRSW' },
+                    { x: 448, y: 144093, z:45, name: 'GPTA', country: 'GPTA' },
+                    { x: 149, y: 103194, z:41, name: 'GMIN', country: 'GMIN' },
+                    { x: 248, y: 85318, z:38, name: 'GRSW', country: 'GRSW' },
                 ]
             }]
 
