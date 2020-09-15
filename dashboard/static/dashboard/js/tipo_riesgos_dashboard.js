@@ -1,5 +1,6 @@
 $(".tipo-riesgos-dashboard").click(function(){
     console.log(this.id);
+    console.log("qwerty")
     if(this.id == "id-check-eventos-dashboard"){
         $("#id-h3-titulo-dashboard").html("Eventos Materializados");
         $("#id-spn-acumulado-dashboard").html("Acumulados - Valorizados");
