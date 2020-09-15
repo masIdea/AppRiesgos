@@ -7,10 +7,10 @@ $(".tipo-riesgos-dashboard").click(function(){
         $("#id-spn-acumulado-dashboard").css("margin-left", "-12%");
         $("#id-div-num-general").css("left", "11%");
         $("#id-div-num-general").css("top", "-11%");
-        $("#id-div-indicadores-1").css("display", "none");
+        //$("#id-div-indicadores-1").css("display", "none");
         $("#id-div-indicadores-2").css("display", "block");
         $("#id-div-indicadores-3").css("display", "block");
-        $("#id-spn-mensual").css("display", "none");
+        $("#id-tb-mensual").css("display", "none");
         datos_dashboard_tipo('eventos');
     }else if(this.id == "id-check-riesgos-dashboard"){
         $("#id-h3-titulo-dashboard").html("Riesgos Críticos");
@@ -21,6 +21,7 @@ $(".tipo-riesgos-dashboard").click(function(){
         $("#id-div-indicadores-2").css("display", "none");
         $("#id-div-indicadores-1").css("display", "block");
         $("#id-div-indicadores-3").css("display", "none");
+        $("#id-tb-mensual").css("display", "block");
         
         datos_dashboard_tipo('riesgos');
     }else if(this.id == "id-check-directi-dashboard"){
@@ -32,6 +33,7 @@ $(".tipo-riesgos-dashboard").click(function(){
         $("#id-div-indicadores-2").css("display", "none");
         $("#id-div-indicadores-1").css("display", "block");
         $("#id-div-indicadores-3").css("display", "none");
+        $("#id-tb-mensual").css("display", "block");
         
         datos_dashboard_tipo('directi');
     }
