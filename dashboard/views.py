@@ -12,8 +12,8 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def inicio(request):
-    mes = 12
-    ano = 2020         
+    mes = datetime.now().month
+    ano = datetime.now().year                
     kpi_costo_presupuesto = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Costo Presupuesto").order_by('-fecreg').values())
     kpi_produccion = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Producción").order_by('-fecreg').values())
     kpi_seguridad = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Seguridad").order_by('-fecreg').values())
@@ -30,12 +30,12 @@ def inicio(request):
     #clasificaciones_riesgos = getRiesgoClasificaciones()
 
     cantidad_riesgos_acumulados_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
-    cantidad_riesgos_mensuales_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+    cantidad_riesgos_mensuales_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
     cantidad_riesgos_acumulados = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_acumulados_alto, directic=1).values()))
     cantidad_riesgos_mes = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_mensuales_alto, directic=1).values()))    
     cantidad_total_registros = len(list(Riesgo.objects.filter(estadoregistro='Vigente', directic=1).values()))
 
-    ano=2020
+    ano=datetime.now().year
     dicccionarioMesesSemestre1 = {}
     dicccionarioMesesSemestre2 = {}
     dicccionarioMesesSemestre1[1]={'mes':'Enero','valor':0,}
@@ -79,14 +79,14 @@ def inicio(request):
         if float(cantidad['montoperdidakusd']) > 0:
             cantidad_riesgos_acumulados+=1        
     
-    riesgos_mes = list(RiesgoUnifica.objects.filter(fecha__year=2020, fecha__month=12).values())
+    riesgos_mes = list(RiesgoUnifica.objects.filter(fecha__year=datetime.now().year, fecha__month=datetime.now().month).values())
     cantidad_riesgos_mes = 0
     for cantidad_mes in riesgos_mes:
         if float(cantidad_mes['montoperdidakusd']) > 0:
             cantidad_riesgos_mes+=1"""
 
     #cantidad_riesgos_acumulados = len(list(Riesgo.objects.all().values()))
-    #cantidad_riesgos_mes = len(list(Riesgo.objects.filter(fechadigita__year=2020, fechadigita__month=12).values()))
+    #cantidad_riesgos_mes = len(list(Riesgo.objects.filter(fechadigita__year=datetime.now().year, fechadigita__month=datetime.now().month).values()))
 
     eventos_materializados = impactoFinancieroEventosMaterializados()
     kusNeto = 0
@@ -128,8 +128,8 @@ def inicio(request):
     return render(request, "dashboard/index.html", data)
 
 def inicioResponsive(request):
-    mes = 12
-    ano = 2020                
+    mes = datetime.now().month
+    ano = datetime.now().year                
     kpi_costo_presupuesto = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Costo Presupuesto").order_by('-fecreg').values())
     kpi_produccion = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Producción").order_by('-fecreg').values())
     kpi_seguridad = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Seguridad").order_by('-fecreg').values())
@@ -146,12 +146,12 @@ def inicioResponsive(request):
     #clasificaciones_riesgos = getRiesgoClasificaciones()
 
     cantidad_riesgos_acumulados_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
-    cantidad_riesgos_mensuales_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+    cantidad_riesgos_mensuales_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
     cantidad_riesgos_acumulados = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_acumulados_alto, directic=1).values()))
     cantidad_riesgos_mes = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_mensuales_alto, directic=1).values()))    
     cantidad_total_registros = len(list(Riesgo.objects.filter(estadoregistro='Vigente', directic=1).values()))
 
-    ano=2020
+    ano=datetime.now().year
     dicccionarioMesesSemestre1 = {}
     dicccionarioMesesSemestre2 = {}
     dicccionarioMesesSemestre1[1]={'mes':'Enero','valor':0,}
@@ -196,14 +196,14 @@ def inicioResponsive(request):
         if float(cantidad['montoperdidakusd']) > 0:
             cantidad_riesgos_acumulados+=1        
     
-    riesgos_mes = list(RiesgoUnifica.objects.filter(fecha__year=2020, fecha__month=12).values())
+    riesgos_mes = list(RiesgoUnifica.objects.filter(fecha__year=datetime.now().year, fecha__month=datetime.now().month).values())
     cantidad_riesgos_mes = 0
     for cantidad_mes in riesgos_mes:
         if float(cantidad_mes['montoperdidakusd']) > 0:
             cantidad_riesgos_mes+=1"""
 
     #cantidad_riesgos_acumulados = len(list(Riesgo.objects.all().values()))
-    #cantidad_riesgos_mes = len(list(Riesgo.objects.filter(fechadigita__year=2020, fechadigita__month=12).values()))
+    #cantidad_riesgos_mes = len(list(Riesgo.objects.filter(fechadigita__year=datetime.now().year, fechadigita__month=datetime.now().month).values()))
 
     eventos_materializados = impactoFinancieroEventosMaterializados()
     kusNeto = 0
@@ -247,8 +247,8 @@ def inicioResponsive(request):
     return render(request, "dashboard/indexResponsive.html", data)
 
 def inicio2(request):
-    mes = 12
-    ano = 2020                
+    mes = datetime.now().month
+    ano = datetime.now().year                
     kpi_costo_presupuesto = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Costo Presupuesto").order_by('-fecreg').values())
     kpi_produccion = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Producción").order_by('-fecreg').values())
     kpi_seguridad = list(RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Seguridad").order_by('-fecreg').values())
@@ -262,7 +262,7 @@ def inicio2(request):
     incendio = kpiIncendio("directi")
 
     cantidad_riesgos_acumulados_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
-    cantidad_riesgos_mensuales_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+    cantidad_riesgos_mensuales_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
     cantidad_riesgos_acumulados = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_acumulados_alto, directic=1).values()))
     cantidad_riesgos_mes = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_mensuales_alto, directic=1).values()))
 
@@ -300,7 +300,7 @@ def kpiAtrasoProyecto(tipo):
             sumaTmfTotal += float(atraso['qtmfperdida'])
         suma = suma
 
-        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion="Atraso Proyecto", fecha__year=2020, fecha__month=12).values())
+        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion="Atraso Proyecto", fecha__year=datetime.now().year, fecha__month=datetime.now().month).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
         sumaTmfMes = 0
@@ -320,7 +320,7 @@ def kpiAtrasoProyecto(tipo):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Atraso Proyecto", idriesgo__in=riesgos_criticos_mensuales).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -339,7 +339,7 @@ def kpiAtrasoProyecto(tipo):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Atraso Proyecto", idriesgo__in=riesgos_criticos_mensuales, directic=1).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -364,7 +364,7 @@ def kpiProbidadTransparencia(tipo):
             sumaTmfTotal += float(atraso['qtmfperdida'])
         suma = suma
 
-        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion="Providad y Transparencia", fecha__year=2020, fecha__month=12).values())
+        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion="Providad y Transparencia", fecha__year=datetime.now().year, fecha__month=datetime.now().month).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
         sumaTmfMes = 0
@@ -385,7 +385,7 @@ def kpiProbidadTransparencia(tipo):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Providad y Transparencia", idriesgo__in=riesgos_criticos_mensuales).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -404,7 +404,7 @@ def kpiProbidadTransparencia(tipo):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Providad y Transparencia", idriesgo__in=riesgos_criticos_mensuales, directic=1).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -429,7 +429,7 @@ def kpiFaltaAgua(tipo):
                     suma += float(atraso['montoperdidakusd'])
                     num_riesgos_atraso_proyecto_acum+=1        
 
-        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion="Falta Agua", fecha__year=2020, fecha__month=12).values())
+        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion="Falta Agua", fecha__year=datetime.now().year, fecha__month=datetime.now().month).values())
         num_riesgos_atraso_proyecto = 0
         suma_mes = 0
         sumaTmfMes = 0
@@ -452,7 +452,7 @@ def kpiFaltaAgua(tipo):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Falta Agua", idriesgo__in=riesgos_criticos_mensuales).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -471,7 +471,7 @@ def kpiFaltaAgua(tipo):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Falta Agua", idriesgo__in=riesgos_criticos_mensuales, directic=1).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -500,7 +500,7 @@ def kpiFallaEquipoCritico(tipo):
                     num_riesgos_atraso_proyecto_acum+=1
         suma = suma
 
-        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion="Falla Equipo Crítico", fecha__year=2020, fecha__month=12).values())
+        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion="Falla Equipo Crítico", fecha__year=datetime.now().year, fecha__month=datetime.now().month).values())
         num_riesgos_atraso_proyecto = 0
         suma_mes = 0
         sumaTmfMes = 0
@@ -524,7 +524,7 @@ def kpiFallaEquipoCritico(tipo):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Falla Equipo Crítico", idriesgo__in=riesgos_criticos_mensuales).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -542,7 +542,7 @@ def kpiFallaEquipoCritico(tipo):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Falla Equipo Crítico", idriesgo__in=riesgos_criticos_mensuales, directic=1).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -565,7 +565,7 @@ def kpiIncendio(tipo):
             suma += float(atraso['montoperdidakusd'])
         suma = suma
 
-        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion="Incendio", fecha__year=2020, fecha__month=12).values())
+        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion="Incendio", fecha__year=datetime.now().year, fecha__month=datetime.now().month).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
         sumaTmfMes = 0
@@ -586,7 +586,7 @@ def kpiIncendio(tipo):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Incendio", idriesgo__in=riesgos_criticos_mensuales).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -604,7 +604,7 @@ def kpiIncendio(tipo):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Incendio", idriesgo__in=riesgos_criticos_mensuales, directic=1).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -627,7 +627,7 @@ def kpiUnifica(tipo, clasificacion):
             sumaTmfTotal += float(atraso['qtmfperdida'])
         suma = suma
 
-        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion=clasificacion, fecha__year=2020, fecha__month=12).values())
+        riesgos_atraso_proyecto = list(RiesgoUnifica.objects.filter(clasificacion=clasificacion, fecha__year=datetime.now().year, fecha__month=datetime.now().month).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
         sumaTmfMes = 0
@@ -648,7 +648,7 @@ def kpiUnifica(tipo, clasificacion):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion=clasificacion, idriesgo__in=riesgos_criticos_mensuales).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -666,7 +666,7 @@ def kpiUnifica(tipo, clasificacion):
             suma += float(atraso['maximaperdidamus'])
         suma = suma
 
-        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+        riesgos_criticos_mensuales = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
         riesgos_atraso_proyecto = list(Riesgo.objects.filter(clasificacion="Incendio", idriesgo__in=riesgos_criticos_mensuales, directic=1).values())
         num_riesgos_atraso_proyecto = len(riesgos_atraso_proyecto)
         suma_mes = 0
@@ -731,8 +731,8 @@ def getRiesgoClasificaciones():
         arreglo_valores_acumulado = [float(x or 0) for x in valores_riesgos_acumulado]
         suma_valores_acumulados = sum(arreglo_valores_acumulado)
 
-        cantidad_riesgos_mes = len(list(Riesgo.objects.filter(clasificacion=clasificacion['clasificacion'], fechadigita__month=12, fechadigita__year=2020).values()))
-        valores_riesgos_mes = list(Riesgo.objects.filter(clasificacion=clasificacion['clasificacion'], fechadigita__month=12, fechadigita__year=2020).values_list("maximaperdidamus", flat=True))
+        cantidad_riesgos_mes = len(list(Riesgo.objects.filter(clasificacion=clasificacion['clasificacion'], fechadigita__month=datetime.now().month, fechadigita__year=datetime.now().year).values()))
+        valores_riesgos_mes = list(Riesgo.objects.filter(clasificacion=clasificacion['clasificacion'], fechadigita__month=datetime.now().month, fechadigita__year=datetime.now().year).values_list("maximaperdidamus", flat=True))
         arreglo_valores_mes = [float(x or 0) for x in valores_riesgos_mes]
         suma_valores_mes = sum(arreglo_valores_mes)
                 
@@ -974,7 +974,7 @@ def getDatosDashboardTipoRiesgo(request):
                         if float(cantidad['montoperdidakusd']) > 0:
                             cantidad_riesgos_acumulados+=1
             
-            riesgos_mes = list(RiesgoUnifica.objects.filter(fecha__year=2020, fecha__month=12).values())
+            riesgos_mes = list(RiesgoUnifica.objects.filter(fecha__year=datetime.now().year, fecha__month=datetime.now().month).values())
             cantidad_riesgos_mes = 0
             for cantidad_mes in riesgos_mes:
                 if comprobeConvertedFloat(cantidad['montoperdidakusd']):
@@ -982,17 +982,17 @@ def getDatosDashboardTipoRiesgo(request):
                         if float(cantidad_mes['montoperdidakusd']) > 0:
                             cantidad_riesgos_mes+=1
             #cantidad_riesgos_acumulados = len(list(RiesgoUnifica.objects.all().values()))
-            #cantidad_riesgos_mes = len(list(RiesgoUnifica.objects.filter(fecha__year=2020, fecha__month=12).values()))            
+            #cantidad_riesgos_mes = len(list(RiesgoUnifica.objects.filter(fecha__year=datetime.now().year, fecha__month=datetime.now().month).values()))            
         elif tipo == "riesgos":
             glosa = "Riesgos"
             cantidad_total_registros = len(list(Riesgo.objects.filter(estadoregistro='Vigente').values()))
             cantidad_riesgos_acumulados = len(list(RiesgoEvaluacioncualitativaresidual.objects.filter(nivelriesgoresidual="Alto").values()))
-            cantidad_riesgos_mes = len(list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values()))
+            cantidad_riesgos_mes = len(list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values()))
         elif tipo == "directi":
             glosa = "Directi"
             cantidad_total_registros = len(list(Riesgo.objects.filter(estadoregistro='Vigente', directic=1).values()))
             cantidad_riesgos_acumulados_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
-            cantidad_riesgos_mensuales_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=2020, modificado__month=12, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
+            cantidad_riesgos_mensuales_alto = list(RiesgoEvaluacioncualitativaresidual.objects.filter(modificado__year=datetime.now().year, modificado__month=datetime.now().month, nivelriesgoresidual="Alto").values_list("idriesgo", flat=True))
             cantidad_riesgos_acumulados = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_acumulados_alto, directic=1).values()))
             cantidad_riesgos_mes = len(list(Riesgo.objects.filter(idriesgo__in=cantidad_riesgos_mensuales_alto, directic=1).values()))
                   
@@ -1159,7 +1159,7 @@ def listadoClasificacionGerencia(request):
         todos = request.GET['todos']        
         dictDatos = {}
         datos = []
-        ano = 2020
+        ano = datetime.now().year
         if todos == "false":
             meses = request.GET.getlist('meses[]')
         else:
