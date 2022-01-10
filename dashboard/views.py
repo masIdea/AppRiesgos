@@ -26,8 +26,8 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def inicio(request):
-    mes = 12
-    ano = 2021
+    mes = datetime.now().month
+    ano = datetime.now().year
     kpi_costo_presupuesto = list(
         RiesgoKpi.objects.filter(ano=ano, mes=mes, tipo="Costo Presupuesto")
         .order_by('-fecreg')
@@ -95,7 +95,7 @@ def inicio(request):
         )
     )
 
-    ano = 2021
+    ano = datetime.now().year
     dicccionarioMesesSemestre1 = {}
     dicccionarioMesesSemestre2 = {}
     dicccionarioMesesSemestre1[1] = {
